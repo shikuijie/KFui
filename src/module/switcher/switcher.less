@@ -1,0 +1,136 @@
+@import (reference) '../base';
+
+.kf-switcher-size(@size: 15px) {
+    width: @size * 5;
+    height: @size * 2;
+    border-radius: @size;
+    
+    > div { //container
+        width: @size * 10;
+        height: @size * 2;
+        
+        > div { //on, off
+            width: @size * 5;
+            height: @size * 2;
+            
+            > span { //icon text
+                height: @size * 2;
+                line-height: @size * 2;
+                
+                &:first-child { //text
+                    font-size: @size;
+                    padding-top: 1px;
+                }
+                &:nth-child(2) { //icon
+                    font-size: @size * 2 - 5;
+                }
+            }
+            
+            &:first-child { //on
+                > span {
+                    &:first-child { //text
+                        left: @size;
+                        top: 0;
+                    }
+                    &:nth-child(2) { //icon
+                        right: 5px;
+                        top: 0;
+                    }
+                }
+            }
+            
+            &:nth-child(2) { //off
+                > span {
+                    &:first-child { //text
+                        right: @size;
+                        top: 0;
+                    }
+                    &:nth-child(2) { //icon
+                        left: 5px;
+                        top: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.kf-switcher-color(@onTextColor: @TURQUOISE, 
+                @onIconColor: @TURQUOISE, 
+                @onBgColor: @MIDNIGHT_BLUE, 
+                @offTextColor: white, 
+                @offIconColor: @ASBESTOS, 
+                @offBgColor: @SILVER) {
+    > div { //container
+        background-color: @onBgColor;
+        
+        > div:first-child { //on
+            background-color: @onBgColor;
+            > span {
+                &:first-child { //text
+                    color: @onTextColor;
+                }
+                &:nth-child(2) { //icon
+                    color: @onIconColor;
+                }
+            }
+        }
+        
+        > div:nth-child(2) { //off
+            background-color: @offBgColor;
+            > span {
+                &:first-child { //text
+                    color: @offTextColor;
+                }
+                &:nth-child(2) { //icon
+                    color: @offIconColor;
+                }
+            }
+        }
+    }
+}
+
+.switcher {
+    .kf-switcher-size();
+    .kf-switcher-color();
+    
+    position: relative;
+    z-index: 5;
+    overflow: hidden;
+    cursor: pointer;
+    
+    .container {
+        transition: transform .15s linear;
+        
+        &.on {
+            transform: translateX(0);
+        }
+        &.off {
+            transform: translateX(-50%);
+        }
+
+        .on, .off {
+            float: left;
+            position: relative;
+            
+            .icon, .text {
+                display: inline-block;
+                position: absolute;
+            }
+        }
+        
+        .off {
+            .icon {
+            }
+            .text {
+                color: white;
+            }
+        }
+    
+        br {
+            display: block;
+            height: 0;
+            clear: both;
+        }
+    }
+}

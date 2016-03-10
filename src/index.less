@@ -1,0 +1,56 @@
+@import (reference) './module/base';
+@import (reference) './module/switcher/switcher';
+@import (reference) './module/menu/menu';
+
+.kf-menu-item(menu, @dir, @pos) {
+  font-size: 20px;
+  color: white;
+  background-color: @MIDNIGHT_BLUE;
+  width: 180px;
+  height: 60px;
+  line-height: 60px  ;
+  padding-left: 15px;
+  &:hover {
+    color: @TURQUOISE;
+  }
+
+  & when (@dir = horizontal) and (not (@pos = last)) {
+    border-right: 1px solid @SILVER;
+  }
+  & when (@dir = vertical) and (not (@pos = last)) {
+    border-bottom: 1px solid @SILVER;
+  }
+
+  & when (@dir = horizontal) and (@pos = first) {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  & when (@dir = horizontal) and (@pos = last) {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  & when (@dir = vertical) and (@pos = first) {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  & when (@dir = vertical) and (@pos = last) {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+
+:global {
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .sidebar {
+    .menu {
+      .kf-menu(horizontal, left, 5px, @MIDNIGHT_BLUE, menu);
+    }
+  }
+}
