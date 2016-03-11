@@ -31,3 +31,9 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+# Dependency library
+jspm_packages
+
+# mock data
+mock
