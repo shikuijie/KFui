@@ -1,6 +1,8 @@
 import vue from 'vue';
 
-vue.directive('kf-code', function(newVal) {
+vue.directive('kf-code', {
+  update: function(newVal) {
     this.el.innerHTML = newVal;
     this.vm.$compile(this.el);
+  }
 });

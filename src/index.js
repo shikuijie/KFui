@@ -11,10 +11,11 @@ new vue({
     data: {
       menuData: {
         choose: function(node) {
-          console.log(node.children)
+          console.log('choose ' + node.label)
         },
         children: [{
-          content: '<input type="checkbox" @click="NODE.choose(NODE)">Item0'
+          label: 'node1',
+          content: '<input type="checkbox" @click="ROOT.choose(NODE)">Item0'
         }, {
           content: 'Item1',
           children: [{
@@ -22,7 +23,8 @@ new vue({
             children: [{
               content: 'Item100'
             }, {
-              content: 'Item101'
+              label: 'node2',
+              content: '<input type="checkbox" @click="ROOT.choose(NODE)">Item101'
             }]
           }, {
             content: 'Item11'
@@ -31,7 +33,5 @@ new vue({
           content: 'Item2'
         }]
       }
-    },
-    methods: {
     }
 });

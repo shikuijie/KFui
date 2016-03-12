@@ -4,14 +4,47 @@ import cls from './menu.css.map';
 import '../base';
 
 vue.component('kf-menu', {
+  components: {
+    'kf-menu-item': {
+      props: {
+        itemData: {
+          type: Object,
+          coerce: function(val) {
+            if(val.children) {
+              val.children.forEach(function(child) {
+                child.__ROOT = val.__ROOT;
+              });
+            }
+
+            return val;
+          }
+        }
+      },
+      template:
+        '<li :kf-submenu="!!itemData.children">' +
+          '<div v-kf-code="itemData.content"></div>' +
+          '<div v-if="itemData.children"></div>' +
+          '<kf-menu v-if="itemData.children" :menu-data="itemData"></kf-menu>' +
+        '</li>',
+      data: function() {
+        return {
+          ROOT: this.itemData.__ROOT,
+          NODE: this.itemData
+        };
+      }
+    }
+  },
+
   props: {
     menuData: {
       type: Object,
       coerce: function(val) {
-        val.children && val.children.forEach(function(child) {
-          if(child.children) {
-            child.$$_submenu = true;
-          }
+        if(!val.__ROOT) {
+          val.__ROOT = val;
+        }
+
+        val.children.forEach(function(child) {
+          child.__ROOT = val.__ROOT;
         });
 
         return val;
@@ -20,16 +53,11 @@ vue.component('kf-menu', {
   },
   template:
     '<ul :class="cls.menu">' +
-      '<li v-for="item in menuData.children" :kf-submenu="item.$$_submenu">' +
-        '<div v-kf-code="item.content"></div>' +
-        '<div v-if="item.children"></div>' +
-        '<kf-menu v-if="item.children" :menu-data="item"></kf-menu>' +
-      '</li>' +
+      '<kf-menu-item v-for="item in menuData.children" :item-data="item"></kf-menu-item>' +
     '</ul>',
   data: function() {
     return {
-      cls: cls,
-      NODE: this.menuData
+      cls: cls
     };
   }
 });
