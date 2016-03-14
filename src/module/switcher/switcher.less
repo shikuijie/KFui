@@ -1,136 +1,39 @@
 @import (reference) '../base';
 
-.kf-switcher-size(@size: 15px) {
-    width: @size * 5;
-    height: @size * 2;
-    border-radius: @size;
-    
-    > div { //container
-        width: @size * 10;
-        height: @size * 2;
-        
-        > div { //on, off
-            width: @size * 5;
-            height: @size * 2;
-            
-            > span { //icon text
-                height: @size * 2;
-                line-height: @size * 2;
-                
-                &:first-child { //text
-                    font-size: @size;
-                    padding-top: 1px;
-                }
-                &:nth-child(2) { //icon
-                    font-size: @size * 2 - 5;
-                }
-            }
-            
-            &:first-child { //on
-                > span {
-                    &:first-child { //text
-                        left: @size;
-                        top: 0;
-                    }
-                    &:nth-child(2) { //icon
-                        right: 5px;
-                        top: 0;
-                    }
-                }
-            }
-            
-            &:nth-child(2) { //off
-                > span {
-                    &:first-child { //text
-                        right: @size;
-                        top: 0;
-                    }
-                    &:nth-child(2) { //icon
-                        left: 5px;
-                        top: 0;
-                    }
-                }
-            }
-        }
-    }
-}
+.kf-switcher(@itemStyle, @width, @height) {
+  width: @width;
+  height: @height;
 
-.kf-switcher-color(@onTextColor: @TURQUOISE, 
-                @onIconColor: @TURQUOISE, 
-                @onBgColor: @MIDNIGHT_BLUE, 
-                @offTextColor: white, 
-                @offIconColor: @ASBESTOS, 
-                @offBgColor: @SILVER) {
-    > div { //container
-        background-color: @onBgColor;
-        
-        > div:first-child { //on
-            background-color: @onBgColor;
-            > span {
-                &:first-child { //text
-                    color: @onTextColor;
-                }
-                &:nth-child(2) { //icon
-                    color: @onIconColor;
-                }
-            }
-        }
-        
-        > div:nth-child(2) { //off
-            background-color: @offBgColor;
-            > span {
-                &:first-child { //text
-                    color: @offTextColor;
-                }
-                &:nth-child(2) { //icon
-                    color: @offIconColor;
-                }
-            }
-        }
-    }
+  &[kf-switcher-on] > div:first-child {
+    left: 0;
+    .kf-switcher-item(@itemStyle, on, on);
+  }
+  &[kf-switcher-on] > div:nth-child(2) {
+    left: @width;
+    .kf-switcher-item(@itemStyle, on, off);
+  }
+
+  &[kf-switcher-off] > div:first-child {
+    left: -@width;
+    .kf-switcher-item(@itemStyle, off, on);
+  }
+  &[kf-switcher-off] > div:nth-child(2) {
+    left: 0;
+    .kf-switcher-item(@itemStyle, off, off);
+  }
 }
 
 .switcher {
-    .kf-switcher-size();
-    .kf-switcher-color();
-    
-    position: relative;
-    z-index: 5;
-    overflow: hidden;
-    cursor: pointer;
-    
-    .container {
-        transition: transform .15s linear;
-        
-        &.on {
-            transform: translateX(0);
-        }
-        &.off {
-            transform: translateX(-50%);
-        }
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
+  cursor: pointer;
 
-        .on, .off {
-            float: left;
-            position: relative;
-            
-            .icon, .text {
-                display: inline-block;
-                position: absolute;
-            }
-        }
-        
-        .off {
-            .icon {
-            }
-            .text {
-                color: white;
-            }
-        }
-    
-        br {
-            display: block;
-            height: 0;
-            clear: both;
-        }
-    }
+  .on, .off {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    transition: all .2s linear;
+  }
 }

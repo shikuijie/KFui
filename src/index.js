@@ -9,28 +9,29 @@ import './module/base';
 new vue({
     el: 'body',
     data: {
+      switcherOn: true,
       menuData: {
         choose: function(node) {
-          console.log('choose ' + node.label)
+          console.log(node.title)
         },
-        children: [{
-          label: 'node1',
-          content: '<input type="checkbox" @click="ROOT.choose(NODE)">Item0'
+        submenu: [{
+          title: 'node0',
+          item: '<input type="checkbox" @click="ROOT.choose(NODE)">Item0'
         }, {
-          content: 'Item1',
-          children: [{
-            content: 'Item10',
-            children: [{
-              content: 'Item100'
+          item: 'Item1',
+          submenu: [{
+            item: 'Item10',
+            submenu: [{
+              item: 'Item100'
             }, {
-              label: 'node2',
-              content: '<input type="checkbox" @click="ROOT.choose(NODE)">Item101'
+              title: 'node1',
+              item: '<input type="checkbox" @click="ROOT.choose(NODE)">Item101'
             }]
           }, {
-            content: 'Item11'
+            item: 'Item11'
           }]
         }, {
-          content: 'Item2'
+          item: 'Item2'
         }]
       }
     }

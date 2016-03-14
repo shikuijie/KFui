@@ -44,6 +44,23 @@
   }
 }
 
+.kf-switcher-item(circle, @status, @item) {
+  .on {
+    color: @TURQUOISE;
+  }
+  .off {
+    color: @ASBESTOS;
+  }
+
+  & when (@status = on) {
+    background-color: @MIDNIGHT_BLUE;
+  }
+
+  & when (@status = off) {
+    background-color: @SILVER;
+  }
+}
+
 :global {
   html, body {
     margin: 0;
@@ -52,7 +69,12 @@
 
   .sidebar {
     .menu {
-      .kf-menu(horizontal, left, 5px, @MIDNIGHT_BLUE, menu);
+      .kf-menu(menu, horizontal, left, 5px, @MIDNIGHT_BLUE);
     }
+  }
+
+  .switcher {
+    margin-top: 10px;
+    .kf-switcher(circle, 180px, 60px);
   }
 }

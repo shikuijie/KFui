@@ -15,16 +15,16 @@
 }
 
 /**
-  @dir: 水平菜单或竖直菜单
-  @pos: 菜单是页面靠左还是靠右
+  @dir: 水平菜单或竖直菜单(horizontal/vertical)
+  @pos: 菜单是页面靠左还是靠右(left/right)
   @triangleSize: 小尖角的大小
   @triangleColor: 小尖角的颜色
   @itemStyle: 用户通过.kf-menu-item自行定义的菜单内容的样式,譬如上面的default
 */
-.kf-menu(@dir: vertical, @pos: left,
+.kf-menu(@itemStyle,
+          @dir: vertical, @pos: left,
           @triangleSize: 5px,
-          @triangleColor: @MIDNIGHT_BLUE,
-          @itemStyle) {
+          @triangleColor: @MIDNIGHT_BLUE) {
 
   & when (@dir = vertical) {
     li {
@@ -193,6 +193,7 @@
       }
 
       > ul {
+        z-index: 2016;
         opacity: 0;
         visibility: hidden;
         position: absolute;

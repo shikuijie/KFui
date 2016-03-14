@@ -11,17 +11,12 @@ vue.component('kf-switcher', {
         }
     },
     template:
-        '<div :class="styles.switcher">' +
-            '<div :class="[styles.container, state]">' +
-                '<div :class="styles.on" @click="switchOff()">' +
-                    '<span :class="styles.text">ON</span>' +
-                    '<span :class="styles.icon"><i class="fa fa-circle"></i></span>' +
-                '</div>' +
-                '<div :class="styles.off" @click="switchOn()">' +
-                    '<span :class="styles.text">OFF</span>' +
-                    '<span :class="styles.icon"><i class="fa fa-circle"></i></span>' +
-                '</div>' +
-                '<br>' +
+        '<div :class="styles.switcher" :kf-switcher-on="on" :kf-switcher-off="!on">' +
+            '<div :class="styles.on" @click="switchOff()">' +
+              '<slot name="on"></slot>' +
+            '</div>' +
+            '<div :class="styles.off" @click="switchOn()">' +
+              '<slot name="off"></slot>' +
             '</div>' +
         '</div>',
     data: function() {

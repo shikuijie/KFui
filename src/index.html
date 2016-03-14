@@ -11,6 +11,15 @@
     <kf-menu class="menu" :menu-data="menuData"></kf-menu>
   </div>
 
+  <kf-switcher :on.sync="switcherOn" class="switcher">
+    <template slot="on">
+      <span class="on"><i class="fa fa-circle"></i></span>
+    </template>
+    <template slot="off">
+      <span class="off"><i class="fa fa-circle"></i></span>
+    </template>
+  </kf-switcher>
+
     <script>
         System.import('./index.js');
     </script>
