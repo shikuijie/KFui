@@ -29,6 +29,7 @@ System.config({
     "image": "github:systemjs/plugin-image@0.1.0",
     "jquery": "npm:jquery@2.2.0",
     "json": "github:systemjs/plugin-json@0.1.0",
+    "lodash": "npm:lodash@4.6.1",
     "reflect-metadata": "npm:reflect-metadata@0.1.3",
     "swiper": "npm:swiper@3.3.0",
     "text": "github:systemjs/plugin-text@0.0.4",
@@ -160,6 +161,10 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "source-map": "npm:source-map@0.1.31"
+    },
+    "npm:lodash@4.6.1": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:os-browserify@0.1.2": {
       "os": "github:jspm/nodelibs-os@0.1.0"

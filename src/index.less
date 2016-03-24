@@ -1,5 +1,4 @@
 @import (reference) './module/base';
-@import (reference) './module/switcher/switcher';
 @import (reference) './module/menu/menu';
 
 .kf-menu-item(menu, @dir, @pos) {
@@ -44,23 +43,6 @@
   }
 }
 
-.kf-switcher-item(circle, @status, @item) {
-  .on {
-    color: @TURQUOISE;
-  }
-  .off {
-    color: @ASBESTOS;
-  }
-
-  & when (@status = on) {
-    background-color: @MIDNIGHT_BLUE;
-  }
-
-  & when (@status = off) {
-    background-color: @SILVER;
-  }
-}
-
 :global {
   html, body {
     margin: 0;
@@ -73,8 +55,9 @@
     }
   }
 
-  .switcher {
-    margin-top: 10px;
-    .kf-switcher(circle, 180px, 60px);
+  .ttable {
+    tr > td:first-child .fa {
+      margin-right: 5px;
+    }
   }
 }
