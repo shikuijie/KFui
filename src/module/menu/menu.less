@@ -1,31 +1,13 @@
-@import (reference) '../base';
-
-/**
-  default是一个用户提供的名字,定义该mixin时生成.
-  @dir有horizontal和vertical两个值
-  @pos有first middle和last三个值
-  @dir和@pos是我在调用该mixin时传入
-    horizontal表示当前的菜单项位于一个水平菜单中
-    vertical表示当前菜单项位于一个竖向菜单中
-    first表示当前菜单项是第一个菜单项
-    middle表示当前菜单项是中间的某个菜单
-    last表示当前菜单项是最后一个菜单项
-*/
-.kf-menu-item(default, @dir, @pos) {
-}
+@import (reference) '../caret/caret';
 
 /**
   @dir: 水平菜单或竖直菜单(horizontal/vertical)
   @pos: 菜单是页面靠左还是靠右(left/right)
   @triangleSize: 小尖角的大小
   @triangleColor: 小尖角的颜色
-  @itemStyle: 用户通过.kf-menu-item自行定义的菜单内容的样式,譬如上面的default
+  @itemStyle: 用户通过.kf-menu-item自行定义的菜单内容的样式
 */
-.kf-menu(@itemStyle,
-          @dir: vertical, @pos: left,
-          @triangleSize: 5px,
-          @triangleColor: @MIDNIGHT_BLUE) {
-
+.kf-menu(@itemStyle, @dir, @pos, @triangleSize, @triangleColor) {
   & when (@dir = vertical) {
     li {
       &:first-child > div:first-child {
@@ -48,10 +30,8 @@
   }
 
   & when (@dir = horizontal) {
-    .clearfix();
-
     > li {
-      float: left;
+      display: inline-block;
 
       &:first-child > div:first-child {
         .kf-menu-item(@itemStyle, @dir, first);
@@ -87,80 +67,80 @@
       }
     }
   }
-}
 
-.bottom-submenu(@pos, @size, @color) {
-  > div:nth-child(2) {
-    & when (@pos = left) {
-      left: @size * 4;
+  .bottom-submenu(@pos, @size, @color) {
+    > div:nth-child(2) {
+      & when (@pos = left) {
+        left: @size * 4;
+      }
+      & when (@pos = right) {
+        right: @size * 4;
+      }
+
+      bottom: 0;
+      .kf-tip-arrow(up, @color, @size);
     }
-    & when (@pos = right) {
-      right: @size * 4;
+
+    &:hover > div:nth-child(2) {
+      bottom: -(@size+2px);
     }
 
-    bottom: 0;
-    .kf-tip-arrow(up, @color, @size);
+    > ul {
+      left: 0;
+      top: 100%;
+      transform: translateY(-(@size+2px));
+      border-top: (@size+2px) solid transparent;
+    }
+
+    &:hover > ul {
+      transform: translateY(0);
+    }
   }
 
-  &:hover > div:nth-child(2) {
-    bottom: -(@size+2px);
+  .left-submenu(@size, @color) {
+    > div:nth-child(2) {
+      top: 50%;
+      transform: translateY(-(@size/2));
+      left: 0;
+      .kf-tip-arrow(right, @color, @size);
+    }
+
+    &:hover > div:nth-child(2) {
+      left: -(@size+2px);
+    }
+
+    > ul {
+      top: 0;
+      right: 100%;
+      border-right: (@size+2px) solid transparent;
+      transform: translateX(@size+2px);
+    }
+
+    &:hover > ul {
+      transform: translateX(0);
+    }
   }
 
-  > ul {
-    left: 0;
-    top: 100%;
-    transform: translateY(-(@size+2px));
-    border-top: (@size+2px) solid transparent;
-  }
+  .right-submenu(@size, @color) {
+    > div:nth-child(2) {
+      top: 50%;
+      transform: translateY(-(@size/2));
+      right: 0;
+      .kf-tip-arrow(left, @color, @size);
+    }
+    &:hover > div:nth-child(2) {
+      right: -(@size+2px);
+    }
 
-  &:hover > ul {
-    transform: translateY(0);
-  }
-}
-
-.left-submenu(@size, @color) {
-  > div:nth-child(2) {
-    top: 50%;
-    transform: translateY(-(@size/2));
-    left: 0;
-    .kf-tip-arrow(right, @color, @size);
-  }
-
-  &:hover > div:nth-child(2) {
-    left: -(@size+2px);
-  }
-
-  > ul {
-    top: 0;
-    right: 100%;
-    border-right: (@size+2px) solid transparent;
-    transform: translateX(@size+2px);
-  }
-
-  &:hover > ul {
-    transform: translateX(0);
-  }
-}
-
-.right-submenu(@size, @color) {
-  > div:nth-child(2) {
-    top: 50%;
-    transform: translateY(-(@size/2));
-    right: 0;
-    .kf-tip-arrow(left, @color, @size);
-  }
-  &:hover > div:nth-child(2) {
-    right: -(@size+2px);
-  }
-
-  > ul {
-    top: 0;
-    left: 100%;
-    border-left: (@size+2px) solid transparent;
-    transform: translateX(-(@size+2px));
-  }
-  &:hover > ul {
-    transform: translateX(0);
+    > ul {
+      top: 0;
+      left: 100%;
+      border-left: (@size+2px) solid transparent;
+      transform: translateX(-(@size+2px));
+    }
+    &:hover > ul {
+      transform: translateX(0);
+    }
   }
 }
 

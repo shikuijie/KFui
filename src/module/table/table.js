@@ -1,7 +1,5 @@
 import vue from 'vue';
 import _ from 'lodash';
-import styles from './table.css.map';
-import './table.css!';
 
 let thead = vue.extend({
   props: ['tableData', 'headData'],
@@ -107,7 +105,6 @@ let mrow = vue.extend({
               ':rowspan="rowData.__rowspan[rn][cn]">' +
             '<div v-kf-code="getValue(rowData, keyRow[rowData.__keyMap[key]])"></div>' +
           '</td>' +
-          '<div v-kf-code="getValue(rowData, colKey)"></div>' +
         '</tr>' +
     '</tbody>',
   data: function() {
@@ -153,11 +150,10 @@ let mtable = vue.component('kf-mtable', {
 });
 
 let trow = vue.extend({
-  props: ['tableData', 'rowData', 'colKeys', 'childrenKey', 'openIcon', 'closeIcon', 'spinIcon'],
+  props: ['tableData', 'rowData', 'colKeys', 'childrenKey'],
   template:
     '<tr :class="rowData.__lvlCls" v-show="visible">' +
       '<td>' +
-        // '<i :class="iconCls" @click="toggle()" v-if="rowData[childrenKey]"></i>' +
         '<div v-kf-code="rowData[colKeys[0]]"></div>' +
       '</td>' +
       '<td v-for="ck in colKeys.slice(1)"><div v-kf-code="rowData[ck]"></div></td>' +
@@ -166,14 +162,8 @@ let trow = vue.extend({
     vue.set(this.rowData, '__expand', false);
     return {
       TABLE: this.tableData,
-      ROW: this.rowData,
-      styles: styles
+      ROW: this.rowData
     };
-  },
-  methods: {
-    toggle: function() {
-      this.rowData.__expand = !this.rowData.__expand;
-    }
   },
   computed: {
     visible: function() {
@@ -185,17 +175,6 @@ let trow = vue.extend({
         cur = cur.__parent;
       }
       return true;
-    },
-    iconCls: function() {
-      if(!this.rowData[this.childrenKey]) {
-        return null;
-      } else if(!this.rowData.__expand) {
-        return this.closeIcon;
-      } else if(this.rowData[this.childrenKey].length) {
-        return this.openIcon;
-      } else {
-        return this.spinIcon;
-      }
     }
   }
 });
@@ -209,28 +188,22 @@ vue.component('kf-ttable', {
   props: {
     table: Object,
     colKeys: Array,
-    childrenKey: String,
-    openIcon: String,
-    closeIcon: String,
-    spinIcon: String
+    childrenKey: {
+      type: String,
+      default: 'children'
+    }
   },
   template:
-    '<table :class="styles.ttable">' +
+    '<table>' +
       '<thead is="kf-thead" v-if="table.__thead" :table-data="table" :head-data="table.__thead"></thead>' +
       '<tbody v-if="table.__tbody">' +
         '<tr is="kf-trow" v-for="row in tbody" ' +
-            ':table-data="table" :row-data="row" :col-keys="colKeys" ' +
-            ':children-key="childrenKey" :open-icon="openIcon" ' +
-            ':close-icon="closeIcon" :spin-icon="spinIcon">' +
+            ':table-data="table" :row-data="row" ' +
+            ':col-keys="colKeys" :children-key="childrenKey">' +
         '</tr>' +
       '</tbody>' +
       '<tfoot is="kf-tfoot" v-if="table.__tfoot" :table-data="table" :foot-data="table.__tfoot"></tfoot>' +
     '</table>',
-  data: function() {
-    return {
-      styles: styles
-    };
-  },
   computed: {
     tbody: function() {
       return parseTrows(this.table, this.table.__tbody, this.childrenKey);
@@ -540,7 +513,6 @@ function parseTrows(table, rows, childrenKey) {
     row.__root = table;
     row.__parent = table;
     row.__lvl = 0;
-    row.__lvlCls = styles['level' + row.__lvl];
 
     parseRow(table, row, res);
     return res;
@@ -553,7 +525,6 @@ function parseTrows(table, rows, childrenKey) {
       child.__root = table;
       child.__parent = row;
       child.__lvl = row.__lvl + 1;
-      child.__lvlCls = styles['level' + child.__lvl];
 
       parseRow(table, child, res);
     });
@@ -571,26 +542,18 @@ export var kfTable = {
     vue.set(table, '__tbody', bodyData);
   },
   prependRow: function(target, row) {
-    if(target.__root) {
-      if(target.__root === target) {
-        target.__tbody.unshift(row);
-      } else {
-        target[target.__root.__childrenKey].unshift(row);
-      }
-    } else {
-      target.__tbody.unshift(row);
+    let coll = target.__tbody;
+    if(target.__root && (target !== target.__root)) {
+      coll = target[target.__root.__childrenKey];
     }
+    coll.unshift(row);
   },
   appendRow: function(target, row) {
-    if(target.__root) {
-      if(target.__root === target) {
-        target.__tbody.push(row);
-      } else {
-        target[target.__root.__childrenKey].push(row);
-      }
-    } else {
-      target.__tbody.push(row);
+    let coll = target.__tbody;
+    if(target.__root && (target !== target.__root)) {
+      coll = target[target.__root.__childrenKey];
     }
+    coll.push(row);
   },
   deleteRow: function(table, row) {
     let coll = table.__tbody;

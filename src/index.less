@@ -4,22 +4,23 @@
 .kf-menu-item(menu, @dir, @pos) {
   font-size: 20px;
   color: white;
-  background-color: @MIDNIGHT_BLUE;
+  background-color: @dwarm;
   width: 180px;
   height: 60px;
   line-height: 60px  ;
   padding-left: 15px;
+  padding-right: 15px;
 
   &:hover {
-    color: @TURQUOISE;
+    color: @lprimary;
   }
 
   & when (@dir = horizontal) and (not (@pos = last)) {
-    border-right: 1px solid @SILVER;
+    border-right: 1px solid @lfail;
   }
 
   & when (@dir = vertical) and (not (@pos = last)) {
-    border-bottom: 1px solid @SILVER;
+    border-bottom: 1px solid @lfail;
   }
 
   & when (@dir = horizontal) and (@pos = first) {
@@ -49,9 +50,12 @@
     padding: 0;
   }
 
-  .sidebar {
-    .menu {
-      .kf-menu(menu, horizontal, left, 5px, @MIDNIGHT_BLUE);
+  .menu {
+    @media (max-width: 600px) {
+      .kf-menu(menu, vertical, left, 5px, @dwarm);
+    }
+    @media (min-width: 600px) {
+      .kf-menu(menu, horizontal, left, 5px, @dwarm);
     }
   }
 

@@ -2,29 +2,18 @@ import vue from 'vue';
 import './menu.css!';
 import cls from './menu.css.map';
 import '../base';
+import 'animate.css';
 
 vue.component('kf-menu', {
   components: {
     'kf-menu-item': {
-      props: {
-        itemKey: {
-          type: String,
-          default: 'item'
-        },
-        submenuKey: {
-          type: String,
-          default: 'submenu'
-        },
-        itemData: {
-          type: Object
-        }
-      },
+      props: ['itemKey', 'submenuKey', 'itemData'],
       template:
         '<li :kf-submenu="!!itemData[submenuKey]">' +
           '<div v-kf-code="itemData[itemKey]"></div>' +
           '<div v-if="itemData[submenuKey]"></div>' +
           '<kf-menu v-if="itemData[submenuKey]" ' +
-                  ':menu-data="itemData" ' +
+                  ':menu="itemData" ' +
                   ':item-key="itemKey" ' +
                   ':submenu-key="submenuKey"></kf-menu>' +
         '</li>',
@@ -38,17 +27,14 @@ vue.component('kf-menu', {
         }
 
         return {
-          ROOT: this.itemData.__ROOT,
-          NODE: this.itemData
+          MENU: this.itemData.__ROOT,
+          ITEM: this.itemData
         };
       }
     }
   },
-
   props: {
-    menuData: {
-      type: Object
-    },
+    menu: Object,
     itemKey: {
       type: String,
       default: 'item'
@@ -60,15 +46,15 @@ vue.component('kf-menu', {
   },
   template:
     '<ul :class="cls.menu">' +
-      '<kf-menu-item v-for="item in menuData[submenuKey]" ' +
+      '<kf-menu-item v-for="item in menu[submenuKey]" ' +
                     ':item-data="item" ' +
                     ':item-key="itemKey" ' +
                     ':submenu-key="submenuKey"></kf-menu-item>' +
     '</ul>',
   data: function() {
-    var menuData = this.menuData;
+    var menuData = this.menu;
     if(!menuData.__ROOT) {
-      menuData.__ROOT = this.menuData;
+      menuData.__ROOT = menuData;
     }
 
     menuData[this.submenuKey] && menuData[this.submenuKey].forEach(function(child) {

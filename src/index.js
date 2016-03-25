@@ -4,7 +4,6 @@ import './index.css!';
 import './module/menu/menu.js';
 import {kfTable} from './module/table/table.js';
 import './module/base';
-
 new vue({
     el: 'body',
     methods: {
@@ -59,9 +58,9 @@ new vue({
         },
         toggle: function(row) {
           kfTable.toggleRow(row, function(expand, level) {
-            console.log(expand, level)
             if(!row.children) return;
-            if(expand && !row.children.length) {
+            if(row.children.length) return;
+            if(expand) {
               kfTable.appendRow(row, {
                 name: '<button @click="TABLE.toggle(ROW)">simon</button>', sex: 'male', age: 30, email: 'skj9798@163.com',
                 action: '<button @click="TABLE.click(TABLE, ROW)">点我</button>',
@@ -91,7 +90,7 @@ new vue({
         },
         submenu: [{
           title: 'node0',
-          item: '<input type="checkbox" @click="ROOT.choose(NODE)">Item0'
+          item: '<input type="checkbox" @click="MENU.choose(ITEM)">Item0'
         }, {
           item: 'Item1',
           submenu: [{
@@ -100,7 +99,7 @@ new vue({
               item: 'Item100'
             }, {
               title: 'node1',
-              item: '<input type="checkbox" @click="ROOT.choose(NODE)">Item101'
+              item: '<input type="checkbox" @click="MENU.choose(ITEM)">Item101'
             }]
           }, {
             item: 'Item11'
