@@ -23,26 +23,15 @@ vue.component('kf-checkbox', {
   },
   data: function() {
     return {
-      status: this.model === this.value,
-      origModel: this.model,
-      cls: cls
+      cls: cls,
+      origModel: this.model
     };
-  },
-  methods: {
-    click: function() {
-      this.status = !this.status;
-      if(this.status) {
-        this.model = this.value;
-      } else {
-        this.model = this.origModel;
-      }
-    }
   },
   template:
     '<span :class="cls.checkbox">' +
-      '<input type="checkbox" v-model="status" @click="click()"/>' +
+      '<input type="checkbox" v-model="model" :true-value="value" :false-value="origModel"/>' +
       '<span></span>' +
-      '<i class="fa fa-check" v-show="status"></i>' +
+      '<i class="fa fa-check" v-show="model === value"></i>' +
       '<label v-kf-code="label"></label>' +
     '</span>'
 });

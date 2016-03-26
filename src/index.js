@@ -4,6 +4,7 @@ import './index.css!';
 import './module/menu/menu.js';
 import './module/code/code';
 import './module/checkbox/checkbox';
+import './module/radio/radio';
 import {kfTable} from './module/table/table.js';
 
 new vue({
@@ -60,6 +61,7 @@ new vue({
       val1: {name: 'skj'},
       val2: {name: 'shikuijie'},
       val3: {name: 'simonshi'},
+      rdgrp: 1,
 
       ttable: {
         click: function(table, row) {

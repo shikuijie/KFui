@@ -17,6 +17,11 @@
   <br>
   <span>{{cbgrp | json}}</span>
 
+  <br>
+  <kf-radio-group class="radio-group" :model.sync="rdgrp" :labels="['标签1', '标签2', '标签3']" :values="[1,2,3]"></kf-radio-group>
+  <br>
+  <span>{{rdgrp | json}}</span>
+
   <script>
     System.import('./index.js');
   </script>

@@ -1,6 +1,7 @@
 @import (reference) './module/base';
 @import (reference) './module/menu/menu';
 @import (reference) './module/checkbox/checkbox';
+@import (reference) './module/radio/radio';
 
 .kf-menu-item(menu, @dir, @pos) {
   font-size: 20px;
@@ -72,5 +73,10 @@
   .checkbox-group {
     width: 100%;
     .kf-checkbox-group(default, 14px, @lwarm, @lprimary, @dgray, 30%);
+  }
+
+  .radio-group {
+    width: 100%;
+    .kf-radio-group(default, 15px, @lprimary, @dgray, 30%);
   }
 }

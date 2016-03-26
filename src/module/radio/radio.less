@@ -1,0 +1,66 @@
+@import (reference) '../base';
+
+.kf-radio-label(default) {}
+
+/**
+  @kf-comment-type  {LESS mixin}
+  @kf-comment-name  {kf-radio-group}
+  @kf-comment-how   {.kf-radio-group(@labelStyle, @size, @onBgColor, @onFgColor, @offBgColor)}
+  @kf-comment-what  {设置kf-radio-group组件的样式.
+                     @labelStyle表示跟在radio的标签的样式风格，由用户通过.kf-radio-label(@labelStyle)设置．
+                     @size表示radio的大小
+                     @onColor表示选取状态下radio的颜色
+                     @offColor表示选取状态下radio的颜色
+                     @itemWidth表示单个radio及其标签的宽度}
+*/
+.kf-radio-group(@labelStyle, @size, @onColor, @offColor, @itemWidth) {
+  & > span {
+    width: @itemWidth;
+
+    > input[type=radio] {
+      width: @size;
+      height: @size;
+    }
+
+    > i {
+      font-size: @size;
+      color: @onColor;
+
+      &:first-of-type {
+        color: @offColor;
+      }
+    }
+
+    > label {
+      margin-left: @size + 5px;
+      .kf-radio-label(@labelStyle);
+    }
+  }
+}
+
+.rdgrp {
+  display: inline-block;
+
+  > span {
+    display: inline-block;
+    position: relative;
+
+    > input[type=radio] {
+      position: absolute;
+      display: inline-block;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      z-index: 1;
+      margin: 0;
+    }
+
+    > i {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
