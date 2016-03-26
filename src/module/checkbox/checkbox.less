@@ -1,0 +1,94 @@
+@import '../base';
+
+.kf-checkbox-label(default) {
+}
+
+/**
+  @kf-comment-type  {LESS mixin}
+  @kf-comment-name  {kf-checkbox}
+  @kf-comment-how   {.kf-checkbox(@labelStyle, @size, @onBgColor, @onFgColor, @offBgColor)}
+  @kf-comment-what  {设置kf-checkbox组件的样式.
+                     @labelStyle表示跟在checkbox的标签的样式风格，由用户通过.kf-checkbox-label(@labelStyle)设置．
+                     @size表示checkbox的大小
+                     @onBgColor表示checked状态下checkbox的背景色
+                     @onFgColor表示checked状态下check符号的颜色
+                     @offBgColor表示unchecked状态下checkbox的背景色}
+*/
+.kf-checkbox(@labelStyle, @size, @onBgColor, @onFgColor, @offBgColor) {
+  & > input[type=checkbox] {
+    width: @size;
+    height: @size;
+
+    &:checked + span {
+      background-color: @onBgColor;
+    }
+  }
+  & > span {
+    width: @size;
+    height: @size;
+    background-color: @offBgColor;
+    border-radius: @size/4;
+  }
+  & > i {
+    font-size: @size - 2px;
+    color: @onFgColor;
+  }
+  & > label {
+    margin-left: @size + 5px;
+    .kf-checkbox-label(@labelStyle);
+  }
+}
+
+.checkbox {
+  display: inline-block;
+  position: relative;
+
+  > input[type=checkbox] {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  > span {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  > i {
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/**
+  @kf-comment-type  {LESS mixin}
+  @kf-comment-name  {kf-checkbox-group}
+  @kf-comment-how   {.kf-checkbox-group(@labelStyle, @size, @onBgColor, @onFgColor, @offBgColor, @itemGap)}
+  @kf-comment-what  {设置kf-checkbox组件的样式.
+                     @labelStyle表示跟在checkbox的标签的样式风格，由用户通过.kf-checkbox-label(@labelStyle)设置．
+                     @size表示checkbox的大小
+                     @onBgColor表示checked状态下checkbox的背景色
+                     @onFgColor表示checked状态下check符号的颜色
+                     @offBgColor表示unchecked状态下checkbox的背景色
+                     @itemWidth表示每个checkbox及其标签的宽度}
+*/
+.kf-checkbox-group(@labelStyle, @size, @onBgColor, @onFgColor, @offBgColor, @itemWidth) {
+  & > span {
+    .kf-checkbox(@labelStyle, @size, @onBgColor, @onFgColor, @offBgColor);
+    width: @itemWidth;
+  }
+}
+
+.ckbgrp {
+  display: inline-block;
+}

@@ -2,8 +2,10 @@ import vue from 'vue';
 import 'font-awesome';
 import './index.css!';
 import './module/menu/menu.js';
+import './module/code/code';
+import './module/checkbox/checkbox';
 import {kfTable} from './module/table/table.js';
-import './module/base';
+
 new vue({
     el: 'body',
     methods: {
@@ -52,6 +54,13 @@ new vue({
       }
     },
     data: {
+      cb: {name: 'skj'},
+      val: {name: 'shikuijie'},
+      cbgrp: [],
+      val1: {name: 'skj'},
+      val2: {name: 'shikuijie'},
+      val3: {name: 'simonshi'},
+
       ttable: {
         click: function(table, row) {
           kfTable.deleteRow(table, row);

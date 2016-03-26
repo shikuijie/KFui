@@ -1,5 +1,6 @@
 @import (reference) './module/base';
 @import (reference) './module/menu/menu';
+@import (reference) './module/checkbox/checkbox';
 
 .kf-menu-item(menu, @dir, @pos) {
   font-size: 20px;
@@ -58,10 +59,18 @@
       .kf-menu(menu, horizontal, left, 5px, @dwarm);
     }
   }
-
   .ttable {
     tr > td:first-child .fa {
       margin-right: 5px;
     }
+  }
+
+  .checkbox {
+    .kf-checkbox(default, 14px, @lwarm, @lprimary, @dgray);
+  }
+
+  .checkbox-group {
+    width: 100%;
+    .kf-checkbox-group(default, 14px, @lwarm, @lprimary, @dgray, 30%);
   }
 }

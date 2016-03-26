@@ -1,5 +1,6 @@
 import vue from 'vue';
 import _ from 'lodash';
+import '../code/code';
 
 let thead = vue.extend({
   props: ['tableData', 'headData'],

@@ -9,6 +9,14 @@
 <body>
   <kf-menu class="menu" :menu="menuData"></kf-menu>
 
+  <kf-checkbox class="checkbox" label="复选框" :value="val" :model.sync="cb"></kf-checkbox>
+  <br>
+  <kf-checkbox-group class="checkbox-group" :labels="['标签1', '标签2', '标签3']" :values="[val1, val2, val3]" :model.sync="cbgrp"></kf-checkbox-group>
+  <br>
+  <span>{{cb | json}}</span>
+  <br>
+  <span>{{cbgrp | json}}</span>
+
   <script>
     System.import('./index.js');
   </script>

@@ -1,7 +1,7 @@
 import vue from 'vue';
 import './menu.css!';
 import cls from './menu.css.map';
-import '../base';
+import '../code/code';
 import 'animate.css';
 
 vue.component('kf-menu', {
