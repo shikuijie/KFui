@@ -25,6 +25,7 @@
 
   <kf-select class="select" :model.sync="slct" :values="[123, 456, 789]" :default-label="'<div></div>'" :labels="['<div>option1</div>', '<div>option2</div>', '<div>option3</div>']"></kf-select>
   <br>
+  <span>{{slct | json}}</span>
 
   <script>
     System.import('./index.js');

@@ -35,6 +35,7 @@ vue.component('kf-select', {
     select: function(index) {
       this.selectedIndex = index;
       this.selectedLabel = this.labels[index];
+      this.model = this.values[index];
     }
   },
   template:
