@@ -14,11 +14,22 @@ import './checkbox.css!';
 */
 vue.component('kf-checkbox', {
   props: {
-    label: String,
-    value: null,
+    click: {
+      type: Function,
+      default: ()=>{}
+    },
+    label: {
+      type: String,
+      required: true
+    },
+    value: {
+      type: null,
+      required: true
+    },
     model: {
       twoWay: true,
-      type: null
+      type: null,
+      required: true
     }
   },
   data: function() {
@@ -29,7 +40,7 @@ vue.component('kf-checkbox', {
   },
   template:
     '<span :class="cls.checkbox">' +
-      '<input type="checkbox" v-model="model" :true-value="value" :false-value="origModel"/>' +
+      '<input type="checkbox" @click="click(value)" v-model="model" :true-value="value" :false-value="origModel"/>' +
       '<span></span>' +
       '<i class="fa fa-check" v-show="model === value"></i>' +
       '<label v-kf-code="label"></label>' +
@@ -46,11 +57,22 @@ vue.component('kf-checkbox', {
 */
 vue.component('kf-checkbox-group', {
   props: {
-    labels: Array,
-    values: Array,
+    click: {
+      type: Function,
+      default: ()=>{}
+    },
+    labels: {
+      type: Array,
+      required: true
+    },
+    values: {
+      type: Array,
+      required: true
+    },
     model: {
       type: Array,
-      twoWay: true
+      twoWay: true,
+      required: true
     }
   },
   data: function() {
@@ -73,7 +95,7 @@ vue.component('kf-checkbox-group', {
   template:
     '<span class="cls.ckbgrp">' +
       '<span :class="cls.checkbox" v-for="label in labels">' +
-        '<input type="checkbox" v-model="model" :value="values[$index]"/>' +
+        '<input type="checkbox" @click="click(values[$index])" v-model="model" :value="values[$index]"/>' +
         '<span></span>' +
         '<i class="fa fa-check" v-show="status[$index]"></i>' +
         '<label v-kf-code="label"></label>' +

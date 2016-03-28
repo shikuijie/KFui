@@ -21,6 +21,10 @@
   <kf-radio-group class="radio-group" :model.sync="rdgrp" :labels="['标签1', '标签2', '标签3']" :values="[1,2,3]"></kf-radio-group>
   <br>
   <span>{{rdgrp | json}}</span>
+  <br>
+
+  <kf-select class="select" :model.sync="slct" :values="[123, 456, 789]" :default-label="'<div></div>'" :labels="['<div>option1</div>', '<div>option2</div>', '<div>option3</div>']"></kf-select>
+  <br>
 
   <script>
     System.import('./index.js');

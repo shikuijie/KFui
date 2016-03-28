@@ -2,6 +2,7 @@
 @import (reference) './module/menu/menu';
 @import (reference) './module/checkbox/checkbox';
 @import (reference) './module/radio/radio';
+@import (reference) './module/select/select';
 
 .kf-menu-item(menu, @dir, @pos) {
   font-size: 20px;
@@ -46,10 +47,51 @@
   }
 }
 
+.kf-select-item(select, common) {
+  background-color: @lwarm;
+  padding: 3px 6px;
+
+  > div {
+    color: white;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 3px;
+    padding-left: 10px;
+  }
+}
+
+.kf-select-item(select, @type) {
+  & when (@type = top) {
+    background-color: @lprimary;
+    border-radius: 5px;
+  }
+  & when (@type = first) {
+    padding-top: 6px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  & when (@type = last) {
+    padding-bottom: 6px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  & > div when (@type = selected) {
+    background-color: @lprimary;
+  }
+  & > div when (@type = hover) {
+    background-color: @lprimary;
+  }
+}
+
 :global {
   html, body {
     margin: 0;
     padding: 0;
+  }
+  body {
+    padding: 10px;
   }
 
   .menu {
@@ -77,6 +119,10 @@
 
   .radio-group {
     width: 100%;
-    .kf-radio-group(default, 15px, @lprimary, @dgray, 30%);
+    .kf-radio-group(default, 15px, @lprimary, @dgray, 100%);
+  }
+
+  .select {
+    .kf-select(select, 6px, white, 6px, @lwarm);
   }
 }

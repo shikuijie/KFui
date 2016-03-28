@@ -1,11 +1,12 @@
 import vue from 'vue';
 import 'font-awesome';
 import './index.css!';
-import './module/menu/menu.js';
+import './module/menu/menu';
 import './module/code/code';
 import './module/checkbox/checkbox';
 import './module/radio/radio';
-import {kfTable} from './module/table/table.js';
+import './module/select/select';
+import {kfTable} from './module/table/table';
 
 new vue({
     el: 'body',
@@ -62,6 +63,7 @@ new vue({
       val2: {name: 'shikuijie'},
       val3: {name: 'simonshi'},
       rdgrp: 1,
+      slct: [123],
 
       ttable: {
         click: function(table, row) {

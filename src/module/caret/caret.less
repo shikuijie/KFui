@@ -1,10 +1,11 @@
 @import (reference) '../base';
 
-.kf-tip-arrow(@dir: up, @color: @dwarm, @width: 5px) {
+.kf-tip-arrow(@dir, @color, @width) {
   width: 0;
   height: 0;
   border-color: transparent;
   border-style: solid;
+  display: block;
 
   & when (@dir = up) {
     border-bottom-color: @color;
@@ -21,5 +22,5 @@
   & when (@dir = left) {
     border-right-color: @color;
     border-width: @width @width @width 0;
-    }
+  }
 }
