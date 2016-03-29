@@ -1,13 +1,9 @@
-@import (reference) '../base';
-@import (reference) '../caret/caret';
+@import (reference) '../../caret/caret';
 
-.kf-select-item(default, @type) {
-}
-
-.kf-select(@itemStyle, @caretDownSize, @caretDownColor, @caretUpSize, @caretUpColor) {
+._kf-select(@itemStyle, @caretDownSize, @caretDownColor, @caretUpSize, @caretUpColor) {
   > div:first-child {
-    .kf-select-item(@itemStyle, common);
-    .kf-select-item(@itemStyle, top);
+    ._kf-select-item(@itemStyle, common);
+    ._kf-select-item(@itemStyle, top);
   }
 
   > div:nth-child(2) {
@@ -29,23 +25,23 @@
     transform: translateY(-(@caretUpSize + 2px));
 
     > li > div {
-      .kf-select-item(@itemStyle, common);
+      ._kf-select-item(@itemStyle, common);
     }
 
     > li:first-child > div {
-      .kf-select-item(@itemStyle, first);
+      ._kf-select-item(@itemStyle, first);
     }
 
     > li:last-child > div {
-      .kf-select-item(@itemStyle, last);
+      ._kf-select-item(@itemStyle, last);
     }
 
-    > li[kf-selected] > div {
-      .kf-select-item(@itemStyle, selected);
+    > li[_kf-selected] > div {
+      ._kf-select-item(@itemStyle, selected);
     }
 
     > li:hover div {
-      .kf-select-item(@itemStyle, hover);
+      ._kf-select-item(@itemStyle, hover);
     }
   }
 }

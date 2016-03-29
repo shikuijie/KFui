@@ -23,8 +23,8 @@ vue.component('kf-select', {
     }
   },
   data: function() {
-    var index = this.values.indexOf(this.model);
-    var label = (index != -1) ? this.labels[index] : this.defaultLabel;
+    let index = this.values.indexOf(this.model),
+        label = (index != -1) ? this.labels[index] : this.defaultLabel;
     return {
       cls: cls,
       selectedIndex: index,
@@ -45,7 +45,7 @@ vue.component('kf-select', {
       '<span></span>' +
       '<ul>' +
         '<li v-for="label in labels" ' +
-            ':kf-selected="selectedIndex == $index" ' +
+            ':_kf-selected="selectedIndex == $index" ' +
             '@click="select($index)">' +
           '<div v-kf-code="label"></div>' +
         '</li>' +

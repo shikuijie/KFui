@@ -3,9 +3,9 @@ import 'font-awesome';
 import './index.css!';
 import './module/menu/menu';
 import './module/code/code';
-import './module/checkbox/checkbox';
-import './module/radio/radio';
-import './module/select/select';
+import './module/form/checkbox/checkbox';
+import './module/form/radio/radio';
+import './module/form/select/select';
 import {kfTable} from './module/table/table';
 
 new vue({

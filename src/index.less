@@ -1,8 +1,8 @@
 @import (reference) './module/base';
 @import (reference) './module/menu/menu';
-@import (reference) './module/checkbox/checkbox';
-@import (reference) './module/radio/radio';
-@import (reference) './module/select/select';
+@import (reference) './module/form/checkbox/checkbox';
+@import (reference) './module/form/radio/radio';
+@import (reference) './module/form/select/select';
 
 .kf-menu-item(menu, @dir, @pos) {
   font-size: 20px;
@@ -47,7 +47,7 @@
   }
 }
 
-.kf-select-item(select, common) {
+._kf-select-item(select, common) {
   background-color: @lwarm;
   padding: 3px 6px;
 
@@ -61,7 +61,7 @@
   }
 }
 
-.kf-select-item(select, @type) {
+._kf-select-item(select, @type) {
   & when (@type = top) {
     background-color: @lprimary;
     border-radius: 5px;
@@ -123,6 +123,6 @@
   }
 
   .select {
-    .kf-select(select, 6px, white, 6px, @lwarm);
+    ._kf-select(select, 6px, white, 6px, @lwarm);
   }
 }
