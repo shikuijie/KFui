@@ -1,9 +1,9 @@
 @import (reference) '../../caret/caret';
 
-._kf-select(@itemStyle, @caretDownSize, @caretDownColor, @caretUpSize, @caretUpColor) {
+.kf-select(@itemStyle, @caretDownSize, @caretDownColor, @caretUpSize, @caretUpColor) {
   > div:first-child {
-    ._kf-select-item(@itemStyle, common);
-    ._kf-select-item(@itemStyle, top);
+    .kf-select-item(@itemStyle, common);
+    .kf-select-item(@itemStyle, top);
   }
 
   > div:nth-child(2) {
@@ -25,23 +25,23 @@
     transform: translateY(-(@caretUpSize + 2px));
 
     > li > div {
-      ._kf-select-item(@itemStyle, common);
+      .kf-select-item(@itemStyle, common);
     }
 
     > li:first-child > div {
-      ._kf-select-item(@itemStyle, first);
+      .kf-select-item(@itemStyle, first);
     }
 
     > li:last-child > div {
-      ._kf-select-item(@itemStyle, last);
+      .kf-select-item(@itemStyle, last);
     }
 
-    > li[_kf-selected] > div {
-      ._kf-select-item(@itemStyle, selected);
+    > li[kf-selected] > div {
+      .kf-select-item(@itemStyle, selected);
     }
 
     > li:hover div {
-      ._kf-select-item(@itemStyle, hover);
+      .kf-select-item(@itemStyle, hover);
     }
   }
 }

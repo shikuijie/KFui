@@ -1,6 +1,5 @@
 import vue from 'vue';
 import _ from 'lodash';
-import '../code/code';
 
 let thead = vue.extend({
   props: ['tableData', 'headData'],
@@ -11,7 +10,7 @@ let thead = vue.extend({
             'v-if="thead.rowspan[cn][rn] && thead.colspan[rn][cn]" ' +
             ':rowspan="thead.rowspan[cn][rn]" ' +
             ':colspan="thead.colspan[rn][cn]"> ' +
-          '<div v-kf-code="tcol"></div>' +
+          '<div v-html="tcol"></div>' +
         '</th>' +
       '</tr>' +
     '</thead>',
@@ -32,7 +31,7 @@ let tfoot = vue.extend({
             'v-if="tfoot.rowspan[cn][rn] && tfoot.colspan[rn][cn]" ' +
             ':rowspan="tfoot.rowspan[cn][rn]" ' +
             ':colspan="tfoot.colspan[rn][cn]"> ' +
-          '<div v-kf-code="tcol"></div>' +
+          '<div v-html="tcol"></div>' +
         '</th>' +
       '</tr>' +
     '</tfoot>',
@@ -49,7 +48,7 @@ let srow = vue.extend({
   template:
     '<tr>' +
         '<td v-for="colKey in colKeys">' +
-          '<div v-kf-code="getValue(rowData, colKey)"></div>' +
+          '<div v-html="getValue(rowData, colKey)"></div>' +
         '</td>' +
     '</tr>',
   data: function() {
@@ -104,7 +103,7 @@ let mrow = vue.extend({
           '<td v-for="(cn, key) in colKeys" track-by="$index" ' +
               'v-if="rowData.__rowspan[rn][cn]" ' +
               ':rowspan="rowData.__rowspan[rn][cn]">' +
-            '<div v-kf-code="getValue(rowData, keyRow[rowData.__keyMap[key]])"></div>' +
+            '<div v-html="getValue(rowData, keyRow[rowData.__keyMap[key]])"></div>' +
           '</td>' +
         '</tr>' +
     '</tbody>',
@@ -155,9 +154,9 @@ let trow = vue.extend({
   template:
     '<tr :class="rowData.__lvlCls" v-show="visible">' +
       '<td>' +
-        '<div v-kf-code="rowData[colKeys[0]]"></div>' +
+        '<div v-html="rowData[colKeys[0]]"></div>' +
       '</td>' +
-      '<td v-for="ck in colKeys.slice(1)"><div v-kf-code="rowData[ck]"></div></td>' +
+      '<td v-for="ck in colKeys.slice(1)"><div v-html="rowData[ck]"></div></td>' +
     '</tr>',
   data: function() {
     vue.set(this.rowData, '__expand', false);

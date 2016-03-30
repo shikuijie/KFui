@@ -40,14 +40,14 @@ vue.component('kf-select', {
   },
   template:
     '<div :class="cls.select">' +
-      '<div v-kf-code="selectedLabel"></div>' +
+      '<div v-html="selectedLabel"></div>' +
       '<div></div>' +
       '<span></span>' +
       '<ul>' +
         '<li v-for="label in labels" ' +
-            ':_kf-selected="selectedIndex == $index" ' +
+            ':kf-selected="selectedIndex == $index" ' +
             '@click="select($index)">' +
-          '<div v-kf-code="label"></div>' +
+          '<div v-html="label"></div>' +
         '</li>' +
       '</ul>' +
     '</div>'

@@ -43,7 +43,7 @@ vue.component('kf-checkbox', {
       '<input type="checkbox" @click="click(value)" v-model="model" :true-value="value" :false-value="origModel"/>' +
       '<span></span>' +
       '<i class="fa fa-check" v-show="model === value"></i>' +
-      '<label v-kf-code="label"></label>' +
+      '<label v-html="label"></label>' +
     '</span>'
 });
 
@@ -51,9 +51,9 @@ vue.component('kf-checkbox', {
   @kf-comment-type  {VUE component}
   @kf-comment-name  {kf-checkbox-group}
   @kf-comment-how   {<kf-checkbox-group :labels="['slfslk', 'sldfe']" :model.sync="mdl" :values="[123, 345]"></kf-checkbox-group>}
-  @kf-comment-what  {label为跟在checkbox后面的标签;
-                      当勾选一个checkbox时,对应的value会被push到model中;
-                      当取消勾选时,对应的value会被splice掉}
+  @kf-comment-what  {labels为跟在对应checkbox后面的标签;
+                      当勾选一个checkbox时,values对应的值会被push到model中;
+                      当取消勾选时,对应的值会被splice掉}
 */
 vue.component('kf-checkbox-group', {
   props: {
@@ -98,7 +98,7 @@ vue.component('kf-checkbox-group', {
         '<input type="checkbox" @click="click(values[$index])" v-model="model" :value="values[$index]"/>' +
         '<span></span>' +
         '<i class="fa fa-check" v-show="status[$index]"></i>' +
-        '<label v-kf-code="label"></label>' +
+        '<label v-html="label"></label>' +
       '</span>' +
     '</span>'
 });

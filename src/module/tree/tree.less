@@ -1,0 +1,138 @@
+@import (reference) '../base';
+
+.kf-tree-size(@lineIconGap, @iconFontSize, @iconWidth, @iconNodeGap) {
+  li > {
+    > div:first-child {
+      > span {
+        width: @lineIconGap - 3px;
+        left: -@lineIconGap;
+      }
+
+      > i {
+        font-size: @iconFontSize;
+        margin-right: @iconNodeGap;
+      }
+    }
+
+    > div:nth-child(2) {
+      padding-left: @lineIconGap + @iconWidth/2;
+
+      > span:first-child {
+        left: @iconWidth/2;
+      }
+
+      > span:nth-child(2) {
+        left: -@lineIconGap;
+      }
+    }
+  }
+}
+
+.kf-tree-color(@lineColor, @bgColor) {
+  li > {
+    &:last-child > div:first-child > span {
+      border-left: 1px solid @bgColor;
+    }
+
+    &:last-child > div:nth-child(2) > span:nth-child(2) {
+      border-left: 1px solid @bgColor;
+    }
+
+    > div:first-child {
+      > span {
+        border-top: 1px solid @lineColor;
+      }
+    }
+
+    > div:nth-child(2) {
+      > span:first-child {
+        border-left: 1px solid @lineColor;
+      }
+    }
+  }
+}
+
+.kf-tree-title(@nodeStyle) {
+  li > div:first-child > div {
+    .kf-tree-node(@nodeStyle, common);
+  }
+
+  li[kf-tree-node-dragover] > div:first-child > div {
+    .kf-tree-node(@nodeStyle, dragover);
+  }
+
+  li[kf-tree-node-dragging] > div:first-child > div {
+    .kf-tree-node(@nodeStyle, dragging);
+  }
+}
+
+.kf-tree-node(default, @type) {
+  & when (@type = common) {
+  }
+
+  & when (@type = dragover) {
+    border: 1px solid red;
+  }
+
+  & when (@type = dragging) {
+    border: 1px solid blue;
+    background-color: @dgray;
+  }
+}
+
+.tree {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .kf-tree-size(20px, 14px, 10px, 5px);
+  .kf-tree-color(@dgray, white);
+  .kf-tree-title(default);
+
+  &:not(.subtree) > li > div:first-child > span {
+    border: none;
+  }
+  &:not(.subtree) > li > div:nth-child(2) > span:nth-child(2) {
+    border: none;
+  }
+
+  li > {
+    position: relative;
+
+    &:last-child > div:first-child > span {
+      height: 50%;
+    }
+
+    > div:first-child {
+      position: relative;
+
+      > span {
+        display: block;
+        position: absolute;
+        top: 50%;
+      }
+
+      > div {
+        display: inline-block;
+      }
+    }
+
+    > div:nth-child(2) {
+      position: relative;
+
+      > span:first-child {
+        display: block;
+        position: absolute;
+        height: 100%;
+        top: 0;
+      }
+
+      > span:nth-child(2) {
+        display: block;
+        position: absolute;
+        height: 100%;
+        top: 0;
+      }
+    }
+  }
+}
