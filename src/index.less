@@ -3,6 +3,7 @@
 @import (reference) './module/form/checkbox/checkbox';
 @import (reference) './module/form/radio/radio';
 @import (reference) './module/form/select/select';
+@import (reference) './module/tree/tree';
 
 .kf-menu-item(menu, @dir, @pos) {
   font-size: 20px;
@@ -47,21 +48,21 @@
   }
 }
 
-.kf-select-item(select, common) {
-  background-color: @lwarm;
-  padding: 3px 6px;
-
-  > div {
-    color: white;
-    width: 200px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 3px;
-    padding-left: 10px;
-  }
-}
-
 .kf-select-item(select, @type) {
+  & when (@type = common) {
+    background-color: @lwarm;
+    padding: 3px 6px;
+
+    > div {
+      color: white;
+      width: 200px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 3px;
+      padding-left: 10px;
+    }
+  }
+
   & when (@type = top) {
     background-color: @lprimary;
     border-radius: 5px;
@@ -82,6 +83,23 @@
   }
   & > div when (@type = hover) {
     background-color: @lprimary;
+  }
+}
+
+.kf-tree-item(default, @type) {
+  & when (@type = common) {
+  }
+
+  & when (@type = dragover) {
+    border: 1px solid red;
+  }
+
+  & when (@type = dragging) {
+    border: 1px solid blue;
+    background-color: @dgray;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -124,5 +142,11 @@
 
   .select {
     .kf-select(select, 6px, white, 6px, @lwarm);
+  }
+
+  .tree {
+    .kf-tree-size(20px, 14px, 10px, 5px);
+    .kf-tree-color(@dgray, white);
+    .kf-tree-title(default);
   }
 }

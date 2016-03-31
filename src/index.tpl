@@ -28,7 +28,7 @@
   <span>{{slct | json}}</span>
   <br>
 
-  <kf-tree :tree="treeData" :draggable="true"></kf-tree>
+  <kf-tree class="tree" :tree="treeData" :draggable="true"></kf-tree>
 
   <script>
     System.import('./index.js');

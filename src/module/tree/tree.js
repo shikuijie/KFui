@@ -68,6 +68,7 @@ vue.component('kf-tree', {
         },
         drop: function(event) {
           event.stopPropagation();
+          event.preventDefault();
 
           let id = event.dataTransfer.getData('text/plain'),
               src = this.nodeData.__ROOT.__ID_MAP[id],

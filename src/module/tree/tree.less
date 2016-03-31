@@ -54,29 +54,15 @@
 
 .kf-tree-title(@nodeStyle) {
   li > div:first-child > div {
-    .kf-tree-node(@nodeStyle, common);
+    .kf-tree-item(@nodeStyle, common);
   }
 
   li[kf-tree-node-dragover] > div:first-child > div {
-    .kf-tree-node(@nodeStyle, dragover);
+    .kf-tree-item(@nodeStyle, dragover);
   }
 
   li[kf-tree-node-dragging] > div:first-child > div {
-    .kf-tree-node(@nodeStyle, dragging);
-  }
-}
-
-.kf-tree-node(default, @type) {
-  & when (@type = common) {
-  }
-
-  & when (@type = dragover) {
-    border: 1px solid red;
-  }
-
-  & when (@type = dragging) {
-    border: 1px solid blue;
-    background-color: @dgray;
+    .kf-tree-item(@nodeStyle, dragging);
   }
 }
 
@@ -84,10 +70,6 @@
   margin: 0;
   padding: 0;
   list-style: none;
-
-  .kf-tree-size(20px, 14px, 10px, 5px);
-  .kf-tree-color(@dgray, white);
-  .kf-tree-title(default);
 
   &:not(.subtree) > li > div:first-child > span {
     border: none;
@@ -110,6 +92,10 @@
         display: block;
         position: absolute;
         top: 50%;
+      }
+
+      > i {
+        cursor: pointer;
       }
 
       > div {

@@ -79,7 +79,8 @@ new vue({
         console.log(isExpand, node.node)
       },
       subtree: [{
-        node: 'Node11'
+        label: 'Node1',
+        node: '<button>{{NODE.label}}</button>'
       }, {
         node: 'Node12',
         subtree: [{
