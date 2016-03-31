@@ -1,4 +1,5 @@
 import vue from 'vue';
+import '../../code/code';
 import cls from './select.css.map';
 import './select.css!';
 
@@ -40,14 +41,14 @@ vue.component('kf-select', {
   },
   template:
     '<div :class="cls.select">' +
-      '<div v-html="selectedLabel"></div>' +
+      '<div v-kf-code="selectedLabel"></div>' +
       '<div></div>' +
       '<span></span>' +
       '<ul>' +
         '<li v-for="label in labels" ' +
             ':kf-selected="selectedIndex == $index" ' +
             '@click="select($index)">' +
-          '<div v-html="label"></div>' +
+          '<div v-kf-code="label"></div>' +
         '</li>' +
       '</ul>' +
     '</div>'

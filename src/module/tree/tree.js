@@ -1,4 +1,5 @@
 import vue from 'vue';
+import '../code/code';
 import 'font-awesome';
 import './tree.css!';
 import cls from './tree.css.map';
@@ -101,7 +102,7 @@ vue.component('kf-tree', {
           '<div>' +
             '<span></span>' +
             '<i @click="toggle()" :class="icon" v-if="nodeData[subtreeKey]"></i>' +
-            '<div v-html="nodeData[nodeKey]"></div>' +
+            '<div v-kf-code="nodeData[nodeKey]"></div>' +
           '</div>' +
           '<div v-show="nodeData.__EXPAND">' +
             '<span></span>' +

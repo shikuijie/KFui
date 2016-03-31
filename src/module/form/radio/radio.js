@@ -1,5 +1,6 @@
 import vue from 'vue';
 import 'font-awesome';
+import '../../code/code';
 import './radio.css!';
 import cls from './radio.css.map';
 
@@ -29,7 +30,7 @@ vue.component('kf-radio-group', {
         '<input type="radio" v-model="model" :value="values[$index]"/>' +
         '<i class="fa fa-circle-o" v-show="model !== values[$index]"></i>' +
         '<i class="fa fa-dot-circle-o" v-show="model === values[$index]"></i>' +
-        '<label v-html="label"></label>' +
+        '<label v-kf-code="label"></label>' +
       '</span>' +
     '</span>'
 })

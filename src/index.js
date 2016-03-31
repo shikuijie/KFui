@@ -80,7 +80,7 @@ new vue({
       },
       subtree: [{
         label: 'Node1',
-        node: '<button>{{NODE.label}}</button>'
+        node: '<button v-text="NODE.label"></button>'
       }, {
         node: 'Node12',
         subtree: [{

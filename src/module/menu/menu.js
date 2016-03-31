@@ -1,5 +1,6 @@
 import vue from 'vue';
 import './menu.css!';
+import '../code/code';
 import cls from './menu.css.map';
 import 'animate.css';
 
@@ -9,7 +10,7 @@ vue.component('kf-menu', {
       props: ['itemKey', 'submenuKey', 'itemData'],
       template:
         '<li :kf-submenu="!!itemData[submenuKey]">' +
-          '<div v-html="itemData[itemKey]"></div>' +
+          '<div v-kf-code="itemData[itemKey]"></div>' +
           '<div v-if="itemData[submenuKey]"></div>' +
           '<kf-menu v-if="itemData[submenuKey]" ' +
                   ':menu="itemData" ' +

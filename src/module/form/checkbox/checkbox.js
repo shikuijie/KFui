@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import vue from 'vue';
+import '../../code/code';
 import cls from './checkbox.css.map';
 import 'font-awesome';
 import './checkbox.css!';
@@ -43,7 +44,7 @@ vue.component('kf-checkbox', {
       '<input type="checkbox" @click="click(value)" v-model="model" :true-value="value" :false-value="origModel"/>' +
       '<span></span>' +
       '<i class="fa fa-check" v-show="model === value"></i>' +
-      '<label v-html="label"></label>' +
+      '<label v-kf-code="label"></label>' +
     '</span>'
 });
 
@@ -98,7 +99,7 @@ vue.component('kf-checkbox-group', {
         '<input type="checkbox" @click="click(values[$index])" v-model="model" :value="values[$index]"/>' +
         '<span></span>' +
         '<i class="fa fa-check" v-show="status[$index]"></i>' +
-        '<label v-html="label"></label>' +
+        '<label v-kf-code="label"></label>' +
       '</span>' +
     '</span>'
 });
