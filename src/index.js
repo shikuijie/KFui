@@ -1,6 +1,7 @@
 import vue from 'vue';
 import 'font-awesome';
 import './index.css!';
+import './module/base';
 import './module/menu/menu';
 import './module/form/checkbox/checkbox';
 import './module/form/radio/radio';
@@ -8,6 +9,8 @@ import './module/form/select/select';
 import './module/tree/tree';
 import {kfTable} from './module/table/table';
 import {kfTree} from './module/tree/tree';
+import './module/date/date';
+import './module/slide/slide';
 
 new vue({
   el: 'body',

@@ -30,6 +30,15 @@
 
   <kf-tree class="tree" :tree="treeData" :draggable="true"></kf-tree>
 
+  <kf-xslide>
+    <div style="height: 100px; line-height: 100px; background-color: #bbb">Item0</div>
+    <div style="height: 100px; line-height: 100px; background-color: #ccc">Item1</div>
+    <div style="height: 100px; line-height: 100px; background-color: #ddd">Item2</div>
+    <div style="height: 100px; line-height: 100px; background-color: #eee">Item3</div>
+  </kf-xslide>
+
+  <kf-hcircle-slide></kf-hcircle-slide>
+
   <script>
     System.import('./index.js');
   </script>
