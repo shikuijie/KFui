@@ -104,40 +104,6 @@
   }
 }
 
-.kf-slide-item(slide, @i) {
-  font-size: 14px;
-  text-align: center;
-  line-height: 20px;
-
-  & when (@i = 1) {
-    background-color: @lprimary;
-  }
-  & when (@i = 2) {
-    background-color: @lsuccess;
-  }
-  & when (@i = 3) {
-    background-color: @linfo;
-  }
-  & when (@i = 4) {
-    background-color: @lbright;
-  }
-  & when (@i = 5) {
-    background-color: @lwarm;
-  }
-  & when (@i = 6) {
-    background-color: @lerror;
-  }
-  & when (@i = 7) {
-    background-color: @lfail;
-  }
-  & when (@i = 8) {
-    background-color: @ldanger;
-  }
-  & when (@i = 9) {
-    background-color: @lgray;
-  }
-}
-
 :global {
   html, body {
     margin: 0;
@@ -183,12 +149,5 @@
     .kf-tree-size(20px, 14px, 10px, 5px);
     .kf-tree-color(@dgray, white);
     .kf-tree-title(default);
-  }
-
-  .slide {
-    margin: 0 auto;
-    width: 50px;
-    height: 20px;
-    .kf-circle-slide(12, slide);
   }
 }

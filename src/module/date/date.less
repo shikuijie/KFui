@@ -1,20 +1,43 @@
 @import (reference) '../base';
+@import (reference) '../slide/slide';
 
-.slide {
-  height: 120px;
-  width: 200px;
-  overflow-y: hidden;
-  position: relative;
+.date {
+  .monthWrapper {
+    position: relative;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
 
-  > li {
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
-    color: @lgray;
+    .left, .right {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      z-index: 1;
+      &:hover {
+        cursor: url() default;
+      }
 
-    &.active {
-      color: @dgray;
-      font-size: 25px;
+      &.left {
+        left: 0;
+      }
+      &.right {
+        right: 0;
+      }
+    }
+
+    .month {
+      width: 50px;
+      height: 100%;
+      margin: 0 auto;
+      .kf-circle-slide(12, kfMonthSlideItem);
+
+      .kf-slide-item(kfMonthSlideItem, @i) {
+        line-height: 30px;
+        font-size: 16px;
+        text-align: center;
+      }
     }
   }
 }
