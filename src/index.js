@@ -71,6 +71,8 @@ new vue({
     rdgrp: 1,
     slct: [123],
 
+    curSlideItem: 3,
+
     treeData: {
       drop: function(src, target) {
         if(src.subtree && src.subtree.length) {
