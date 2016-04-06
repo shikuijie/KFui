@@ -30,6 +30,7 @@ System.config({
     "jquery": "npm:jquery@2.2.0",
     "json": "github:systemjs/plugin-json@0.1.0",
     "lodash": "npm:lodash@4.6.1",
+    "moment": "npm:moment@2.12.0",
     "reflect-metadata": "npm:reflect-metadata@0.1.3",
     "scss": "github:mobilexag/plugin-sass@0.2.1",
     "swiper": "npm:swiper@3.3.0",
@@ -324,6 +325,9 @@ System.config({
     "npm:miller-rabin@4.0.0": {
       "bn.js": "npm:bn.js@4.11.1",
       "brorand": "npm:brorand@1.0.5"
+    },
+    "npm:moment@2.12.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:os-browserify@0.1.2": {
       "os": "github:jspm/nodelibs-os@0.1.0"

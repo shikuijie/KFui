@@ -29,7 +29,7 @@
   <br>
 
   <kf-tree class="tree" :tree="treeData" :draggable="true"></kf-tree>
-  <kf-date></kf-date>
+  <kf-date :month="4" :year="2016"></kf-date>
 
   <script>
     System.import('./index.js');

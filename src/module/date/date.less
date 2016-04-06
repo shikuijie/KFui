@@ -2,9 +2,9 @@
 @import (reference) '../slide/slide';
 
 .date {
-  .monthWrapper {
+  .year, .month {
+    display: inline-block;
     position: relative;
-    width: 120px;
     height: 30px;
     line-height: 30px;
     overflow: hidden;
@@ -15,8 +15,11 @@
       width: 50%;
       height: 100%;
       z-index: 1;
-      &:hover {
-        cursor: url() default;
+      &.right:hover {
+        cursor: e-resize;
+      }
+      &.left:hover {
+        cursor: w-resize;
       }
 
       &.left {
@@ -27,17 +30,29 @@
       }
     }
 
-    .month {
-      width: 50px;
-      height: 100%;
+    .slide {
       margin: 0 auto;
-      .kf-circle-slide(12, kfMonthSlideItem);
 
-      .kf-slide-item(kfMonthSlideItem, @i) {
-        line-height: 30px;
-        font-size: 16px;
+      .el {
+        height: 100%;
+        font-size: 14px;
         text-align: center;
       }
+    }
+  }
+
+  .year {
+    width: 70px;
+
+    .slide {
+      .kf-circle-slide(60px, 100%);
+    }
+  }
+  .month {
+    width: 50px;
+
+    .slide {
+      .kf-circle-slide(40px, 100%);
     }
   }
 }
