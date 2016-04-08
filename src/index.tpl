@@ -29,7 +29,7 @@
   <br>
 
   <kf-tree class="tree" :tree="treeData" :draggable="true"></kf-tree>
-  <kf-date :month="4" :year="2016"></kf-date>
+  <kf-date :month="3" :day="30" :year="2020" :hour="20" :minute="26" :second="30"></kf-date>
 
   <script>
     System.import('./index.js');

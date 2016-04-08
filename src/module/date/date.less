@@ -1,58 +1,186 @@
 @import (reference) '../base';
+@import (reference) '../caret/caret';
 @import (reference) '../slide/slide';
 
 .date {
-  .year, .month {
-    display: inline-block;
-    position: relative;
-    height: 30px;
-    line-height: 30px;
-    overflow: hidden;
+  border: 1px solid @lwarm;
+  width: 180px;
+  padding: 8px 5px 5px;
 
-    .left, .right {
-      position: absolute;
-      top: 0;
-      width: 50%;
-      height: 100%;
-      z-index: 1;
-      &.right:hover {
-        cursor: e-resize;
-      }
-      &.left:hover {
-        cursor: w-resize;
-      }
-
-      &.left {
-        left: 0;
-      }
-      &.right {
-        right: 0;
+  > div {
+    &.header {
+      padding-left: 3px;
+      > .title > span:last-child {
+        .kf-tip-arrow(down, @lprimary, 5px);
       }
     }
 
-    .slide {
-      margin: 0 auto;
+    &.footer {
+      text-align: right;
+      > .title > span:last-child {
+        .kf-tip-arrow(up, @lprimary, 5px);
+      }
+    }
 
-      .el {
-        height: 100%;
+    > .title {
+      cursor: pointer;
+      > span {
+        display: inline-block;
+        vertical-align: middle;
         font-size: 14px;
-        text-align: center;
+        color: @lprimary;
+        margin-right: 2px;
       }
     }
   }
 
-  .year {
-    width: 70px;
+  > div {
+    position: relative;
 
-    .slide {
-      .kf-circle-slide(60px, 100%);
+    &:first-child {
+      border-bottom: 5px solid transparent;
+      > .slides {
+        top: 100%;
+        box-shadow: 3px 3px @lgray;
+      }
+    }
+
+    &:last-child {
+      border-top: 5px solid transparent;
+      > .slides {
+        bottom: 100%;
+        box-shadow: 3px -3px @lgray;
+      }
+    }
+
+    > .title:hover + .slides,
+    .slides:hover {
+      visibility: visible;
+    }
+
+    > .slides {
+      text-align: center;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      z-index: 1;
+      background-color: white;
+      border: 1px solid @lgray;
+      margin-left: -2px;
+      padding: 10px 0;
+      visibility: hidden;
+
+      > div {
+        display: inline-block;
+        position: relative;
+        height: 100%;
+        width: percentage(1/3);
+
+        box-sizing: border-box;
+        overflow: hidden;
+        font-size: 12px;
+
+        > span {
+          display: none;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-4px);
+          z-index: 1;
+
+          &:first-child {
+            top: 25%;
+            .kf-tip-arrow(up, @lprimary, 8px);
+          }
+          &:last-child {
+            bottom: 25%;
+            .kf-tip-arrow(down, @lprimary, 8px);
+          }
+        }
+
+        &:hover {
+          cursor: row-resize;
+          > span {
+            display: block;
+            cursor: pointer;
+          }
+        }
+
+        &.year .slide {
+          line-height: 44px;
+          .kf-circle-slide(100%, 43px);
+        }
+        &.month .slide {
+          line-height: 41px;
+          .kf-circle-slide(100%, 40px);
+        }
+        &.day .slide {
+          line-height: 36px;
+          .kf-circle-slide(100%, 36px);
+        }
+        &.hour .slide {
+          line-height: 42px;
+          .kf-circle-slide(100%, 42px);
+        }
+        &.minute .slide {
+          line-height: 40px;
+          .kf-circle-slide(100%, 40px);
+        }
+        &.second .slide {
+          line-height: 40px;
+          .kf-circle-slide(100%, 40px);
+        }
+
+        .slide {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+
+          .el {
+            height: 100%;
+            text-align: center;
+            color: @dgray;
+            transition: font .5s linear, color .5s linear;
+
+            &.active {
+              font-size: 16px;
+              color: @lprimary;
+            }
+          }
+        }
+      }
     }
   }
-  .month {
-    width: 50px;
 
-    .slide {
-      .kf-circle-slide(40px, 100%);
+  > table {
+    font-size: 12px;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid @lgray;
+
+    th {
+      text-align: center;
+      border-bottom: 1px solid @lgray;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    td {
+      text-align: center;
+      cursor: pointer;
+      box-sizing: border-box;
+      padding: 2px;
+
+      > div {
+        padding: 5px 0;
+        box-sizing: border-box;
+      }
+
+      &.active > div {
+        background-color: @lprimary;
+        border-radius: 50%;
+        color: white;
+      }
     }
   }
 }
