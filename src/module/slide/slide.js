@@ -13,8 +13,7 @@ vue.component('kf-circle-slide', {
       default: 0
     },
     size: {
-      type: Number,
-      required: true
+      type: Number
     }
   },
   data: function() {

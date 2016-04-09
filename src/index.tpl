@@ -13,23 +13,23 @@
   <br>
   <kf-checkbox-group class="checkbox-group" :labels="['标签1', '标签2', '标签3']" :values="[val1, val2, val3]" :model.sync="cbgrp"></kf-checkbox-group>
   <br>
-  <span>{{cb | json}}</span>
+  <span v-text="cb | json"></span>
   <br>
-  <span>{{cbgrp | json}}</span>
+  <span v-text="cbgrp | json"></span>
 
   <br>
   <kf-radio-group class="radio-group" :model.sync="rdgrp" :labels="['标签1', '标签2', '标签3']" :values="[1,2,3]"></kf-radio-group>
   <br>
-  <span>{{rdgrp | json}}</span>
+  <span v-text="rdgrp | json"></span>
   <br>
 
   <kf-select class="select" :model.sync="slct" :values="[123, 456, 789]" :default-label="'<div></div>'" :labels="['<div>option1</div>', '<div>option2</div>', '<div>option3</div>']"></kf-select>
   <br>
-  <span>{{slct | json}}</span>
+  <span v-text="slct | json"></span>
   <br>
 
   <kf-tree class="tree" :tree="treeData" :draggable="true"></kf-tree>
-  <kf-date :month="3" :day="30" :year="2020" :hour="20" :minute="26" :second="30"></kf-date>
+  <kf-date-picker :datime.sync="datime" label="日期" :flip="{top: true}" :has-time="true" :has-sec="false"></kf-date-picker>
 
   <script>
     System.import('./index.js');

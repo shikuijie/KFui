@@ -71,7 +71,7 @@ new vue({
     rdgrp: 1,
     slct: [123],
 
-    curSlideItem: 3,
+    datime: '',
 
     treeData: {
       drop: function(src, target) {
