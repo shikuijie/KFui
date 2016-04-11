@@ -71,7 +71,9 @@ new vue({
     rdgrp: 1,
     slct: [123],
 
-    datime: '',
+    moment: '',
+    start: '',
+    end: '',
 
     treeData: {
       drop: function(src, target) {

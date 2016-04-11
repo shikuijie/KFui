@@ -6,9 +6,9 @@ import cls from './date.css.map';
 import 'animate.css';
 
 let datime = vue.extend({
-  props: ['year', 'month', 'day', 'hour', 'minute', 'second', 'hasSec', 'hasTime'],
+  props: ['moment', 'hasSec', 'hasTime', 'name', 'min', 'max'],
   data: function() {
-    let now = new Date();
+    let now = this.moment && new Date(this.moment) || new Date();
     let year = this.year || now.getFullYear(),
         month = this.month || now.getMonth(),
         hour = this.hour || now.getHours(),
@@ -69,21 +69,26 @@ let datime = vue.extend({
       }
 
       let m = this.monthObj.els[this.monthObj.idx],
+          lm = m == 0 ? 11 : m-1,
           y = this.yearObj.els[this.yearObj.idx],
+          ly = m == 0 ? y - 1 : y,
           first = new Date(y, m, 1),
           firstDate = first.getDate(),
           firstWeekDay = first.getDay(),
           lastDate = getLastDate(y, m),
+          lmLastDate = getLastDate(ly, lm),
           last = new Date(y, m, lastDate),
           lastWeekDay = last.getDay(),
-          days = _.range(- firstWeekDay + 1, lastDate + 7 - lastWeekDay);
+          days = _.range(- firstWeekDay + 1, -firstWeekDay + 43);
 
       let res = [];
       while(days.length) {
         res.push(_.map(days.splice(0, 7), function(d) {
+          let valid = d >= 1 && d <= lastDate,
+              value = valid ? d : (d <= 0 ? (lmLastDate + d) : (d - lastDate));
           return {
-            value: d,
-            valid: d >= 1 && d <= lastDate
+            value: value,
+            valid: valid
           };
         }));
       }
@@ -119,14 +124,56 @@ let datime = vue.extend({
     chooseDate: function(d) {
       if(!d.valid) return;
       this.date = d.value;
-      this.$dispatch('kf-datime-selected', new Date(
-        this.yearObj.els[this.yearObj.idx],
-        this.monthObj.els[this.monthObj.idx],
-        this.date,
-        this.hourObj.els[this.hourObj.idx],
-        this.minuteObj.els[this.minuteObj.idx],
-        this.secondObj.els[this.secondObj.idx]
-      ));
+      this.$dispatch('kf-datime-selected', {
+        name: this.name,
+        date: new Date(
+          this.yearObj.els[this.yearObj.idx],
+          this.monthObj.els[this.monthObj.idx],
+          this.date,
+          this.hourObj.els[this.hourObj.idx],
+          this.minuteObj.els[this.minuteObj.idx],
+          this.secondObj.els[this.secondObj.idx])
+        }
+      );
+    },
+    inRange: function(d) {
+      if(!this.min || !this.max) return false;
+      let month = this.monthObj.els[this.monthObj.idx],
+          year = this.yearObj.els[this.yearObj.idx];
+
+      if(!d.valid && d.value < 20) {
+        month++;
+        if(month == 12) {
+          month = 0;
+          year++;
+        }
+      } else if(!d.valid && d.value > 20) {
+        month--;
+        if(month == -1) {
+          month = 11;
+          year--;
+        }
+      }
+
+      let el = formatDate(new Date(year, month, d.value), false, false),
+          min = formatDate(new Date(this.min), false, false),
+          max = formatDate(new Date(this.max), false, false);
+      return min < el && el < max;
+    }
+  },
+  events: {
+    'kf-datime-ask': function() {
+      this.$dispatch('kf-datime-answer', {
+        name: this.name,
+        date: new Date(
+          this.yearObj.els[this.yearObj.idx],
+          this.monthObj.els[this.monthObj.idx],
+          this.date,
+          this.hourObj.els[this.hourObj.idx],
+          this.minuteObj.els[this.minuteObj.idx],
+          this.secondObj.els[this.secondObj.idx])
+        }
+      );
     }
   },
   template:
@@ -141,19 +188,19 @@ let datime = vue.extend({
 
         '<div :class="cls.slides">' +
           '<div @mousewheel="scroll($event, yearObj)" :class="cls.year">' +
-            '<span @click="prev(yearObj)"></span>' +
+            '<span @click="next(yearObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="yearObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="yearObj.idx == $index" v-for="y in yearObj.els" v-text="y + \'年\'"></span>' +
             '</kf-circle-slide>' +
-            '<span @click="next(yearObj)"></span>' +
+            '<span @click="prev(yearObj)"></span>' +
           '</div>' +
 
           '<div @mousewheel="scroll($event, monthObj)" :class="cls.month">' +
-            '<span @click="prev(monthObj)"></span>' +
+            '<span @click="next(monthObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="monthObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="monthObj.idx == $index" v-for="m in monthObj.els" v-text="m + 1 + \'月\'"></span>' +
             '</kf-circle-slide>' +
-            '<span @click="next(monthObj)"></span>' +
+            '<span @click="prev(monthObj)"></span>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -170,7 +217,7 @@ let datime = vue.extend({
 
         '<div :class="cls.slides">' +
           '<div :class="cls.hour" @mousewheel="scroll($event, hourObj)">' +
-            '<span @click="prev(hourObj)"></span>' +
+            '<span @click="next(hourObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="hourObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="hourObj.idx == $index" v-for="h in hourObj.els" v-text="h + \'时\'"></span>' +
             '</kf-circle-slide>' +
@@ -178,7 +225,7 @@ let datime = vue.extend({
           '</div>' +
 
           '<div :class="cls.minute" @mousewheel="scroll($event, minuteObj)">' +
-            '<span @click="prev(minuteObj)"></span>' +
+            '<span @click="next(minuteObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="minuteObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="minuteObj.idx == $index" v-for="m in minuteObj.els" v-text="m + \'分\'"></span>' +
             '</kf-circle-slide>' +
@@ -186,7 +233,7 @@ let datime = vue.extend({
           '</div>' +
 
           '<div v-if="hasSec" :class="cls.second" @mousewheel="scroll($event, secondObj)">' +
-            '<span @click="prev(secondObj)"></span>' +
+            '<span @click="next(secondObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="secondObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="secondObj.idx == $index" v-for="h in secondObj.els" v-text="h + \'秒\'"></span>' +
             '</kf-circle-slide>' +
@@ -203,12 +250,206 @@ let datime = vue.extend({
         '</thead>' +
         '<tbody>' +
           '<tr v-for="w in weeksOfMonth">' +
-            '<td v-for="d in w" @click.prevent.stop="chooseDate(d)" :kf-datime-active="d.valid && d.value == date">' +
-              '<div v-text="d.valid && d.value || \'\'"></div>' +
+            '<td v-for="d in w" @click.prevent.stop="chooseDate(d)" ' +
+                ':class="!d.valid && cls.invalid" ' +
+                ':kf-datime-inrange="inRange(d)" ' +
+                ':kf-datime-active="d.valid && d.value == date">' +
+              '<div v-text="d.value"></div>' +
             '</td>' +
           '</tr>' +
         '</tbody>' +
       '</table>' +
+    '</div>'
+});
+
+vue.component('kf-date-picker', {
+  props: {
+    moment: {
+      twoWay: true,
+      type: String,
+      required: true
+    },
+    flip: {
+      type: Object,
+      default: function() {
+        return {bottom: true, left: true};
+      },
+      coerce: function(val) {
+        if((val.bottom && val.top) || (!val.bottom && !val.top)) {
+          val.bottom = true;
+          val.top = false;
+        }
+        if((val.left && val.right) || (!val.left && !val.right)) {
+          val.left = true;
+          val.right = false;
+        }
+
+        return val;
+      }
+    },
+    hasTime: {
+      type: Boolean,
+      default: false
+    },
+    hasSec: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function() {
+    return {
+      cls: cls,
+      visible: false
+    };
+  },
+  computed: {
+    datimeCls: function() {
+      let res = {};
+      res[cls.hidden] = !this.visible;
+      res[cls.left] = this.flip.left;
+      res[cls.right] = this.flip.right;
+      res[cls.top] = this.flip.top;
+      res[cls.bottom] = this.flip.bottom;
+
+      return res;
+    }
+  },
+  methods: {
+    clear: function() {
+      this.moment = '';
+    }
+  },
+  components: {
+    'kf-datime': datime
+  },
+  events: {
+    'kf-datime-selected': function(data) {
+      this.moment = formatDate(data.date, this.hasTime, this.hasSec);
+      this.visible = false;
+    }
+  },
+  template:
+    '<div :class="cls.dtpicker">' +
+      '<input type="text" @click="visible = true" :value="moment" readonly/>' +
+      '<div :class="cls.bg" v-show="visible" @click="visible = false"></div>' +
+      '<kf-datime kf-datime :class="datimeCls" :moment="moment" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
+      '<i class="fa fa-times" @click="clear()"></i>' +
+    '</div>'
+});
+
+vue.component('kf-date-ranger', {
+  props: {
+    start: {
+      twoWay: true,
+      type: String,
+      required: true
+    },
+    end: {
+      twoWay: true,
+      type: String,
+      required: true
+    },
+    flip: {
+      type: Object,
+      default: function() {
+        return {bottom: true, left: true};
+      },
+      coerce: function(val) {
+        if((val.bottom && val.top) || (!val.bottom && !val.top)) {
+          val.bottom = true;
+          val.top = false;
+        }
+        if((val.left && val.right) || (!val.left && !val.right)) {
+          val.left = true;
+          val.right = false;
+        }
+
+        return val;
+      }
+    },
+    hasTime: {
+      type: Boolean,
+      default: false
+    },
+    hasSec: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function() {
+    return {
+      cls: cls,
+      visible: false,
+      range: {start: this.start, end: this.end},
+      rangeStr: '',
+      rangerr: ''
+    };
+  },
+  computed: {
+    rangeCls: function() {
+      let res = {};
+      res[cls.hidden] = !this.visible;
+      res[cls.left] = this.flip.left;
+      res[cls.right] = this.flip.right;
+      res[cls.top] = this.flip.top;
+      res[cls.bottom] = this.flip.bottom;
+      res[cls.range] = true;
+
+      return res;
+    }
+  },
+  methods: {
+    clear: function() {
+      this.start = '';
+      this.end = '';
+    },
+    chooseRange: function() {
+      this.$broadcast('kf-datime-ask');
+      this.start = this.range.start;
+      this.end = this.range.end;
+
+      if(!this.start) {
+        this.rangerr = '开始时间不能为空';
+        return;
+      }
+      if(!this.end) {
+        this.rangerr = '结束时间不能为空';
+        return;
+      }
+      if(this.start > this.end) {
+        this.rangerr = '结束时间不能在开始时间之前';
+        return;
+      }
+
+      this.rangeStr = this.start.replace(/-/g, '/') + ' - ' + this.end.replace(/-/g, '/');
+      this.rangerr = '';
+      this.visible = false;
+    }
+  },
+  components: {
+    'kf-datime': datime
+  },
+  events: {
+    'kf-datime-answer': function(data) {
+      this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
+    },
+    'kf-datime-selected': function(data) {
+      this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
+    },
+  },
+  template:
+    '<div :class="cls.dtranger">' +
+      '<input type="text" @click="visible = true" :value="rangeStr" readonly/>' +
+      '<div :class="cls.bg" v-show="visible" @click="visible = false"></div>' +
+      '<div :class="rangeCls">' +
+        '<kf-datime kf-datime name="start" :moment="start" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
+        '<kf-datime kf-datime name="end" :moment="end" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
+        '<div :class="cls.confirm">' +
+          '<span v-show="rangerr" v-text="rangerr"></span>' +
+          '<button @click="chooseRange()">确定</button>' +
+        '</div>' +
+      '</div>' +
+      '<i class="fa fa-times" @click="clear()"></i>' +
     '</div>'
 });
 
@@ -229,87 +470,3 @@ function formatDate(date, hasTime, hasSec) {
   return _.map(dateArr, datify).join('-') + ' ' +
         _.map(timeArr, datify).join(':');
 }
-
-vue.component('kf-date-picker', {
-  props: {
-    datime: {
-      twoWay: true,
-      type: String,
-      required: true,
-      default: formatDate(new Date(), true, true)
-    },
-    flip: {
-      type: Object,
-      default: function() {
-        return {bottom: true, left: true};
-      },
-      coerce: function(val) {
-        if((val.bottom && val.top) || (!val.bottom && !val.top)) {
-          val.bottom = true;
-          val.top = false;
-        }
-        if((val.left && val.right) || (!val.left && !val.right)) {
-          val.left = true;
-          val.right = false;
-        }
-
-        return val;
-      }
-    },
-    label: {
-      type: String
-    },
-    hasTime: {
-      type: Boolean,
-      default: false
-    },
-    hasSec: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data: function() {
-    let date = new Date(this.datime);
-    return {
-      cls: cls,
-      visible: false
-    };
-  },
-  methods: {
-    getDtCls: function() {
-      return !this.visible ? cls.hidden : '';
-    },
-    getFlipCls: function() {
-      let res = {};
-      res[cls.hidden] = !this.visible;
-      res[cls.left] = this.flip.left;
-      res[cls.right] = this.flip.right;
-      res[cls.top] = this.flip.top;
-      res[cls.bottom] = this.flip.bottom;
-
-      return res;
-    },
-    clear: function() {
-      this.datime = '';
-    }
-  },
-  components: {
-    'kf-datime': datime
-  },
-  events: {
-    'kf-datime-selected': function(date) {
-      this.datime = formatDate(date, this.hasTime, this.hasSec);
-      this.visible = false;
-    }
-  },
-  template:
-    '<div :class="cls.dtpicker">' +
-      '<div>' +
-        '<label v-if="label" v-text="label"></label>' +
-        '<input type="text" @click="visible = true" v-model="datime" readonly/>' +
-      '</div>' +
-      '<div :class="cls.bg" v-show="visible" @click="visible = false"></div>' +
-      '<kf-datime :class="getFlipCls()" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
-      '<i class="fa fa-times" @click="clear()"></i>' +
-    '</div>'
-});

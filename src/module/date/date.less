@@ -130,23 +130,23 @@
 
         &.year .slide {
           line-height: 40px;
-          .kf-circle-slide(100%, 40px);
+          .kf-circle-slide(x, 100%, 40px, 12);
         }
         &.month .slide {
           line-height: 40px;
-          .kf-circle-slide(100%, 40px);
+          .kf-circle-slide(x, 100%, 40px, 12);
         }
         &.hour .slide {
           line-height: 41px;
-          .kf-circle-slide(100%, 41px);
+          .kf-circle-slide(x, 100%, 41px, 24);
         }
         &.minute .slide {
           line-height: 40px;
-          .kf-circle-slide(100%, 40px);
+          .kf-circle-slide(x, 100%, 40px, 60);
         }
         &.second .slide {
           line-height: 40px;
-          .kf-circle-slide(100%, 40px);
+          .kf-circle-slide(x, 100%, 40px, 60);
         }
 
         .slide {
@@ -196,72 +196,60 @@
         box-sizing: border-box;
       }
 
+      &.invalid {
+        color: @dgray;
+      }
+
       &[kf-datime-active] > div {
         border-radius: 50%;
         color: white;
       }
+
+      &[kf-datime-inrange] {
+        padding-left: 0;
+        padding-right: 0;
+
+        &[kf-datime-active] {
+          > div {
+            background-color: @lgray !important;
+            color: @lwarm;
+            border-radius: 0;
+          }
+        }
+
+        > div {
+          background-color: @lgray;
+        }
+      }
     }
   }
 }
 
-.kf-datime-picker(@color, @fontSize) {
-  font-size: @fontSize;
-
-  > div:first-child {
-    > * {
-      height: @fontSize + 20px;
-      line-height: @fontSize + 20px;
-    }
+.kf-datime-picker(@color) {
+  border: 1px solid @color;
+  > [kf-datime] {
+    .kf-datime(@color);
   }
 }
-.dtpicker {
-  .kf-datime-picker(@lprimary, 12px);
 
+.kf-datime-ranger(@color) {
+  border: 1px solid @color;
+  > div > [kf-datime] {
+    .kf-datime(@color);
+  }
+}
+
+.dtpicker,
+.dtranger {
   display: inline-block;
   position: relative;
+  padding-right: 15px !important;
 
-  > div:first-child {
-    > * {
-      display: inline-block;
-      box-sizing: border-box;
-      padding-left: 10px;
-      padding-right: 15px;
-      vertical-align: middle;
-
-      &:first-child {
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      &:last-child {
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-      }
-    }
-
-    > label {
-      background-color: @lprimary;
-      color: white;
-      &:first-child {
-        margin-right: -2px;
-      }
-    }
-
-    > input {
-      font-size: inherit;
-      border: none;
-      border-top: 1px solid @lprimary;
-      border-bottom: 1px solid @lprimary;
-      outline: none;
-      padding-left: 9.5px;
-      padding-right: 14.5px;
-
-      &:first-child {
-        border-left: 1px solid @lprimary;
-      }
-      &:last-child {
-        border-right: 1px solid @lprimary;
-      }
-    }
+  > input {
+    font-size: inherit;
+    outline: none;
+    border: none;
+    width: 100%;
   }
 
   > .bg {
@@ -282,45 +270,85 @@
     top: 50%;
     margin-top: -6px;
     cursor: pointer;
+    font-size: 12px;
+  }
+}
+
+.dtpicker > .datime,
+.dtranger > .range {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 2016;
+  background-color: white;
+  border-radius: 3px;
+  margin-top: 3px;
+
+  &.left.bottom {
+    box-shadow: 2px 2px @lgray;
+  }
+  &.left.top {
+    box-shadow: 2px -2px @lgray;
+  }
+  &.right.bottom {
+    box-shadow: -2px 2px @lgray;
+  }
+  &.right.top {
+    box-shadow: -2px -2px @lgray;
   }
 
-  > .datime {
-    .kf-datime(@lprimary);
-    position: absolute;
-    left: 0;
-    top: 100%;
-    z-index: 2016;
-    background-color: white;
-    border-radius: 3px;
-    margin-top: 3px;
+  &.right {
+    right: 0;
+    left: auto;
+    box-shadow: inset;
+  }
+  &.top {
+    bottom: 100%;
+    top: auto;
+    margin-bottom: 3px;
+    margin-top: 0;
+  }
 
-    &.left.bottom {
-      box-shadow: 2px 2px @lgray;
-    }
-    &.left.top {
-      box-shadow: 2px -2px @lgray;
-    }
-    &.right.bottom {
-      box-shadow: -2px 2px @lgray;
-    }
-    &.right.top {
-      box-shadow: -2px -2px @lgray;
-    }
+  &.hidden {
+    visibility: hidden;
+  }
+}
 
-    &.right {
-      right: 0;
-      left: auto;
-      box-shadow: inset;
-    }
-    &.top {
-      bottom: 100%;
-      top: auto;
-      margin-bottom: 3px;
-      margin-top: 0;
+.dtranger {
+  .kf-datime-ranger(@lprimary);
+  font-size: 12px;
+
+  > .range {
+    width: 400px;
+    padding: 5px;
+    border: 1px solid @lgray;
+
+    > .datime {
+      display: inline-block;
+      & + .datime {
+        margin-left: 15px;
+      }
     }
 
-    &.hidden {
-      visibility: hidden;
+    > .confirm {
+      text-align: right;
+      > span {
+        color: @ldanger;
+        margin-right: 10px;
+      }
+
+      > button {
+        background-color: @lprimary;
+        color: white;
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 12px;
+        border: 1px solid transparent;
+        margin-top: 5px;
+        &:focus {
+          outline: none;
+        }
+      }
     }
   }
 }

@@ -29,7 +29,13 @@
   <br>
 
   <kf-tree class="tree" :tree="treeData" :draggable="true"></kf-tree>
-  <kf-date-picker :datime.sync="datime" label="日期" :flip="{top: true}" :has-time="true" :has-sec="false"></kf-date-picker>
+
+  <div class="input-group">
+    <label class="addon">选择日期</label>
+    <kf-date-picker class="input" :moment.sync="moment" :flip="{right: true}" :has-time="true" :has-sec="false"></kf-date-picker>
+  </div>
+
+  <kf-date-ranger style="width: 80%;" :start.sync="start" :end.sync="end" :has-time="true" :has-sec="true"></kf-date-ranger>
 
   <script>
     System.import('./index.js');

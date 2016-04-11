@@ -1,8 +1,42 @@
 @import (reference) '../base';
 
-.kf-circle-slide(@width, @height) {
+.kf-circle-slide(@axis, @width, @height, @num) {
   width: @width;
   height: @height;
+
+  > div {
+    & when (@axis = x) {
+      @size: @height/2/tan(180deg/@num);
+
+      > * {
+        .slide-items(@num, @size);
+      }
+    }
+    & when (@axis = y) {
+      @size: @width/2/tan(180deg/@num);
+
+      > * {
+        .slide-items(@num, @size);
+      }
+    }
+  }
+
+  .slide-items(@num, @zDist) {
+    .slide-item(1);
+
+    .slide-item(@i) when (@i <= @num) {
+      @angle: (@i - 1) * 360deg / @num;
+
+      &:nth-child(@{i}) when (@axis = x) {
+        transform: rotateX(@angle) translateZ(@zDist);
+      }
+      &:nth-child(@{i}) when (@axis = y) {
+        transform: rotateY(@angle) translateZ(@zDist);
+      }
+
+      .slide-item(@i + 1);
+    }
+  }
 }
 
 .circle {
