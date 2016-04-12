@@ -35,7 +35,10 @@
     <kf-date-picker class="input" :moment.sync="moment" :flip="{right: true}" :has-time="true" :has-sec="false"></kf-date-picker>
   </div>
 
-  <kf-date-ranger style="width: 80%;" :start.sync="start" :end.sync="end" :has-time="true" :has-sec="true"></kf-date-ranger>
+  <div class="input-group">
+    <label class="addon">日期区间</label>
+    <kf-date-ranger class="input" style="width: 80%;" :flip="{top: true}" :start.sync="start" :end.sync="end"></kf-date-ranger>
+  </div>
 
   <script>
     System.import('./index.js');

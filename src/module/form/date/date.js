@@ -9,14 +9,14 @@ let datime = vue.extend({
   props: ['moment', 'hasSec', 'hasTime', 'name', 'min', 'max'],
   data: function() {
     let now = this.moment && new Date(this.moment) || new Date();
-    let year = this.year || now.getFullYear(),
-        month = this.month || now.getMonth(),
-        hour = this.hour || now.getHours(),
-        min = this.minute || now.getMinutes(),
-        sec = this.second || now.getSeconds();
+    let year = now.getFullYear(),
+        month = now.getMonth(),
+        hour = now.getHours(),
+        min = now.getMinutes(),
+        sec = now.getSeconds();
 
     let years = _.range(year, year + 6).concat(_.range(year - 6, year)),
-        months = _.range(month - 1, 12).concat(_.range(0, month - 1)),
+        months = _.range(month, 12).concat(_.range(0, month)),
         hours = _.range(hour, 24).concat(_.range(0, hour)),
         minutes = _.range(min, 60).concat(_.range(0, min)),
         seconds = _.range(sec, 60).concat(_.range(0, sec));
@@ -114,6 +114,20 @@ let datime = vue.extend({
       delta = (delta < 0) ? (delta + obj.els.length) : delta;
       obj.idx = (obj.idx + delta) % obj.els.length;
     },
+    prevMonth: function() {
+      let m = this.monthObj.els[this.monthObj.idx];
+      if(m == 0) {
+        this.prev(this.yearObj);
+      }
+      this.prev(this.monthObj);
+    },
+    nextMonth: function() {
+      let m = this.monthObj.els[this.monthObj.idx];
+      if(m == 11) {
+        this.next(this.yearObj);
+      }
+      this.next(this.monthObj);
+    },
     datify: function(num) {
       if(num < 10) {
         return '0' + num;
@@ -180,10 +194,12 @@ let datime = vue.extend({
     '<div :class="cls.datime">' +
       '<div :class="cls.date">' +
         '<span :class="cls.title">' +
+          '<i @click="prevMonth()"></i>' +
           '<span v-text="datify(yearObj.els[yearObj.idx])"></span>' +
           '<span>-</span>' +
           '<span v-text="datify(monthObj.els[monthObj.idx] + 1)"></span>' +
           '<span></span>' +
+          '<i @click="nextMonth()"></i>' +
         '</span>' +
 
         '<div :class="cls.slides">' +
@@ -377,10 +393,11 @@ vue.component('kf-date-ranger', {
     }
   },
   data: function() {
+    let now = formatDate(new Date(), false, false);
     return {
       cls: cls,
       visible: false,
-      range: {start: this.start, end: this.end},
+      range: {start: this.start || now, end: this.end || now},
       rangeStr: '',
       rangerr: ''
     };
@@ -402,6 +419,7 @@ vue.component('kf-date-ranger', {
     clear: function() {
       this.start = '';
       this.end = '';
+      this.rangeStr = '';
     },
     chooseRange: function() {
       this.$broadcast('kf-datime-ask');

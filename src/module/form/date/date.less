@@ -49,6 +49,7 @@
     &.time {
       position: absolute;
       right: 5px;
+
       > .title > span:last-child {
         .kf-tip-arrow(down, @lwarm, 3px);
       }
@@ -60,16 +61,24 @@
     }
 
     > .title {
-      cursor: pointer;
       font-size: 12px;
       > span {
+        cursor: pointer;
         display: inline-block;
         vertical-align: middle;
         color: @lwarm;
         margin-right: 2px;
+      }
 
-        &:last-child {
-          .kf-tip-arrow(down, @lwarm, 3px);
+      > i {
+        display: inline-block;
+        &:first-of-type {
+          .kf-tip-arrow(left, @lwarm, 5px);
+          margin-right: 3px;
+        }
+        &:last-of-type {
+          margin-left: 3px;
+          .kf-tip-arrow(right, @lwarm, 5px);
         }
       }
     }
@@ -261,7 +270,7 @@
     opacity: 0;
   }
 
-  i {
+  > i {
     position: absolute;
     right: 5px;
     color: @lgray;
