@@ -1,47 +1,38 @@
+@import (reference) '../../base';
 @import (reference) '../../caret/caret';
 
-.kf-select(@itemStyle, @caretDownSize, @caretDownColor, @caretUpSize, @caretUpColor) {
-  > div:first-child {
-    .kf-select-item(@itemStyle, common);
-    .kf-select-item(@itemStyle, top);
+.kf-select(@color, @inverse: false) {
+  & when (@inverse = false) {
+    border: 1px solid @color;
+
+    > span {
+      .kf-tip-arrow(down, @color, 5px);
+    }
   }
 
-  > div:nth-child(2) {
-    .kf-tip-arrow(up, @caretUpColor, @caretUpSize);
-    right: @caretUpSize * 2;
-  }
+  & when (@inverse = true) {
+    background-color: @color;
+    input {
+      color: white;
+    }
 
-  &:hover > div:nth-child(2) {
-    transform: translateY(@caretUpSize + 2px);
-  }
-
-  > span {
-    .kf-tip-arrow(down, @caretDownColor, @caretDownSize);
-    right: 12px;
+    > span {
+      .kf-tip-arrow(down, white, 5px);
+    }
   }
 
   > ul {
-    border-top: (@caretUpSize + 2px) solid transparent;
-    transform: translateY(-(@caretUpSize + 2px));
-
-    > li > div {
-      .kf-select-item(@itemStyle, common);
-    }
-
-    > li:first-child > div {
-      .kf-select-item(@itemStyle, first);
-    }
-
-    > li:last-child > div {
-      .kf-select-item(@itemStyle, last);
-    }
+    margin-top: 2px;
+    background-color: white;
 
     > li[kf-selected] > div {
-      .kf-select-item(@itemStyle, selected);
+      background-color: @color;
+      color: white;
     }
 
-    > li:hover div {
-      .kf-select-item(@itemStyle, hover);
+    > li:hover > div {
+      background-color: @color;
+      color: white;
     }
   }
 }
@@ -49,42 +40,66 @@
 .select {
   position: relative;
   display: inline-block;
+  padding-right: 10px;
+
+  > .input {
+    cursor: pointer;
+
+    > input {
+      background-color: transparent;
+      appearance: none;
+      font-size: inherit;
+      border: none;
+      outline: none;
+      padding: 0;
+      width: 100%;
+    }
+  }
+
+  > .bg {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2015;
+    opacity: 0;
+  }
 
   > span {
     position: absolute;
+    display: inline-block;
     top: 50%;
+    right: 5px;
     transform: translateY(-50%);
   }
-  > div:nth-child(2) {
-    position: absolute;
-    bottom: 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(0);
-    transition: all .2s linear;
-  }
 
-  &:hover > div:nth-child(2) {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  &:hover > ul {
-    transform: translateY(0);
-    opacity: 1;
+  > ul.visible {
     visibility: visible;
   }
 
   > ul {
     position: absolute;
+    width: 100%;
     z-index: 2016;
     margin: 0;
     padding: 0;
     list-style: none;
     left: 0;
-    top: 100%;
+    top: 0;
+    transform: translateX(10px) translateY(10px);
     visibility: hidden;
-    opacity: 0;
-    transition: all .2s linear;
+    box-shadow: 2px 2px @lgray;
+    border: 1px solid @lgray;
+    color: black;
+
+    li {
+      padding: 5px;
+      > div {
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 3px;
+      }
+    }
   }
 }

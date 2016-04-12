@@ -9,7 +9,7 @@ import './module/form/select/select';
 import './module/tree/tree';
 import {kfTable} from './module/table/table';
 import {kfTree} from './module/tree/tree';
-import './module/date/date';
+import './module/form/date/date';
 import './module/slide/slide';
 
 new vue({
@@ -69,7 +69,8 @@ new vue({
     val2: {name: 'shikuijie'},
     val3: {name: 'simonshi'},
     rdgrp: 1,
-    slct: [123],
+    slct: -1,
+    aslct: -1,
 
     moment: '',
     start: '',

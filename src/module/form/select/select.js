@@ -18,18 +18,19 @@ vue.component('kf-select', {
       type: Array,
       required: true
     },
-    defaultLabel: {
-      type: String,
-      required: true
+    onSelect: {
+      type: Function,
+      default: () => {}
     }
   },
   data: function() {
     let index = this.values.indexOf(this.model),
-        label = (index != -1) ? this.labels[index] : this.defaultLabel;
+        label = (index != -1) ? this.labels[index] : ''
     return {
       cls: cls,
       selectedIndex: index,
-      selectedLabel: label
+      selectedLabel: label,
+      visible: false
     };
   },
   methods: {
@@ -37,18 +38,25 @@ vue.component('kf-select', {
       this.selectedIndex = index;
       this.selectedLabel = this.labels[index];
       this.model = this.values[index];
+      this.visible = false;
+      this.onSelect(index);
+    },
+    getOptionsCls: function() {
+      if(this.visible) return cls.visible;
     }
   },
   template:
     '<div :class="cls.select">' +
-      '<div v-kf-code="selectedLabel"></div>' +
-      '<div></div>' +
+      '<div :class="cls.input" @click="visible = true">' +
+        '<input readonly type="text" :value="selectedLabel">' +
+      '</div>' +
+      '<div :class="cls.bg" v-show="visible" @click="visible = false"></div>' +
       '<span></span>' +
-      '<ul>' +
+      '<ul :class="getOptionsCls()">' +
         '<li v-for="label in labels" ' +
             ':kf-selected="selectedIndex == $index" ' +
             '@click="select($index)">' +
-          '<div v-kf-code="label"></div>' +
+          '<div v-text="label"></div>' +
         '</li>' +
       '</ul>' +
     '</div>'

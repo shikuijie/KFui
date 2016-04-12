@@ -1,6 +1,6 @@
 import vue from 'vue';
 import _ from 'lodash';
-import '../slide/slide';
+import '../../slide/slide';
 import './date.css!';
 import cls from './date.css.map';
 import 'animate.css';
@@ -109,6 +109,8 @@ let datime = vue.extend({
     },
     scroll: function(event, obj) {
       let delta = Math.floor(event.deltaY / 20);
+      if(delta == 0) delta = 1;
+
       obj.offset += delta;
       delta %= obj.els.length;
       delta = (delta < 0) ? (delta + obj.els.length) : delta;
@@ -170,8 +172,8 @@ let datime = vue.extend({
       }
 
       let el = formatDate(new Date(year, month, d.value), false, false),
-          min = formatDate(new Date(this.min), false, false),
-          max = formatDate(new Date(this.max), false, false);
+          min = this.min.split(' ')[0],
+          max = this.max.split(' ')[0];
       return min < el && el < max;
     }
   },
@@ -203,7 +205,7 @@ let datime = vue.extend({
         '</span>' +
 
         '<div :class="cls.slides">' +
-          '<div @mousewheel="scroll($event, yearObj)" :class="cls.year">' +
+          '<div @wheel.stop.prevent="scroll($event, yearObj)" :class="cls.year">' +
             '<span @click="next(yearObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="yearObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="yearObj.idx == $index" v-for="y in yearObj.els" v-text="y + \'年\'"></span>' +
@@ -211,7 +213,7 @@ let datime = vue.extend({
             '<span @click="prev(yearObj)"></span>' +
           '</div>' +
 
-          '<div @mousewheel="scroll($event, monthObj)" :class="cls.month">' +
+          '<div @wheel.prevent.stop="scroll($event, monthObj)" :class="cls.month">' +
             '<span @click="next(monthObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="monthObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="monthObj.idx == $index" v-for="m in monthObj.els" v-text="m + 1 + \'月\'"></span>' +
@@ -232,7 +234,7 @@ let datime = vue.extend({
         '</span>' +
 
         '<div :class="cls.slides">' +
-          '<div :class="cls.hour" @mousewheel="scroll($event, hourObj)">' +
+          '<div :class="cls.hour" @wheel.prevent.stop="scroll($event, hourObj)">' +
             '<span @click="next(hourObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="hourObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="hourObj.idx == $index" v-for="h in hourObj.els" v-text="h + \'时\'"></span>' +
@@ -240,7 +242,7 @@ let datime = vue.extend({
             '<span @click="prev(hourObj)"></span>' +
           '</div>' +
 
-          '<div :class="cls.minute" @mousewheel="scroll($event, minuteObj)">' +
+          '<div :class="cls.minute" @wheel.prevent.stop="scroll($event, minuteObj)">' +
             '<span @click="next(minuteObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="minuteObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="minuteObj.idx == $index" v-for="m in minuteObj.els" v-text="m + \'分\'"></span>' +
@@ -248,7 +250,7 @@ let datime = vue.extend({
             '<span @click="prev(minuteObj)"></span>' +
           '</div>' +
 
-          '<div v-if="hasSec" :class="cls.second" @mousewheel="scroll($event, secondObj)">' +
+          '<div v-if="hasSec" :class="cls.second" @wheel.prevent.stop="scroll($event, secondObj)">' +
             '<span @click="next(secondObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="secondObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="secondObj.idx == $index" v-for="h in secondObj.els" v-text="h + \'秒\'"></span>' +
@@ -423,25 +425,6 @@ vue.component('kf-date-ranger', {
     },
     chooseRange: function() {
       this.$broadcast('kf-datime-ask');
-      this.start = this.range.start;
-      this.end = this.range.end;
-
-      if(!this.start) {
-        this.rangerr = '开始时间不能为空';
-        return;
-      }
-      if(!this.end) {
-        this.rangerr = '结束时间不能为空';
-        return;
-      }
-      if(this.start > this.end) {
-        this.rangerr = '结束时间不能在开始时间之前';
-        return;
-      }
-
-      this.rangeStr = this.start.replace(/-/g, '/') + ' - ' + this.end.replace(/-/g, '/');
-      this.rangerr = '';
-      this.visible = false;
     }
   },
   components: {
@@ -450,6 +433,18 @@ vue.component('kf-date-ranger', {
   events: {
     'kf-datime-answer': function(data) {
       this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
+
+      if(this.range.start > this.range.end) {
+        this.rangerr = '结束时间不能在开始时间之前';
+        return;
+      }
+
+      this.start = this.range.start;
+      this.end = this.range.end;
+
+      this.rangeStr = 'From ' + this.start + ' To ' + this.end;
+      this.rangerr = '';
+      this.visible = false;
     },
     'kf-datime-selected': function(data) {
       this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
@@ -485,6 +480,10 @@ function formatDate(date, hasTime, hasSec) {
     }
   }
 
-  return _.map(dateArr, datify).join('-') + ' ' +
-        _.map(timeArr, datify).join(':');
+  if(timeArr.length) {
+    return _.map(dateArr, datify).join('-') + ' ' +
+          _.map(timeArr, datify).join(':');
+  } else {
+    return _.map(dateArr, datify).join('-');
+  }
 }

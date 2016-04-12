@@ -23,22 +23,34 @@
   <span v-text="rdgrp | json"></span>
   <br>
 
-  <kf-select class="select" :model.sync="slct" :values="[123, 456, 789]" :default-label="'<div></div>'" :labels="['<div>option1</div>', '<div>option2</div>', '<div>option3</div>']"></kf-select>
+  <div class="input-group">
+    <label class="addon">选择类型</label>
+    <kf-select class="select input" :model.sync="slct" :values="[123, 456, 789]" :labels="['option1', 'option2', 'option3']"></kf-select>
+  </div>
   <br>
+
+  <div class="input-group dtselect">
+    <kf-select class="aselect addon" :model.sync="aslct" :values="[123, 456, 789]" :labels="['option1', 'option2', 'option3']"></kf-select>
+    <kf-date-picker class="input" :moment.sync="moment" :flip="{right: true}" :has-time="true" :has-sec="false"></kf-date-picker>
+  </div>
+  <br>
+
   <span v-text="slct | json"></span>
   <br>
 
   <kf-tree class="tree" :tree="treeData" :draggable="true"></kf-tree>
 
-  <div class="input-group">
+  <div class="input-group datepicker">
     <label class="addon">选择日期</label>
     <kf-date-picker class="input" :moment.sync="moment" :flip="{right: true}" :has-time="true" :has-sec="false"></kf-date-picker>
   </div>
 
-  <div class="input-group">
+  <br>
+  <div class="input-group dateranger">
     <label class="addon">日期区间</label>
-    <kf-date-ranger class="input" style="width: 80%;" :flip="{top: true}" :start.sync="start" :end.sync="end"></kf-date-ranger>
+    <kf-date-ranger class="input" :flip="{top: true}" :start.sync="start" :end.sync="end" :has-time="true"></kf-date-ranger>
   </div>
+  <span v-text="start + ' ' + end"></span>
 
   <script>
     System.import('./index.js');

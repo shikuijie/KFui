@@ -1,6 +1,6 @@
-@import (reference) '../base';
-@import (reference) '../caret/caret';
-@import (reference) '../slide/slide';
+@import (reference) '../../base';
+@import (reference) '../../caret/caret';
+@import (reference) '../../slide/slide';
 
 .kf-datime(@color) {
   //.date > .slides > div
@@ -63,7 +63,6 @@
     > .title {
       font-size: 12px;
       > span {
-        cursor: pointer;
         display: inline-block;
         vertical-align: middle;
         color: @lwarm;
@@ -72,6 +71,7 @@
 
       > i {
         display: inline-block;
+        cursor: pointer;
         &:first-of-type {
           .kf-tip-arrow(left, @lwarm, 5px);
           margin-right: 3px;
@@ -246,6 +246,9 @@
   > div > [kf-datime] {
     .kf-datime(@color);
   }
+  button {
+    background-color: @color;
+  }
 }
 
 .dtpicker,
@@ -259,6 +262,7 @@
     outline: none;
     border: none;
     width: 100%;
+    padding: 0;
   }
 
   > .bg {
@@ -324,7 +328,6 @@
 }
 
 .dtranger {
-  .kf-datime-ranger(@lprimary);
   font-size: 12px;
 
   > .range {
@@ -347,7 +350,7 @@
       }
 
       > button {
-        background-color: @lprimary;
+        // background-color: @lprimary;
         color: white;
         border-radius: 5px;
         padding: 5px 10px;

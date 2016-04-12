@@ -5,7 +5,7 @@
 @import (reference) './module/form/select/select';
 @import (reference) './module/tree/tree';
 @import (reference) './module/slide/slide';
-@import (reference) './module/date/date';
+@import (reference) './module/form/date/date';
 
 .kf-menu-item(menu, @dir, @pos) {
   font-size: 20px;
@@ -129,12 +129,12 @@
   }
 
   .checkbox {
-    .kf-checkbox(default, 14px, @lwarm, @lprimary, @dgray);
+    .kf-checkbox(14px, @lprimary);
   }
 
   .checkbox-group {
     width: 100%;
-    .kf-checkbox-group(default, 14px, @lwarm, @lprimary, @dgray, 30%);
+    .kf-checkbox-group(14px, @lprimary, 5px);
   }
 
   .radio-group {
@@ -142,8 +142,12 @@
     .kf-radio-group(default, 15px, @lprimary, @dgray, 100%);
   }
 
+  .aselect {
+    .kf-select(@lprimary, true);
+    min-width: 60px;
+  }
   .select {
-    .kf-select(select, 6px, white, 6px, @lwarm);
+    .kf-select(@lprimary);
   }
 
   .tree {
@@ -155,7 +159,7 @@
   .input-group {
     display: table;
     font-size: 12px;
-    width: 30%;
+    width: 80%;
 
     > .input,
     > .addon {
@@ -178,8 +182,17 @@
     }
 
     > .input {
-      .kf-datime-picker(@lprimary);
       width: 100%;
     }
+  }
+
+  .dtselect > .input {
+    .kf-datime-picker(@lprimary);
+  }
+  .datepicker > .input {
+    .kf-datime-picker(@lprimary);
+  }
+  .dateranger > .input {
+    .kf-datime-ranger(@lprimary);
   }
 }
