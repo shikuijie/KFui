@@ -18,7 +18,7 @@
   <span v-text="cbgrp | json"></span>
 
   <br>
-  <kf-radio-group class="radio-group" :model.sync="rdgrp" :labels="['标签1', '标签2', '标签3']" :values="[1,2,3]"></kf-radio-group>
+  <kf-radio-group class="radio-group" :model.sync="rdgrp" :labels="['标签1', '标签2', '标签3', 'option4', 'option5', 'option6']" :values="[1,2,3, 910, 911, 912]"></kf-radio-group>
   <br>
   <span v-text="rdgrp | json"></span>
   <br>
@@ -50,6 +50,7 @@
     <label class="addon">日期区间</label>
     <kf-date-ranger class="input" :flip="{top: true}" :start.sync="start" :end.sync="end" :has-time="true"></kf-date-ranger>
   </div>
+  <br>
   <span v-text="start + ' ' + end"></span>
 
   <script>

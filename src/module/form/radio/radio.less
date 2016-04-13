@@ -1,37 +1,38 @@
-.kf-radio-label(default) {}
-
+@import (reference) '../../base';
 /**
   @kf-comment-type  {LESS mixin}
   @kf-comment-name  {kf-radio-group}
-  @kf-comment-how   {.kf-radio-group(@labelStyle, @size, @onBgColor, @onFgColor, @offBgColor)}
+  @kf-comment-how   {.kf-radio-group(@size, @color, @gap, @bcolor: @dgray)}
   @kf-comment-what  {设置kf-radio-group组件的样式.
-                     @labelStyle表示跟在radio的标签的样式风格，由用户通过.kf-radio-label(@labelStyle)设置．
                      @size表示radio的大小
-                     @onColor表示选取状态下radio的颜色
-                     @offColor表示选取状态下radio的颜色
-                     @itemWidth表示单个radio及其标签的宽度}
+                     @color表示选取状态下中心圆点的颜色
+                     @gap相邻radio之间的间距
+                     @bcolor表示radio圆圈的颜色, 默认是@dgray}
 */
-.kf-radio-group(@labelStyle, @size, @onColor, @offColor, @itemWidth) {
+.kf-radio-group(@size, @color, @gap, @bcolor: @dgray) {
   & > span {
-    width: @itemWidth;
-
+    margin-right: @gap;
     > input[type=radio] {
       width: @size;
       height: @size;
+
+      &:checked + i {
+        color: @color;
+      }
     }
 
     > i {
       font-size: @size;
-      color: @onColor;
+    }
 
-      &:first-of-type {
-        color: @offColor;
-      }
+    > span {
+      font-size: @size;
+      color: @bcolor;
     }
 
     > label {
-      margin-left: @size + 5px;
-      .kf-radio-label(@labelStyle);
+      margin-left: @size + 2px;
+      font-size: @size;
     }
   }
 }
@@ -54,11 +55,17 @@
       margin: 0;
     }
 
+    > span,
     > i {
       position: absolute;
       left: 0;
       top: 50%;
       transform: translateY(-50%);
+    }
+
+    > i {
+      color: transparent;
+      transition: color .2s ease;
     }
   }
 }

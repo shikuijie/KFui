@@ -46,16 +46,16 @@ vue.component('kf-select', {
     }
   },
   template:
-    '<div :class="cls.select">' +
-      '<div :class="cls.input" @click="visible = true">' +
+    '<div :class="cls.select" @click="visible = true">' +
+      '<div :class="cls.input">' +
         '<input readonly type="text" :value="selectedLabel">' +
       '</div>' +
-      '<div :class="cls.bg" v-show="visible" @click="visible = false"></div>' +
+      '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
       '<span></span>' +
       '<ul :class="getOptionsCls()">' +
         '<li v-for="label in labels" ' +
             ':kf-selected="selectedIndex == $index" ' +
-            '@click="select($index)">' +
+            '@click.stop="select($index)">' +
           '<div v-text="label"></div>' +
         '</li>' +
       '</ul>' +

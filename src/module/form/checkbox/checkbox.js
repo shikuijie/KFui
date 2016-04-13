@@ -42,9 +42,9 @@ vue.component('kf-checkbox', {
   template:
     '<span :class="cls.checkbox">' +
       '<input type="checkbox" @click="click(value)" v-model="model" :true-value="value" :false-value="origModel"/>' +
-      '<i class="fa fa-check" v-show="model === value"></i>' +
-      '<span class="fa fa-square-o"></span>' +
-      '<label v-kf-code="label"></label>' +
+      '<i class="fa fa-check" :class="cls.check"></i>' +
+      '<span class="fa fa-square-o" :class="cls.box"></span>' +
+      '<label v-text="label"></label>' +
     '</span>'
 });
 
@@ -81,25 +81,13 @@ vue.component('kf-checkbox-group', {
       cls: cls,
     }
   },
-  computed: {
-    status: function() {
-      var self = this;
-      return _.map(self.values, function(val) {
-        if(self.model.indexOf(val) != -1) {
-          return true;
-        } else {
-          return false;
-        }
-      });
-    }
-  },
   template:
     '<span :class="cls.ckbgrp">' +
       '<span :class="cls.checkbox" v-for="label in labels">' +
         '<input type="checkbox" @click="onClick($index)" v-model="model" :value="values[$index]"/>' +
-        '<i class="fa fa-check" v-show="status[$index]"></i>' +
-        '<span class="fa fa-square-o"></span>' +
-        '<label v-kf-code="label"></label>' +
+        '<i class="fa fa-check" :class="cls.check"></i>' +
+        '<span class="fa fa-square-o" :class="cls.box"></span>' +
+        '<label v-text="label"></label>' +
       '</span>' +
     '</span>'
 });

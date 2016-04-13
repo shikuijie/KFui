@@ -1,5 +1,4 @@
 @import (reference) '../../base';
-@import (reference) '../../caret/caret';
 @import (reference) '../../slide/slide';
 
 .kf-datime(@color) {
@@ -322,8 +321,12 @@
     margin-top: 0;
   }
 
-  &.hidden {
-    visibility: hidden;
+  transition: opacity .2s linear, visibility .2s linear;
+  visibility: hidden;
+  opacity: 0;
+  &.visible {
+    visibility: visible;
+    opacity: 1;
   }
 }
 

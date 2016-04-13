@@ -196,29 +196,29 @@ let datime = vue.extend({
     '<div :class="cls.datime">' +
       '<div :class="cls.date">' +
         '<span :class="cls.title">' +
-          '<i @click="prevMonth()"></i>' +
+          '<i @click.stop="prevMonth()"></i>' +
           '<span v-text="datify(yearObj.els[yearObj.idx])"></span>' +
           '<span>-</span>' +
           '<span v-text="datify(monthObj.els[monthObj.idx] + 1)"></span>' +
           '<span></span>' +
-          '<i @click="nextMonth()"></i>' +
+          '<i @click.stop="nextMonth()"></i>' +
         '</span>' +
 
         '<div :class="cls.slides">' +
           '<div @wheel.stop.prevent="scroll($event, yearObj)" :class="cls.year">' +
-            '<span @click="next(yearObj)"></span>' +
+            '<span @click.stop="next(yearObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="yearObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="yearObj.idx == $index" v-for="y in yearObj.els" v-text="y + \'年\'"></span>' +
             '</kf-circle-slide>' +
-            '<span @click="prev(yearObj)"></span>' +
+            '<span @click.stop="prev(yearObj)"></span>' +
           '</div>' +
 
           '<div @wheel.prevent.stop="scroll($event, monthObj)" :class="cls.month">' +
-            '<span @click="next(monthObj)"></span>' +
+            '<span @click.stop="next(monthObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="monthObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="monthObj.idx == $index" v-for="m in monthObj.els" v-text="m + 1 + \'月\'"></span>' +
             '</kf-circle-slide>' +
-            '<span @click="prev(monthObj)"></span>' +
+            '<span @click.stop="prev(monthObj)"></span>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -235,27 +235,27 @@ let datime = vue.extend({
 
         '<div :class="cls.slides">' +
           '<div :class="cls.hour" @wheel.prevent.stop="scroll($event, hourObj)">' +
-            '<span @click="next(hourObj)"></span>' +
+            '<span @click.stop="next(hourObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="hourObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="hourObj.idx == $index" v-for="h in hourObj.els" v-text="h + \'时\'"></span>' +
             '</kf-circle-slide>' +
-            '<span @click="prev(hourObj)"></span>' +
+            '<span @click.stop="prev(hourObj)"></span>' +
           '</div>' +
 
           '<div :class="cls.minute" @wheel.prevent.stop="scroll($event, minuteObj)">' +
-            '<span @click="next(minuteObj)"></span>' +
+            '<span @click.stop="next(minuteObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="minuteObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="minuteObj.idx == $index" v-for="m in minuteObj.els" v-text="m + \'分\'"></span>' +
             '</kf-circle-slide>' +
-            '<span @click="prev(minuteObj)"></span>' +
+            '<span @click.stop="prev(minuteObj)"></span>' +
           '</div>' +
 
           '<div v-if="hasSec" :class="cls.second" @wheel.prevent.stop="scroll($event, secondObj)">' +
-            '<span @click="next(secondObj)"></span>' +
+            '<span @click.stop="next(secondObj)"></span>' +
             '<kf-circle-slide :class="cls.slide" axis="x" :current="secondObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="secondObj.idx == $index" v-for="h in secondObj.els" v-text="h + \'秒\'"></span>' +
             '</kf-circle-slide>' +
-            '<span @click="prev(secondObj)"></span>' +
+            '<span @click.stop="prev(secondObj)"></span>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -323,7 +323,7 @@ vue.component('kf-date-picker', {
   computed: {
     datimeCls: function() {
       let res = {};
-      res[cls.hidden] = !this.visible;
+      res[cls.visible] = this.visible;
       res[cls.left] = this.flip.left;
       res[cls.right] = this.flip.right;
       res[cls.top] = this.flip.top;
@@ -347,11 +347,11 @@ vue.component('kf-date-picker', {
     }
   },
   template:
-    '<div :class="cls.dtpicker">' +
-      '<input type="text" @click="visible = true" :value="moment" readonly/>' +
-      '<div :class="cls.bg" v-show="visible" @click="visible = false"></div>' +
+    '<div :class="cls.dtpicker" @click.stop="visible = true">' +
+      '<input type="text" :value="moment" readonly/>' +
+      '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
       '<kf-datime kf-datime :class="datimeCls" :moment="moment" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
-      '<i class="fa fa-times" @click="clear()"></i>' +
+      '<i class="fa fa-times" @click.stop="clear()"></i>' +
     '</div>'
 });
 
@@ -407,7 +407,7 @@ vue.component('kf-date-ranger', {
   computed: {
     rangeCls: function() {
       let res = {};
-      res[cls.hidden] = !this.visible;
+      res[cls.visible] = this.visible;
       res[cls.left] = this.flip.left;
       res[cls.right] = this.flip.right;
       res[cls.top] = this.flip.top;
@@ -451,18 +451,18 @@ vue.component('kf-date-ranger', {
     },
   },
   template:
-    '<div :class="cls.dtranger">' +
-      '<input type="text" @click="visible = true" :value="rangeStr" readonly/>' +
-      '<div :class="cls.bg" v-show="visible" @click="visible = false"></div>' +
+    '<div :class="cls.dtranger" @click.stop="visible = true">' +
+      '<input type="text" :value="rangeStr" readonly/>' +
+      '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
       '<div :class="rangeCls">' +
         '<kf-datime kf-datime name="start" :moment="start" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
         '<kf-datime kf-datime name="end" :moment="end" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
         '<div :class="cls.confirm">' +
           '<span v-show="rangerr" v-text="rangerr"></span>' +
-          '<button @click="chooseRange()">确定</button>' +
+          '<button @click.stop="chooseRange()">确定</button>' +
         '</div>' +
       '</div>' +
-      '<i class="fa fa-times" @click="clear()"></i>' +
+      '<i class="fa fa-times" @click.stop="clear()"></i>' +
     '</div>'
 });
 

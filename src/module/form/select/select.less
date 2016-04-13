@@ -1,5 +1,4 @@
 @import (reference) '../../base';
-@import (reference) '../../caret/caret';
 
 .kf-select(@color, @inverse: false) {
   & when (@inverse = false) {
@@ -76,6 +75,7 @@
 
   > ul.visible {
     visibility: visible;
+    opacity: 1;
   }
 
   > ul {
@@ -88,10 +88,12 @@
     left: 0;
     top: 0;
     transform: translateX(10px) translateY(10px);
-    visibility: hidden;
     box-shadow: 2px 2px @lgray;
     border: 1px solid @lgray;
     color: black;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .2s linear, visibility .2s linear;
 
     li {
       padding: 5px;

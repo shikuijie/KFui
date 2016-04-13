@@ -8,7 +8,7 @@
                      @size表示checkbox的大小
                      @color表示checked状态下checkbox的前景色}
 */
-.kf-checkbox(@size, @color) {
+.kf-checkbox(@size, @color, @borderColor: @dgray) {
   & > input {
     width: @size;
     height: @size;
@@ -18,11 +18,16 @@
     }
   }
 
+  & > i {
+    font-size: @size;
+  }
+
   & > span {
+    color: @borderColor;
     font-size: @size + 2;
   }
 
-  & > i {
+  & > label {
     font-size: @size;
   }
 }
@@ -42,15 +47,17 @@
     z-index: 1;
   }
 
-  > span {
-    color: @dgray;
+  > .box {
+    background-color: white;
   }
 
-  > i {
+  > .check {
     position: absolute;
     left: 2px;
     top: 50%;
     transform: translateY(-50%);
+    transition: color .2s linear;
+    color: transparent;
   }
 
   > label {
@@ -67,9 +74,9 @@
                      @color表示checked状态下checkbox的前景色
                      @itemGap表示每个checkbox之间的间隔}
 */
-.kf-checkbox-group(@size, @color, @gap) {
+.kf-checkbox-group(@size, @color, @gap, @borderColor: @dgray) {
   & > span {
-    .kf-checkbox(@size, @color);
+    .kf-checkbox(@size, @color, @borderColor);
     margin-right: @gap;
   }
 }

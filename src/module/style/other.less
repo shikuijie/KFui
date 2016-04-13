@@ -1,3 +1,15 @@
+.clearfix() {
+  &:before {
+    display: table;
+    content: " ";
+  }
+  &:after {
+    display: table;
+    content: " ";
+    clear: both;
+  }
+}
+
 .kf-tip-arrow(@dir, @color, @width) {
   width: 0;
   height: 0;

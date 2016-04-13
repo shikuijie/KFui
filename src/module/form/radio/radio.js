@@ -28,9 +28,9 @@ vue.component('kf-radio-group', {
     '<span :class="cls.rdgrp">' +
       '<span v-for="label in labels">' +
         '<input type="radio" v-model="model" :value="values[$index]"/>' +
-        '<i class="fa fa-circle-o" v-show="model !== values[$index]"></i>' +
-        '<i class="fa fa-dot-circle-o" v-show="model === values[$index]"></i>' +
-        '<label v-kf-code="label"></label>' +
+        '<i class="fa fa-dot-circle-o"></i>' +
+        '<span class="fa fa-circle-o"></span>' +
+        '<label v-text="label"></label>' +
       '</span>' +
     '</span>'
 })
