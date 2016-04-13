@@ -1,15 +1,15 @@
-@import (reference) '../../base';
+@import (reference) '../../style/color';
 /**
   @kf-comment-type  {LESS mixin}
   @kf-comment-name  {kf-radio-group}
-  @kf-comment-how   {.kf-radio-group(@size, @color, @gap, @bcolor: @dgray)}
+  @kf-comment-how   {.kf-radio-group(@size, @color, @gap, @bcolor: @gray)}
   @kf-comment-what  {设置kf-radio-group组件的样式.
                      @size表示radio的大小
                      @color表示选取状态下中心圆点的颜色
                      @gap相邻radio之间的间距
-                     @bcolor表示radio圆圈的颜色, 默认是@dgray}
+                     @bcolor表示radio圆圈的颜色, 默认是@gray}
 */
-.kf-radio-group(@size, @color, @gap, @bcolor: @dgray) {
+.kf-radio-group(@size, @color, @gap, @bcolor: @gray) {
   & > span {
     margin-right: @gap;
     > input[type=radio] {

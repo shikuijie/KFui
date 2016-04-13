@@ -1,4 +1,5 @@
-@import (reference) '../../base';
+@import (reference) '../../style/color';
+@import (reference) '../../style/caret';
 @import (reference) '../../slide/slide';
 
 .kf-datime(@color) {
@@ -30,7 +31,7 @@
 }
 
 .datime {
-  border: 1px solid @lgray;
+  border: 1px solid @light;
   width: 180px;
   padding: 8px 5px 5px;
   position: relative;
@@ -50,7 +51,7 @@
       right: 5px;
 
       > .title > span:last-child {
-        .kf-tip-arrow(down, @lwarm, 3px);
+        .kf-tip-arrow(down, @dark, 3px);
       }
 
       > .slides {
@@ -64,7 +65,7 @@
       > span {
         display: inline-block;
         vertical-align: middle;
-        color: @lwarm;
+        color: @dark;
         margin-right: 2px;
       }
 
@@ -72,12 +73,12 @@
         display: inline-block;
         cursor: pointer;
         &:first-of-type {
-          .kf-tip-arrow(left, @lwarm, 5px);
+          .kf-tip-arrow(left, @dark, 5px);
           margin-right: 3px;
         }
         &:last-of-type {
           margin-left: 3px;
-          .kf-tip-arrow(right, @lwarm, 5px);
+          .kf-tip-arrow(right, @dark, 5px);
         }
       }
     }
@@ -89,7 +90,7 @@
 
     > .slides {
       top: 100%;
-      box-shadow: 3px 3px @lgray;
+      box-shadow: 3px 3px @light;
 
       text-align: center;
       position: absolute;
@@ -98,7 +99,7 @@
       height: 100px;
       z-index: 1;
       background-color: white;
-      border: 1px solid @lgray;
+      border: 1px solid @light;
       margin-left: -2px;
       padding: 10px 0;
       visibility: hidden;
@@ -168,7 +169,7 @@
             transition: font .5s linear, color .5s linear;
 
             &:not([kf-datime-active]) {
-              color: @dgray;
+              color: @gray;
             }
 
             &[kf-datime-active] {
@@ -197,7 +198,7 @@
       cursor: pointer;
       box-sizing: border-box;
       padding: 2px;
-      color: @lwarm;
+      color: @dark;
 
       > div {
         padding: 5px 0;
@@ -205,7 +206,7 @@
       }
 
       &.invalid {
-        color: @dgray;
+        color: @gray;
       }
 
       &[kf-datime-active] > div {
@@ -219,14 +220,14 @@
 
         &[kf-datime-active] {
           > div {
-            background-color: @lgray !important;
-            color: @lwarm;
+            background-color: @light !important;
+            color: @dark;
             border-radius: 0;
           }
         }
 
         > div {
-          background-color: @lgray;
+          background-color: @light;
         }
       }
     }
@@ -276,7 +277,7 @@
   > i {
     position: absolute;
     right: 5px;
-    color: @lgray;
+    color: @light;
     height: 12px;
     line-height: 12px;
     top: 50%;
@@ -297,16 +298,16 @@
   margin-top: 3px;
 
   &.left.bottom {
-    box-shadow: 2px 2px @lgray;
+    box-shadow: 2px 2px @light;
   }
   &.left.top {
-    box-shadow: 2px -2px @lgray;
+    box-shadow: 2px -2px @light;
   }
   &.right.bottom {
-    box-shadow: -2px 2px @lgray;
+    box-shadow: -2px 2px @light;
   }
   &.right.top {
-    box-shadow: -2px -2px @lgray;
+    box-shadow: -2px -2px @light;
   }
 
   &.right {
@@ -336,7 +337,7 @@
   > .range {
     width: 400px;
     padding: 5px;
-    border: 1px solid @lgray;
+    border: 1px solid @light;
 
     > .datime {
       display: inline-block;
@@ -348,12 +349,12 @@
     > .confirm {
       text-align: right;
       > span {
-        color: @ldanger;
+        color: @red;
         margin-right: 10px;
       }
 
       > button {
-        // background-color: @lprimary;
+        // background-color: @primary;
         color: white;
         border-radius: 5px;
         padding: 5px 10px;

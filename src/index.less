@@ -1,4 +1,3 @@
-@import (reference) './module/base';
 @import (reference) './module/menu/menu';
 @import (reference) './module/form/checkbox/checkbox';
 @import (reference) './module/form/radio/radio';
@@ -10,7 +9,7 @@
 .kf-menu-item(menu, @dir, @pos) {
   font-size: 20px;
   color: white;
-  background-color: @dwarm;
+  background-color: @dark;
   width: 180px;
   height: 60px;
   line-height: 60px  ;
@@ -18,15 +17,15 @@
   padding-right: 15px;
 
   &:hover {
-    color: @lprimary;
+    color: @primary;
   }
 
   & when (@dir = horizontal) and (not (@pos = last)) {
-    border-right: 1px solid @lfail;
+    border-right: 1px solid @gray;
   }
 
   & when (@dir = vertical) and (not (@pos = last)) {
-    border-bottom: 1px solid @lfail;
+    border-bottom: 1px solid @gray;
   }
 
   & when (@dir = horizontal) and (@pos = first) {
@@ -52,7 +51,7 @@
 
 .kf-select-item(select, @type) {
   & when (@type = common) {
-    background-color: @lwarm;
+    background-color: @dark;
     padding: 3px 6px;
 
     > div {
@@ -66,7 +65,7 @@
   }
 
   & when (@type = top) {
-    background-color: @lprimary;
+    background-color: @primary;
     border-radius: 5px;
   }
   & when (@type = first) {
@@ -81,10 +80,10 @@
   }
 
   & > div when (@type = selected) {
-    background-color: @lprimary;
+    background-color: @primary;
   }
   & > div when (@type = hover) {
-    background-color: @lprimary;
+    background-color: @primary;
   }
 }
 
@@ -97,8 +96,8 @@
   }
 
   & when (@type = dragging) {
-    border: 1px solid blue;
-    background-color: @dgray;
+    border: 1px solid @blue;
+    background-color: @gray;
     &:hover {
       cursor: pointer;
     }
@@ -106,20 +105,16 @@
 }
 
 :global {
-  html, body {
-    margin: 0;
-    padding: 0;
-  }
   body {
     padding: 10px;
   }
 
   .menu {
     @media (max-width: 600px) {
-      .kf-menu(menu, vertical, left, 5px, @dwarm);
+      .kf-menu(menu, vertical, left, 5px, @dark);
     }
     @media (min-width: 600px) {
-      .kf-menu(menu, horizontal, left, 5px, @dwarm);
+      .kf-menu(menu, horizontal, left, 5px, @dark);
     }
   }
   .ttable {
@@ -129,30 +124,30 @@
   }
 
   .checkbox {
-    .kf-checkbox(12px, @lprimary);
+    .kf-checkbox(12px, @primary);
   }
 
   .checkbox-group {
     width: 100%;
-    .kf-checkbox-group(12px, @lprimary, 5px);
+    .kf-checkbox-group(12px, @primary, 5px);
   }
 
   .radio-group {
     width: 100%;
-    .kf-radio-group(15px, @lprimary, 10px, @dgray);
+    .kf-radio-group(15px, @primary, 10px, @gray);
   }
 
   .aselect {
-    .kf-select(@lprimary, true);
+    .kf-select(@primary, true);
     min-width: 60px;
   }
   .select {
-    .kf-select(@lprimary);
+    .kf-select(@primary);
   }
 
   .tree {
     .kf-tree-size(20px, 14px, 10px, 5px);
-    .kf-tree-color(@dgray, white);
+    .kf-tree-color(@gray, white);
     .kf-tree-title(default);
   }
 
@@ -175,7 +170,7 @@
     }
 
     > .addon {
-      background-color: @lprimary;
+      background-color: @primary;
       color: white;
       white-space: nowrap;
     }
@@ -186,12 +181,12 @@
   }
 
   .dtselect > .input {
-    .kf-datime-picker(@lprimary);
+    .kf-datime-picker(@primary);
   }
   .datepicker > .input {
-    .kf-datime-picker(@lprimary);
+    .kf-datime-picker(@primary);
   }
   .dateranger > .input {
-    .kf-datime-ranger(@lprimary);
+    .kf-datime-ranger(@primary);
   }
 }

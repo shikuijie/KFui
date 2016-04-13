@@ -53,6 +53,21 @@
   <br>
   <span v-text="start + ' ' + end"></span>
 
+  <br>
+  <button class="kf-btn kf-btn-dark kf-btn-xs">BUTTON</button>
+  <button class="kf-btn kf-btn-primary kf-btn-sm">BUTTON</button>
+  <button class="kf-btn kf-btn-light kf-btn-lg">BUTTON</button>
+  <br>
+  <div class="kf-btn-group">
+    <button class="kf-btn kf-btn-primary">BUTTON1</button>
+    <button class="kf-btn kf-btn-red">BUTTON2</button>
+    <button class="kf-btn kf-btn-blue">BUTTON3</button>
+    <button class="kf-btn kf-btn-green">BUTTON3</button>
+    <button class="kf-btn kf-btn-dark">BUTTON3</button>
+    <button class="kf-btn kf-btn-light">BUTTON3</button>
+    <button class="kf-btn kf-btn-orange">BUTTON3</button>
+  </div>
+
   <script>
     System.import('./index.js');
   </script>

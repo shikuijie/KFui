@@ -1,0 +1,150 @@
+@import (reference) './color';
+
+.kf-btn() {
+  @len: length(@colors);
+
+  .color(@i: 1) when (@i <= @len) {
+    @c: extract(@colors, @i);
+
+    .kf-btn-@{c} {
+      background-color: @@c;
+      & when not (@c = light) {
+        color: white;
+      }
+      &:focus {
+        background-color: darken(@@c, 10%);
+      }
+    }
+
+    .color(@i + 1);
+  }
+
+  .bcolor(@i: 1) when (@i <= @len) {
+    @c: extract(@colors, @i);
+    .kf-btn-@{c} {
+      border-left: 1px solid darken(@@c, 10%);
+    }
+
+    .bcolor(@i + 1);
+  }
+
+  @vpad-xs: 1px;
+  @hpad-xs: 5px;
+  @br-xs: 3px;
+  @fs-xs: 12px;
+
+  @vpad-sm: 5px;
+  @hpad-sm: 10px;
+  @br-sm: 3px;
+  @fs-sm: 12px;
+
+  @vpad: 6px;
+  @hpad: 12px;
+  @br: 4px;
+  @fs: 14px;
+
+  @vpad-lg: 10px;
+  @hpad-lg: 16px;
+  @br-lg: 6px;
+  @fs-lg: 16px;
+
+  /** button **/
+  :global {
+    .kf-btn {
+      display: inline-block;
+      padding: @vpad @hpad;
+      border: 1px solid transparent;
+      font-size: @fs;
+      border-radius: @br;
+      vertical-align: middle;
+      text-align: center;
+      white-space: nowrap;
+      line-height: 4/3;
+    }
+
+    .kf-btn-lg {
+      padding: @vpad-lg @hpad-lg;
+      font-size: @fs-lg;
+      border-radius: @br-lg;
+    }
+
+    .kf-btn-sm {
+      padding: @vpad-sm @hpad-sm;
+      font-size: @fs-sm;
+      border-radius: @br-sm;
+    }
+
+    .kf-btn-xs {
+      padding: @vpad-xs @hpad-xs;
+      font-size: @fs-xs;
+      border-radius: @br-xs;
+    }
+
+    .color();
+  }
+  /** button **/
+
+  /** button group **/
+  :global {
+    .kf-btn-group {
+      display: inline-block;
+      .bcolor();
+
+      > .kf-btn {
+        border-radius: 0;
+        &:first-child {
+          border-top-left-radius: @br;
+          border-bottom-left-radius: @br;
+          border-left: none;
+        }
+
+        &:last-child {
+          border-top-right-radius: @br;
+          border-bottom-right-radius: @br;
+        }
+      }
+
+      > .kf-btn-xs {
+        border-radius: 0;
+        &:first-child {
+          border-top-left-radius: @br;
+          border-bottom-left-radius: @br;
+        }
+
+        &:last-child {
+          border-top-right-radius: @br;
+          border-bottom-right-radius: @br;
+        }
+      }
+
+      > .kf-btn-sm {
+        border-radius: 0;
+        &:first-child {
+          border-top-left-radius: @br-sm;
+          border-bottom-left-radius: @br-sm;
+        }
+
+        &:last-child {
+          border-top-right-radius: @br-sm;
+          border-bottom-right-radius: @br-sm;
+        }
+      }
+
+      > .kf-btn-lg {
+        border-radius: 0;
+        &:first-child {
+          border-top-left-radius: @br-lg;
+          border-bottom-left-radius: @br-lg;
+        }
+
+        &:last-child {
+          border-top-right-radius: @br-lg;
+          border-bottom-right-radius: @br-lg;
+        }
+      }
+    }
+  }
+  /** button group **/
+}
+
+.kf-btn();

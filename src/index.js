@@ -1,7 +1,7 @@
 import vue from 'vue';
 import 'font-awesome';
+import './module/base.css!';
 import './index.css!';
-import './module/base';
 import './module/menu/menu';
 import './module/form/checkbox/checkbox';
 import './module/form/radio/radio';
