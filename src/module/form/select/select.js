@@ -47,9 +47,7 @@ vue.component('kf-select', {
   },
   template:
     '<div :class="cls.select" @click="visible = true">' +
-      '<div :class="cls.input">' +
-        '<input readonly type="text" :value="selectedLabel">' +
-      '</div>' +
+      '<input readonly type="text" :value="selectedLabel">' +
       '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
       '<span></span>' +
       '<ul :class="getOptionsCls()">' +

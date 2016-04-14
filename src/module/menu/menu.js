@@ -9,14 +9,19 @@ vue.component('kf-menu', {
     'kf-menu-item': {
       props: ['itemKey', 'submenuKey', 'itemData'],
       template:
-        '<li :kf-submenu="!!itemData[submenuKey]">' +
-          '<div v-kf-code="itemData[itemKey]"></div>' +
+        '<li :class="getItemCls()">' +
+          '<a v-text="itemData[itemKey]"></a>' +
           '<div v-if="itemData[submenuKey]"></div>' +
           '<kf-menu v-if="itemData[submenuKey]" ' +
                   ':menu="itemData" ' +
                   ':item-key="itemKey" ' +
                   ':submenu-key="submenuKey"></kf-menu>' +
         '</li>',
+      methods: {
+        getItemCls: function() {
+          return this.itemData[this.submenuKey] && cls.submenu || '';
+        }
+      },
       data: function() {
         var itemData = this.itemData;
         var children = itemData[this.submenuKey];

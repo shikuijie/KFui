@@ -6,190 +6,19 @@
 @import (reference) './module/slide/slide';
 @import (reference) './module/form/date/date';
 
-.kf-menu-item(menu, @dir, @pos) {
-  font-size: 20px;
-  color: white;
-  background-color: @dark;
-  width: 180px;
-  height: 60px;
-  line-height: 60px  ;
-  padding-left: 15px;
-  padding-right: 15px;
-
-  &:hover {
-    color: @primary;
-  }
-
-  & when (@dir = horizontal) and (not (@pos = last)) {
-    border-right: 1px solid @gray;
-  }
-
-  & when (@dir = vertical) and (not (@pos = last)) {
-    border-bottom: 1px solid @gray;
-  }
-
-  & when (@dir = horizontal) and (@pos = first) {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-  }
-
-  & when (@dir = horizontal) and (@pos = last) {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-  }
-
-  & when (@dir = vertical) and (@pos = first) {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-
-  & when (@dir = vertical) and (@pos = last) {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-  }
-}
-
-.kf-select-item(select, @type) {
-  & when (@type = common) {
-    background-color: @dark;
-    padding: 3px 6px;
-
-    > div {
-      color: white;
-      width: 200px;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 3px;
-      padding-left: 10px;
-    }
-  }
-
-  & when (@type = top) {
-    background-color: @primary;
-    border-radius: 5px;
-  }
-  & when (@type = first) {
-    padding-top: 6px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  & when (@type = last) {
-    padding-bottom: 6px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-  }
-
-  & > div when (@type = selected) {
-    background-color: @primary;
-  }
-  & > div when (@type = hover) {
-    background-color: @primary;
-  }
-}
-
-.kf-tree-item(default, @type) {
-  & when (@type = common) {
-  }
-
-  & when (@type = dragover) {
-    border: 1px solid red;
-  }
-
-  & when (@type = dragging) {
-    border: 1px solid @blue;
-    background-color: @gray;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
 :global {
   body {
     padding: 10px;
   }
 
   .menu {
-    @media (max-width: 600px) {
-      .kf-menu(menu, vertical, left, 5px, @dark);
-    }
-    @media (min-width: 600px) {
-      .kf-menu(menu, horizontal, left, 5px, @dark);
-    }
-  }
-  .ttable {
-    tr > td:first-child .fa {
-      margin-right: 5px;
-    }
+    .kf-menu(6px, 12px, 14px, 5px, @primary, @gray);
+    width: 240px;
   }
 
-  .checkbox {
-    .kf-checkbox(12px, @primary);
-  }
-
-  .checkbox-group {
-    width: 100%;
-    .kf-checkbox-group(12px, @primary, 5px);
-  }
-
-  .radio-group {
-    width: 100%;
-    .kf-radio-group(15px, @primary, 10px, @gray);
-  }
-
-  .aselect {
-    .kf-select(@primary, true);
-    min-width: 60px;
-  }
   .select {
     .kf-select(@primary);
   }
-
-  .tree {
-    .kf-tree-size(20px, 14px, 10px, 5px);
-    .kf-tree-color(@gray, white);
-    .kf-tree-title(default);
-  }
-
-  .input-group {
-    display: table;
-    font-size: 12px;
-
-    > .input,
-    > .addon {
-      display: table-cell;
-      padding: 8px;
-      &:first-child {
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      &:last-child {
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-      }
-    }
-
-    > .addon {
-      background-color: @primary;
-      color: white;
-      white-space: nowrap;
-    }
-
-    > .input {
-      width: 100%;
-    }
-  }
-
-  .dtselect > .input {
-    .kf-datime-picker(@primary);
-  }
-  .datepicker > .input {
-    .kf-datime-picker(@primary);
-  }
-  .dateranger > .input {
-    .kf-datime-ranger(@primary);
-  }
-
   .kf-btn-group {
     margin-bottom: 5px;
   }

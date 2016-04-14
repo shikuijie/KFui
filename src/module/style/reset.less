@@ -2,6 +2,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 html, body {
   margin: 0;
@@ -25,4 +26,18 @@ input[type=button] {
   &:focus {
     outline: none;
   }
+}
+
+input:not([type=button]),
+input:not([type=reset]),
+input:not([type=submit]),
+input:not([type=checkbox]),
+input:not([type=radio]) {
+  background-color: transparent;
+  appearance: none;
+  font-size: inherit;
+  border: none;
+  padding: 0;
+  outline: none;
+  width: 100%;
 }

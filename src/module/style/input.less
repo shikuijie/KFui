@@ -1,0 +1,101 @@
+@import (reference) './color';
+@import (reference) './size';
+
+.kf-input() {
+  @colorLen: length(@colors);
+
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+
+    .kf-input-@{c} {
+      border: 1px solid @@c;
+    }
+
+    .color(@i + 1);
+  }
+
+  .gcolor(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+
+    .kf-input-group-@{c} {
+      > .kf-input {
+        border: 1px solid @@c;
+      }
+      > .kf-input-addon {
+        background-color: @@c;
+        & when not (@c = light) {
+          color: white;
+        }
+      }
+    }
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @br: extract(@brs, @i);
+    @fs: extract(@fss, @i);
+
+    .kf-input-@{s} {
+      padding: @@vpad @@hpad;
+      font-size: @@fs;
+      border-radius: @@br;
+    }
+
+    .size(@i + 1);
+  }
+
+  .gsize(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @br: extract(@brs, @i);
+    @fs: extract(@fss, @i);
+
+    .kf-input-group-@{s} {
+      > .kf-input,
+      > .kf-input-addon {
+        padding: @@vpad @@hpad;
+        font-size: @@fs;
+
+        &:first-child {
+          border-top-left-radius: @@br;
+          border-bottom-left-radius: @@br;
+        }
+        &:last-child {
+          border-top-right-radius: @@br;
+          border-bottom-right-radius: @@br;
+        }
+      }
+    }
+
+    .gsize(@i + 1);
+  }
+
+  :global {
+    .kf-input {
+      display: inline-block;
+    }
+
+    .color();
+    .size();
+
+    .kf-input-group {
+      display: table;
+
+      > .kf-input,
+      > .kf-input-addon {
+        display: table-cell;
+        border-radius: 0;
+        white-space: nowrap;
+      }
+    }
+
+    .gcolor();
+    .gsize();
+  }
+}
+
+.kf-input();

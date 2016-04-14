@@ -1,9 +1,10 @@
 @import (reference) './color';
+@import (reference) './size';
 
 .kf-btn() {
-  @len: length(@colors);
+  @colorLen: length(@colors);
 
-  .color(@i: 1) when (@i <= @len) {
+  .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);
 
     .kf-btn-@{c} {
@@ -19,132 +20,78 @@
     .color(@i + 1);
   }
 
-  .bcolor(@i: 1) when (@i <= @len) {
+  .gcolor(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);
-    .kf-btn-@{c} {
+    > .kf-btn-@{c} {
       border-left: 1px solid darken(@@c, 10%);
     }
 
-    .bcolor(@i + 1);
+    .gcolor(@i + 1);
   }
 
-  @vpad-xs: 1px;
-  @hpad-xs: 5px;
-  @br-xs: 3px;
-  @fs-xs: 12px;
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @br: extract(@brs, @i);
+    @fs: extract(@fss, @i);
 
-  @vpad-sm: 5px;
-  @hpad-sm: 10px;
-  @br-sm: 3px;
-  @fs-sm: 12px;
+    .kf-btn-@{s} {
+      padding: @@vpad @@hpad;
+      font-size: @@fs;
+      border-radius: @@br;
+    }
 
-  @vpad: 6px;
-  @hpad: 12px;
-  @br: 4px;
-  @fs: 14px;
+    .size(@i + 1);
+  }
 
-  @vpad-lg: 10px;
-  @hpad-lg: 16px;
-  @br-lg: 6px;
-  @fs-lg: 16px;
+  .gsize(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @br: extract(@brs, @i);
 
-  /** button **/
+    > .kf-btn-@{s} {
+      &:first-child {
+        border-top-left-radius: @@br;
+        border-bottom-left-radius: @@br;
+      }
+      &:last-child {
+        border-top-right-radius: @@br;
+        border-bottom-right-radius: @@br;
+      }
+    }
+
+    .gsize(@i + 1);
+  }
+
   :global {
     .kf-btn {
       display: inline-block;
-      padding: @vpad @hpad;
       border: 1px solid transparent;
-      font-size: @fs;
-      border-radius: @br;
       vertical-align: middle;
       text-align: center;
       white-space: nowrap;
-      line-height: 4/3;
+      line-height: 1;
     }
 
-    .kf-btn-lg {
-      padding: @vpad-lg @hpad-lg;
-      font-size: @fs-lg;
-      border-radius: @br-lg;
-    }
-
-    .kf-btn-sm {
-      padding: @vpad-sm @hpad-sm;
-      font-size: @fs-sm;
-      border-radius: @br-sm;
-    }
-
-    .kf-btn-xs {
-      padding: @vpad-xs @hpad-xs;
-      font-size: @fs-xs;
-      border-radius: @br-xs;
-    }
-
+    .size();
     .color();
   }
-  /** button **/
 
-  /** button group **/
   :global {
     .kf-btn-group {
       display: inline-block;
-      .bcolor();
-
       > .kf-btn {
         border-radius: 0;
         &:first-child {
-          border-top-left-radius: @br;
-          border-bottom-left-radius: @br;
           border-left: none;
         }
-
-        &:last-child {
-          border-top-right-radius: @br;
-          border-bottom-right-radius: @br;
-        }
       }
 
-      > .kf-btn-xs {
-        border-radius: 0;
-        &:first-child {
-          border-top-left-radius: @br;
-          border-bottom-left-radius: @br;
-        }
-
-        &:last-child {
-          border-top-right-radius: @br;
-          border-bottom-right-radius: @br;
-        }
-      }
-
-      > .kf-btn-sm {
-        border-radius: 0;
-        &:first-child {
-          border-top-left-radius: @br-sm;
-          border-bottom-left-radius: @br-sm;
-        }
-
-        &:last-child {
-          border-top-right-radius: @br-sm;
-          border-bottom-right-radius: @br-sm;
-        }
-      }
-
-      > .kf-btn-lg {
-        border-radius: 0;
-        &:first-child {
-          border-top-left-radius: @br-lg;
-          border-bottom-left-radius: @br-lg;
-        }
-
-        &:last-child {
-          border-top-right-radius: @br-lg;
-          border-bottom-right-radius: @br-lg;
-        }
-      }
+      .gcolor();
+      .gsize();
     }
   }
-  /** button group **/
 }
 
 .kf-btn();
