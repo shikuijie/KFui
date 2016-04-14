@@ -54,18 +54,57 @@
   <span v-text="start + ' ' + end"></span>
 
   <br>
-  <button class="kf-btn kf-btn-dark kf-btn-xs">BUTTON</button>
-  <button class="kf-btn kf-btn-primary kf-btn-sm">BUTTON</button>
-  <button class="kf-btn kf-btn-light kf-btn-lg">BUTTON</button>
   <br>
   <div class="kf-btn-group">
-    <button class="kf-btn kf-btn-primary">BUTTON1</button>
-    <button class="kf-btn kf-btn-red">BUTTON2</button>
-    <button class="kf-btn kf-btn-blue">BUTTON3</button>
-    <button class="kf-btn kf-btn-green">BUTTON3</button>
-    <button class="kf-btn kf-btn-dark">BUTTON3</button>
-    <button class="kf-btn kf-btn-light">BUTTON3</button>
-    <button class="kf-btn kf-btn-orange">BUTTON3</button>
+    <button class="kf-btn kf-btn-primary kf-btn-lg">BUTTON</button>
+    <button class="kf-btn kf-btn-dark kf-btn-lg">BUTTON</button>
+    <button class="kf-btn kf-btn-light kf-btn-lg">BUTTON</button>
+    <button class="kf-btn kf-btn-red kf-btn-lg">BUTTON</button>
+    <button class="kf-btn kf-btn-blue kf-btn-lg">BUTTON</button>
+    <button class="kf-btn kf-btn-green kf-btn-lg">BUTTON</button>
+    <button class="kf-btn kf-btn-orange kf-btn-lg">BUTTON</button>
+    <button class="kf-btn kf-btn-yellow kf-btn-lg">BUTTON</button>
+    <button class="kf-btn kf-btn-purple kf-btn-lg">BUTTON</button>
+    <button class="kf-btn kf-btn-gray kf-btn-lg">BUTTON</button>
+  </div>
+  <br>
+  <div class="kf-btn-group">
+    <button class="kf-btn kf-btn-primary">BUTTON</button>
+    <button class="kf-btn kf-btn-dark">BUTTON</button>
+    <button class="kf-btn kf-btn-light">BUTTON</button>
+    <button class="kf-btn kf-btn-red">BUTTON</button>
+    <button class="kf-btn kf-btn-blue">BUTTON</button>
+    <button class="kf-btn kf-btn-green">BUTTON</button>
+    <button class="kf-btn kf-btn-orange">BUTTON</button>
+    <button class="kf-btn kf-btn-yellow">BUTTON</button>
+    <button class="kf-btn kf-btn-purple">BUTTON</button>
+    <button class="kf-btn kf-btn-gray">BUTTON</button>
+  </div>
+  <br>
+  <div class="kf-btn-group">
+    <button class="kf-btn kf-btn-primary kf-btn-sm">BUTTON</button>
+    <button class="kf-btn kf-btn-dark kf-btn-sm">BUTTON</button>
+    <button class="kf-btn kf-btn-light kf-btn-sm">BUTTON</button>
+    <button class="kf-btn kf-btn-red kf-btn-sm">BUTTON</button>
+    <button class="kf-btn kf-btn-blue kf-btn-sm">BUTTON</button>
+    <button class="kf-btn kf-btn-green kf-btn-sm">BUTTON</button>
+    <button class="kf-btn kf-btn-orange kf-btn-sm">BUTTON</button>
+    <button class="kf-btn kf-btn-yellow kf-btn-sm">BUTTON</button>
+    <button class="kf-btn kf-btn-purple kf-btn-sm">BUTTON</button>
+    <button class="kf-btn kf-btn-gray kf-btn-sm">BUTTON</button>
+  </div>
+  <br>
+  <div class="kf-btn-group">
+    <button class="kf-btn kf-btn-primary kf-btn-xs">BUTTON</button>
+    <button class="kf-btn kf-btn-dark kf-btn-xs">BUTTON</button>
+    <button class="kf-btn kf-btn-light kf-btn-xs">BUTTON</button>
+    <button class="kf-btn kf-btn-red kf-btn-xs">BUTTON</button>
+    <button class="kf-btn kf-btn-blue kf-btn-xs">BUTTON</button>
+    <button class="kf-btn kf-btn-green kf-btn-xs">BUTTON</button>
+    <button class="kf-btn kf-btn-orange kf-btn-xs">BUTTON</button>
+    <button class="kf-btn kf-btn-yellow kf-btn-xs">BUTTON</button>
+    <button class="kf-btn kf-btn-purple kf-btn-xs">BUTTON</button>
+    <button class="kf-btn kf-btn-gray kf-btn-xs">BUTTON</button>
   </div>
 
   <script>
