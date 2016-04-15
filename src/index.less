@@ -5,21 +5,33 @@
 @import (reference) './module/tree/tree';
 @import (reference) './module/slide/slide';
 @import (reference) './module/form/date/date';
+@import (reference) './module/layout/layout';
 
 :global {
-  body {
+  .layout {
+    .kf-layout(6vh, 5vh, 200px, 100px);
+  }
+
+  div[slot="header"],
+  div[slot="footer"] {
+    height: 100%;
+    background-color: @dark;
+  }
+
+  div[slot="sidebar.left"] {
+    .menu {
+      .kf-menu(12px, 16px, 18px, 5px, @dark);
+      width: 200px;
+    }
+  }
+
+  .content {
     padding: 10px;
-  }
-
-  .menu {
-    .kf-menu(6px, 12px, 14px, 5px, @primary, @gray);
-    width: 240px;
-  }
-
-  .select {
-    .kf-select(@primary);
-  }
-  .kf-btn-group {
-    margin-bottom: 5px;
+    .select {
+      .kf-select(@primary);
+    }
+    .kf-btn-group {
+      margin-bottom: 5px;
+    }
   }
 }

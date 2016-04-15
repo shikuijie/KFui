@@ -11,27 +11,33 @@ import {kfTable} from './module/table/table';
 import {kfTree} from './module/tree/tree';
 import './module/form/date/date';
 import './module/slide/slide';
+import './module/layout/layout';
 
 new vue({
   el: 'body',
+  methods: {
+    toggleSidebar: function(side) {
+      this.$broadcast('kf-layout-toggle', side);
+    }
+  },
   data: {
     menuData: {
       submenu: [{
         item: 'Item0'
       }, {
-        item: 'Item1',
-        submenu: [{
-          item: 'Item10',
-          submenu: [{
-            item: 'Item100'
-          }, {
-            item: 'Item101'
-          }]
-        }, {
-          item: 'Item11'
-        }]
+        item: 'Item1'
       }, {
         item: 'Item2'
+      }, {
+        item: 'Item1'
+      }, {
+        item: 'Item2'
+      }, {
+        item: 'Item1'
+      }, {
+        item: 'Item2'
+      }, {
+        item: 'Item1'
       }]
     }
   }

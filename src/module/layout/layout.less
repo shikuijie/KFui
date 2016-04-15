@@ -1,0 +1,52 @@
+@import (reference) '../style/color';
+@import (reference) '../style/other';
+
+.kf-layout(@vhh, @vhf, @lsbw, @rsbw) {
+}
+
+.wrapper {
+  > header {
+    height: 5vh;
+  }
+  > footer {
+    height: 5vh;
+  }
+
+  > .body {
+    .kf-clearfix();
+    position: relative;
+    min-height: 90vh;
+
+    > aside:first-child {
+      float: left;
+      width: 200px;
+    }
+    > aside:last-child {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100px;
+    }
+
+    > main {
+      min-height: 90vh;
+      border-left: 200px solid @dark;
+    }
+  }
+
+  &[kf-left-hidden] {
+    > .body > main {
+      border-left-width: 0;
+    }
+    > .body > aside:first-child {
+      overflow: hidden;
+      width: 0;
+    }
+  }
+  &[kf-right-hidden] {
+    > .body > aside:last-child {
+      overflow: hidden;
+      width: 0;
+    }
+  }
+}

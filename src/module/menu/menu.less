@@ -1,17 +1,17 @@
 @import (reference) '../style/color';
 @import (reference) '../style/caret';
 
-.kf-menu(@vpad, @hpad, @fs, @br, @color, @bgColor) {
+.kf-menu(@vpad, @hpad, @fs, @br, @color) {
   li {
-    padding: 5px;
-    background-color: @bgColor;
-    & when not (@bgColor = @light) {
+    background-color: @color;
+    & when not (@color = @light) {
       color: white;
     }
 
-    &:not(:last-child) {
-      border-bottom: 1px solid lighten(@bgColor, 10%);
+    &:first-child {
+      border-top: 1px solid lighten(@color, 15%);
     }
+    border-bottom: 1px solid lighten(@color, 15%);
 
     > a {
       padding: @vpad @hpad;
@@ -23,7 +23,7 @@
       top: 50%;
       transform: translateY(-(@br/2));
       right: 0;
-      .kf-tip-arrow(left, @bgColor, @br);
+      .kf-tip-arrow(left, @color, @br);
     }
 
     > ul {
@@ -35,11 +35,7 @@
 
     &:hover {
       > a {
-        background-color: @color;
-        color: white;
-        & when (@color = @light) {
-          color: @dark;
-        }
+        background-color: lighten(@color, 15%);
       }
 
       > div {
@@ -56,6 +52,7 @@
 .menu {
   > li {
     position: relative;
+    padding: 8px;
 
     > a {
       display: block;
