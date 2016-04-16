@@ -27,9 +27,31 @@ new vue({
       }, {
         item: 'Item1'
       }, {
+        item: 'Item2',
+        submenu: [{
+          item: 'Item1'
+        }, {
+          item: 'Item2',
+          submenu: [{
+            item: 'Item1'
+          }, {
+            item: 'Item2'
+          }, {
+            item: 'Item1'
+          }]
+        }, {
+          item: 'Item1'
+        }]
+      }, {
+        item: 'Item1'
+      }, {
+        item: 'Item1'
+      }, {
         item: 'Item2'
       }, {
         item: 'Item1'
+      }, {
+        item: 'Item2'
       }, {
         item: 'Item2'
       }, {

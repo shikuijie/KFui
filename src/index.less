@@ -9,13 +9,21 @@
 
 :global {
   .layout {
-    .kf-layout(6vh, 5vh, 200px, 100px);
+    @media (min-width: 768px) {
+      .kf-layout(6vh, 5vh, 200px, 100px, @dark);
+    }
+    @media (max-width: 768px) {
+      .kf-layout(6vh, 5vh, 200px, 100px, @dark, small);
+    }
   }
 
+  div[slot="sidebar.right"],
   div[slot="header"],
   div[slot="footer"] {
     height: 100%;
     background-color: @dark;
+    color: white;
+    text-align: center;
   }
 
   div[slot="sidebar.left"] {
@@ -27,6 +35,7 @@
 
   .content {
     padding: 10px;
+    height: 1000px;
     .select {
       .kf-select(@primary);
     }

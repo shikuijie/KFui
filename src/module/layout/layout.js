@@ -7,7 +7,7 @@ vue.component('kf-layout', {
   data: function() {
     return {
       cls: cls,
-      hidden: {left: false, right: true}
+      visible: {left: false, right: false}
     };
   },
   events: {
@@ -15,11 +15,11 @@ vue.component('kf-layout', {
       if(_.isUndefined(side)) {
         side = 'left';
       }
-      this.hidden[side] = !this.hidden[side];
+      this.visible[side] = !this.visible[side];
     }
   },
   template:
-    '<section :class="cls.wrapper" :kf-left-hidden="hidden.left" :kf-right-hidden="hidden.right">' +
+    '<section :class="cls.wrapper" :kf-left-visible="visible.left" :kf-right-visible="visible.right">' +
       '<header>' +
         '<slot name="header"></slot>' +
       '</header>' +

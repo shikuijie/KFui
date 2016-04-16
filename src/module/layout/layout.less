@@ -1,49 +1,62 @@
 @import (reference) '../style/color';
 @import (reference) '../style/other';
 
-.kf-layout(@vhh, @vhf, @lsbw, @rsbw) {
+.kf-layout(@vhh, @vhf, @lsbw, @rsbw, @color, @screenSize: big) {
+  > header {
+    height: @vhh;
+  }
+  > footer {
+    height: @vhf;
+  }
+
+  > section {
+    > aside:first-child {
+      width: @lsbw;
+    }
+    > aside:last-child {
+      width: @rsbw;
+    }
+
+    > main {
+      min-height: 100vh - @vhh - @vhf;
+    }
+  }
+
+  &[kf-left-visible] > section > main {
+    & when (@screenSize = big) {
+      border-left: @lsbw solid @color;
+    }
+    & when (@screenSize = small) {
+      margin-left: @lsbw;
+      margin-right: -@lsbw;
+    }
+  }
 }
 
 .wrapper {
-  > header {
-    height: 5vh;
-  }
-  > footer {
-    height: 5vh;
-  }
+  overflow-x: hidden;
 
   > .body {
     .kf-clearfix();
     position: relative;
-    min-height: 90vh;
 
     > aside:first-child {
       float: left;
-      width: 200px;
     }
     > aside:last-child {
       position: absolute;
       right: 0;
       top: 0;
-      width: 100px;
-    }
-
-    > main {
-      min-height: 90vh;
-      border-left: 200px solid @dark;
     }
   }
 
-  &[kf-left-hidden] {
-    > .body > main {
-      border-left-width: 0;
-    }
+  &:not([kf-left-visible]) {
     > .body > aside:first-child {
       overflow: hidden;
       width: 0;
     }
   }
-  &[kf-right-hidden] {
+  &:not([kf-right-visible]) {
     > .body > aside:last-child {
       overflow: hidden;
       width: 0;
