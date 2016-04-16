@@ -1,7 +1,7 @@
 @import (reference) './color';
 @import (reference) './size';
 
-.kf-btn() {
+.define-kf-btn() {
   @colorLen: length(@colors);
 
   .color(@i: 1) when (@i <= @colorLen) {
@@ -94,4 +94,4 @@
   }
 }
 
-.kf-btn();
+.define-kf-btn();

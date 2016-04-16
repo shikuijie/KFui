@@ -17,25 +17,24 @@
     }
   }
 
-  div[slot="sidebar.right"],
-  div[slot="header"],
-  div[slot="footer"] {
+  div[slot=right],
+  div[slot=header],
+  div[slot=footer] {
     height: 100%;
     background-color: @dark;
     color: white;
     text-align: center;
   }
 
-  div[slot="sidebar.left"] {
+  div[slot=left] {
     .menu {
       .kf-menu(12px, 16px, 18px, 5px, @dark);
       width: 200px;
     }
   }
 
-  .content {
+  div[slot=middle].content {
     padding: 10px;
-    height: 1000px;
     .select {
       .kf-select(@primary);
     }

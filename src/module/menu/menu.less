@@ -20,15 +20,11 @@
     }
 
     > div {
-      top: 50%;
       transform: translateY(-(@br/2));
-      right: 0;
       .kf-tip-arrow(left, @color, @br);
     }
 
     > ul {
-      top: 0;
-      left: 100%;
       border-left: (@br+2px) solid transparent;
       transform: translateX(-(@br+2px));
     }
@@ -71,6 +67,8 @@
         opacity: 0;
         position: absolute;
         transition: all .2s linear;
+        top: 50%;
+        right: 0;
       }
 
       &:hover > ul {
@@ -85,6 +83,8 @@
         position: absolute;
         transition: all .2s linear;
         width: 100%;
+        top: 0;
+        left: 100%;
       }
     }
   }

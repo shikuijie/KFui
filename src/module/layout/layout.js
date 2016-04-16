@@ -25,13 +25,13 @@ vue.component('kf-layout', {
       '</header>' +
       '<section :class="cls.body">' +
         '<aside>' +
-          '<slot name="sidebar.left"></slot>' +
+          '<slot name="left"></slot>' +
         '</aside>' +
         '<main>' +
-          '<slot name="body"></slot>' +
+          '<slot name="middle"></slot>' +
         '</main>' +
         '<aside>' +
-          '<slot name="sidebar.right"></slot>' +
+          '<slot name="right"></slot>' +
         '</aside>' +
       '</section>' +
       '<footer>' +

@@ -1,4 +1,5 @@
 import vue from 'vue';
+import _ from 'lodash';
 import './menu.css!';
 import '../code/code';
 import cls from './menu.css.map';
@@ -13,6 +14,7 @@ vue.component('kf-menu', {
           '<a v-text="itemData[itemKey]"></a>' +
           '<div v-if="itemData[submenuKey]"></div>' +
           '<kf-menu v-if="itemData[submenuKey]" ' +
+                  ':style="top" ' +
                   ':menu="itemData" ' +
                   ':item-key="itemKey" ' +
                   ':submenu-key="submenuKey"></kf-menu>' +
@@ -23,23 +25,27 @@ vue.component('kf-menu', {
         }
       },
       data: function() {
-        var itemData = this.itemData;
-        var children = itemData[this.submenuKey];
+        let itemData = this.itemData;
+        let children = itemData[this.submenuKey];
         if(children) {
-          children.forEach(function(child) {
+          _.forEach(children, function(child, i) {
             child.__ROOT = itemData.__ROOT;
           });
         }
 
         return {
           MENU: this.itemData.__ROOT,
-          ITEM: this.itemData
+          ITEM: this.itemData,
+          top: {top: (this.itemData.__SUBMENU_TOP - this.itemData.__SELF_TOP) * 100 + '%'}
         };
       }
     }
   },
   props: {
-    menu: Object,
+    menu: {
+      type: Object,
+      required: true
+    },
     itemKey: {
       type: String,
       default: 'item'
@@ -57,13 +63,24 @@ vue.component('kf-menu', {
                     ':submenu-key="submenuKey"></kf-menu-item>' +
     '</ul>',
   data: function() {
-    var menuData = this.menu;
-    if(!menuData.__ROOT) {
-      menuData.__ROOT = menuData;
+    let menu = this.menu,
+        key = this.submenuKey;
+    if(!menu.__ROOT) {
+      menu.__ROOT = menu;
+      menu.__SUBMENU_TOP = 0;
     }
 
-    menuData[this.submenuKey] && menuData[this.submenuKey].forEach(function(child) {
-      child.__ROOT = menuData.__ROOT;
+    let submenu = menu[key] && menu[key] || [];
+    _.forEach(submenu, function(child, i) {
+      child.__ROOT = menu.__ROOT;
+      if(child[key]) {
+        if(child[key].length > i + menu.__SUBMENU_TOP) {
+          child.__SUBMENU_TOP = 0;
+        } else {
+          child.__SUBMENU_TOP = i + menu.__SUBMENU_TOP + 1 - child[key].length;
+        }
+        child.__SELF_TOP = menu.__SUBMENU_TOP + i;
+      }
     });
 
     return {

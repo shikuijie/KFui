@@ -1,7 +1,7 @@
 @import (reference) './color';
 @import (reference) './size';
 
-.kf-input() {
+.define-kf-input() {
   @colorLen: length(@colors);
 
   .color(@i: 1) when (@i <= @colorLen) {
@@ -98,4 +98,4 @@
   }
 }
 
-.kf-input();
+.define-kf-input();

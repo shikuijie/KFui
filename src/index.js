@@ -25,41 +25,70 @@ new vue({
       submenu: [{
         item: 'Item0'
       }, {
-        item: 'Item1'
+        item: 'Item1',
+        submenu: [{
+          item: 'Item10',
+          submenu: [{
+            item: 'Item100'
+          }]
+        }]
       }, {
         item: 'Item2',
         submenu: [{
-          item: 'Item1'
+          item: 'Item20'
         }, {
-          item: 'Item2',
+          item: 'Item21',
           submenu: [{
-            item: 'Item1'
+            item: 'Item210'
           }, {
-            item: 'Item2'
+            item: 'Item211'
           }, {
-            item: 'Item1'
+            item: 'Item212'
+          }, {
+            item: 'Item213'
+          }, {
+            item: 'Item214'
+          }, {
+            item: 'Item215'
+          }, {
+            item: 'Item216'
           }]
         }, {
-          item: 'Item1'
+          item: 'Item3',
         }]
       }, {
-        item: 'Item1'
+        item: 'Item3'
       }, {
-        item: 'Item1'
+        item: 'Item4',
+        submenu: [{
+          item: 'Item40'
+        }, {
+          item: 'Item41'
+        }, {
+          item: 'Item42',
+          submenu: [{
+            item: 'Item420'
+          }, {
+            item: 'Item421'
+          }]
+        }, {
+          item: 'Item43'
+        }, {
+          item: 'Item44'
+        }, {
+          item: 'Item45'
+        }, {
+          item: 'Item46',
+          submenu: [{
+            item: 'Item460'
+          }, {
+            item: 'Item461'
+          }, {
+            item: 'Item462'
+          }]
+        }]
       }, {
-        item: 'Item2'
-      }, {
-        item: 'Item1'
-      }, {
-        item: 'Item2'
-      }, {
-        item: 'Item2'
-      }, {
-        item: 'Item1'
-      }, {
-        item: 'Item2'
-      }, {
-        item: 'Item1'
+        item: 'Item5'
       }]
     }
   }

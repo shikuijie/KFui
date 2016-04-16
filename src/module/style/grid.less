@@ -1,84 +1,38 @@
-/** grid **/
+@import (reference) './size';
+
 @columns: 12;
 
-//col width
-.kf-grid-col-xs(@col) when (@col <= @columns) {
-  .kf-col-xs-@{col} {
+.define-kf-grid-col(@size, @col: 1) when (@col <= @columns) {
+  .kf-col-@{size}-@{col} {
     display: inline-block;
     width: percentage(@col/@columns);
   }
-  .kf-grid-col-xs(@col + 1);
+
+  .define-kf-grid-col(@size, @col + 1);
 }
 
-.kf-grid-col-sm(@col) when (@col <= @columns) {
-  .kf-col-sm-@{col} {
-    display: inline-block;
-    width: percentage(@col/@columns);
-  }
-  .kf-grid-col-sm(@col + 1);
-}
-
-.kf-grid-col-md(@col) when (@col <= @columns) {
-  .kf-col-md-@{col} {
-    display: inline-block;
-    width: percentage(@col/@columns);
-  }
-  .kf-grid-col-md(@col + 1);
-}
-
-.kf-grid-col-lg(@col) when (@col <= @columns) {
-  .kf-col-lg-@{col} {
-    display: inline-block;
-    width: percentage(@col/@columns);
-  }
-  .kf-grid-col-lg(@col + 1);
-}
-
-//left offset
-.kf-grid-offset-xs(@col) when (@col <= @columns) {
-  .kf-offset-xs-@{col} {
+.define-kf-grid-offset(@size, @col: 1) when (@col <= @columns) {
+  .kf-offset-@{size}-@{col} {
     margin-left: percentage(@col/@columns);
   }
-  .kf-grid-offset-xs(@col + 1);
-}
-
-.kf-grid-offset-sm(@col) when (@col <= @columns) {
-  .kf-offset-sm-@{col} {
-    margin-left: percentage(@col/@columns);
-  }
-  .kf-grid-offset-sm(@col + 1);
-}
-
-.kf-grid-offset-md(@col) when (@col <= @columns) {
-  .kf-offset-md-@{col} {
-    margin-left: percentage(@col/@columns);
-  }
-  .kf-grid-offset-md(@col + 1);
-}
-
-.kf-grid-offset-lg(@col) when (@col <= @columns) {
-  .kf-offset-lg-@{col} {
-    margin-left: percentage(@col/@columns);
-  }
-  .kf-grid-offset-lg(@col + 1);
+  .define-kf-grid-offset(@size, @col + 1);
 }
 
 :global {
   @media (max-width: 768px) {
-    .kf-grid-col-xs(1);
-    .kf-grid-offset-xs(1);
+    .define-kf-grid-col(xs);
+    .define-kf-grid-offset(xs);
   }
   @media (min-width: 768px) and (max-width: 922px) {
-    .kf-grid-col-sm(1);
-    .kf-grid-offset-sm(1);
+    .define-kf-grid-col(sm);
+    .define-kf-grid-offset(sm);
   }
   @media (min-width: 922px) and (max-width: 1200px) {
-    .kf-grid-col-md(1);
-    .kf-grid-offset-md(1);
+    .define-kf-grid-col(md);
+    .define-kf-grid-offset(md);
   }
   @media (min-width: 1200px) {
-    .kf-grid-col-lg(1);
-    .kf-grid-offset-lg(1);
+    .define-kf-grid-col(lg);
+    .define-kf-grid-offset(lg);
   }
 }
-/** grid **/

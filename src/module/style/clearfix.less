@@ -9,3 +9,12 @@
     clear: both;
   }
 }
+
+.define-kf-clearfix() {
+  :global {
+    .kf-clearfix {
+      .kf-clearfix();
+    }
+  }
+}
+.define-kf-clearfix();
