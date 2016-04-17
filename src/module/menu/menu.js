@@ -10,7 +10,7 @@ vue.component('kf-menu', {
     'kf-menu-item': {
       props: ['itemKey', 'submenuKey', 'itemData'],
       template:
-        '<li :class="getItemCls()">' +
+        '<li :class="getItemCls()" @click="setActive($event)">' +
           '<a v-text="itemData[itemKey]"></a>' +
           '<div v-if="itemData[submenuKey]"></div>' +
           '<kf-menu v-if="itemData[submenuKey]" ' +
@@ -28,7 +28,7 @@ vue.component('kf-menu', {
         let itemData = this.itemData;
         let children = itemData[this.submenuKey];
         if(children) {
-          _.forEach(children, function(child, i) {
+          _.forEach(children, function(child) {
             child.__ROOT = itemData.__ROOT;
           });
         }

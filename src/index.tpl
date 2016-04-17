@@ -14,7 +14,7 @@
     </div>
 
     <div slot="left">
-      <kf-menu class="menu" :menu="menuData"></kf-menu>
+      <kf-menu class="menu kf-menu-dark kf-menu-md" :menu="menuData"></kf-menu>
     </div>
 
     <div slot="middle" class="content">
