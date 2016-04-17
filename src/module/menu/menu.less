@@ -18,7 +18,8 @@
       .kf-tip-arrow(left, @color, 4px);
     }
 
-    &:hover {
+    &:hover,
+    &[kf-menu-active] {
       > a {
         background-color: lighten(@color, 15%);
       }
@@ -43,6 +44,9 @@
 
     > a {
       display: block;
+      &[kf-menu-link] {
+        cursor: pointer;
+      }
     }
 
     &.submenu {

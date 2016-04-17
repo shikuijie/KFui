@@ -23,7 +23,8 @@ new vue({
   data: {
     menuData: {
       submenu: [{
-        item: 'Item0'
+        item: 'Item0',
+        href: 'http://www.baidu.com'
       }, {
         item: 'Item1',
         submenu: [{
