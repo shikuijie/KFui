@@ -28,13 +28,11 @@ vue.component('kf-menu', {
         setActive: function() {
           let cur = this.itemData.__ROOT.__ACTIVE_ITEM;
 
-          //clear active items
           while(cur) {
             cur.__ACTIVE = false;
             cur = cur.__ACTIVE_ITEM;
           }
 
-          //set active items
           cur = this.itemData;
           let parent = cur.__PARENT,
               root = cur.__ROOT;
