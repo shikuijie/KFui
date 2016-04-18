@@ -1,7 +1,7 @@
 @import (reference) '../style/color';
 @import (reference) '../style/clearfix';
 
-.kf-layout(@vhh, @vhf, @lsbw, @rsbw, @color, @screenSize: big) {
+.kf-layout(@vhh, @vhf, @lsbw, @rsbw, @lsBgColor, @screenSize: big) {
   > header {
     height: @vhh;
   }
@@ -24,7 +24,7 @@
 
   &[kf-left-visible] > section > main {
     & when (@screenSize = big) {
-      border-left: @lsbw solid @color;
+      border-left: @lsbw solid @lsBgColor;
     }
     & when (@screenSize = small) {
       margin-left: @lsbw;

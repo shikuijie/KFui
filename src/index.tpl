@@ -18,10 +18,22 @@
     </div>
 
     <div slot="middle" class="content">
+      <kf-tab class="kf-tab-vertical kf-tab-dark kf-tab-lg">
+        <kf-tab-item label="蓝色">
+          <div style="height: 100px">蓝色</div>
+        </kf-tab-item>
+        <kf-tab-item label="绿色">
+          <div style="height: 200px">绿色</div>
+        </kf-tab-item>
+        <kf-tab-item label="红色">
+          <div style="height: 50px">红色</div>
+        </kf-tab-item>
+      </kf-tab>
+
+      <br>
       <div class="kf-btn-group">
         <button class="kf-btn kf-btn-primary kf-btn-lg">BUTTON</button>
         <button class="kf-btn kf-btn-dark kf-btn-lg">BUTTON</button>
-        <button class="kf-btn kf-btn-light kf-btn-lg">BUTTON</button>
         <button class="kf-btn kf-btn-red kf-btn-lg">BUTTON</button>
         <button class="kf-btn kf-btn-blue kf-btn-lg">BUTTON</button>
         <button class="kf-btn kf-btn-green kf-btn-lg">BUTTON</button>
@@ -34,7 +46,6 @@
       <div class="kf-btn-group">
         <button class="kf-btn kf-btn-primary kf-btn-md">BUTTON</button>
         <button class="kf-btn kf-btn-dark kf-btn-md">BUTTON</button>
-        <button class="kf-btn kf-btn-light kf-btn-md">BUTTON</button>
         <button class="kf-btn kf-btn-red kf-btn-md">BUTTON</button>
         <button class="kf-btn kf-btn-blue kf-btn-md">BUTTON</button>
         <button class="kf-btn kf-btn-green kf-btn-md">BUTTON</button>
@@ -47,7 +58,6 @@
       <div class="kf-btn-group">
         <button class="kf-btn kf-btn-primary kf-btn-sm">BUTTON</button>
         <button class="kf-btn kf-btn-dark kf-btn-sm">BUTTON</button>
-        <button class="kf-btn kf-btn-light kf-btn-sm">BUTTON</button>
         <button class="kf-btn kf-btn-red kf-btn-sm">BUTTON</button>
         <button class="kf-btn kf-btn-blue kf-btn-sm">BUTTON</button>
         <button class="kf-btn kf-btn-green kf-btn-sm">BUTTON</button>
@@ -60,7 +70,6 @@
       <div class="kf-btn-group">
         <button class="kf-btn kf-btn-primary kf-btn-xs">BUTTON</button>
         <button class="kf-btn kf-btn-dark kf-btn-xs">BUTTON</button>
-        <button class="kf-btn kf-btn-light kf-btn-xs">BUTTON</button>
         <button class="kf-btn kf-btn-red kf-btn-xs">BUTTON</button>
         <button class="kf-btn kf-btn-blue kf-btn-xs">BUTTON</button>
         <button class="kf-btn kf-btn-green kf-btn-xs">BUTTON</button>

@@ -26,6 +26,7 @@ vue.component('kf-menu', {
           return res;
         },
         setActive: function() {
+          if(!this.itemData[this.hrefKey]) return;
           let cur = this.itemData.__ROOT.__ACTIVE_ITEM;
 
           while(cur) {

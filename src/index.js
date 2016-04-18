@@ -12,6 +12,7 @@ import {kfTree} from './module/tree/tree';
 import './module/form/date/date';
 import './module/slide/slide';
 import './module/layout/layout';
+import './module/pane/pane';
 
 new vue({
   el: 'body',

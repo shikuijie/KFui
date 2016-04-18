@@ -1,0 +1,116 @@
+@import (reference) '../style/clearfix';
+@import (reference) '../style/color';
+@import (reference) '../style/size';
+
+.kf-tab-direction(@dir) {
+  & when (@dir = vertical) {
+    display: flex;
+
+    > ul {
+      flex: 0;
+      border-bottom: none !important;
+      > li {
+        &[kf-tab-active] {
+          border-right: none !important;
+          border-top-right-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+          left: 1px;
+        }
+      }
+    }
+
+    > div {
+      flex: 1;
+    }
+  }
+
+  & when (@dir = horizontal) {
+    > ul {
+      border-right: none !important;
+      > li {
+        display: inline-block;
+        &[kf-tab-active] {
+          border-bottom: white !important;
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+          top: 1px;
+        }
+      }
+    }
+  }
+}
+.kf-tab-size(@vpad, @hpad, @fs, @br) {
+  > ul > li {
+    padding: @vpad @hpad;
+    font-size: @fs;
+    &[kf-tab-active] {
+      border-radius: @br;
+    }
+  }
+}
+.kf-tab-color(@color) {
+  > ul {
+    background-color: white;
+    border-bottom: 1px solid @color;
+    border-right: 1px solid @color;
+
+    > li {
+      &[kf-tab-active] {
+        border: 1px solid @color;
+      }
+    }
+  }
+}
+
+.tabs {
+  > ul {
+    > li {
+      cursor: pointer;
+      white-space: nowrap;
+      background-color: white;
+      &[kf-tab-active] {
+        position: relative;
+      }
+    }
+  }
+}
+
+.define-kf-tab() {
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-tab-@{c} {
+      .kf-tab-color(@@c);
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    @br: extract(@brs, @i);
+    .kf-tab-@{s} {
+      .kf-tab-size(@@vpad, @@hpad, @@fs, @@br);
+    }
+
+    .size(@i + 1);
+  }
+
+  .kf-tab-horizontal {
+    .kf-tab-direction(horizontal);
+  }
+  .kf-tab-vertical {
+    .kf-tab-direction(vertical);
+  }
+
+  .color();
+  .size();
+}
+
+:global {
+  .define-kf-tab();
+}
