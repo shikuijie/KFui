@@ -4,12 +4,6 @@ import '../../code/code';
 import './radio.css!';
 import cls from './radio.css.map';
 
-/**
-  @kf-comment-type  {VUE component}
-  @kf-comment-name  {kf-radio-group}
-  @kf-comment-how   {<kf-radio-group :labels="['lsk', 'dfk', 'kdfe']" :model.sync="mdl" :values="[1,2,3]"></kf-radio-group>}
-  @kf-comment-what  {labels为跟在radio后面的标签; 当选择某个radio时,将对应的value赋值给model}
-*/
 vue.component('kf-radio-group', {
   props: {
     labels: Array,

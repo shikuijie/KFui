@@ -1,7 +1,5 @@
 import vue from 'vue';
 import 'font-awesome';
-import './module/base.css!';
-import './index.css!';
 import './module/menu/menu';
 import './module/form/checkbox/checkbox';
 import './module/form/radio/radio';
@@ -10,9 +8,16 @@ import './module/tree/tree';
 import {kfTable} from './module/table/table';
 import {kfTree} from './module/tree/tree';
 import './module/form/date/date';
-import './module/slide/slide';
+import './module/rotator/rotator';
 import './module/layout/layout';
-import './module/pane/pane';
+import './module/tab/tab';
+
+import './module/style/clearfix.css!';
+import './module/style/button.css!';
+import './module/style/input.css!';
+import './module/style/grid.css!';
+import './module/style/reset.css!';
+import './index.css!';
 
 new vue({
   el: 'body',
@@ -22,6 +27,13 @@ new vue({
     }
   },
   data: {
+    moment: '',
+    start: '',
+    end: '',
+    radioGroup: true,
+    checkboxGroup: [],
+    checkbox: '',
+    select: 1,
     menuData: {
       submenu: [{
         item: 'Item0',

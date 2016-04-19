@@ -7,26 +7,23 @@
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);
 
-    .kf-btn-@{c} {
+    .kf-btn.kf-@{c} {
       background-color: @@c;
-      & when not (@c = light) {
-        color: white;
+      color: white;
+      &:focus {
+        background-color: darken(@@c, 10%);
       }
+    }
+    .kf-btn-group.kf-@{c} > .kf-btn {
+      border-left: 1px solid darken(@@c, 10%);
+      background-color: @@c;
+      color: white;
       &:focus {
         background-color: darken(@@c, 10%);
       }
     }
 
     .color(@i + 1);
-  }
-
-  .gcolor(@i: 1) when (@i <= @colorLen) {
-    @c: extract(@colors, @i);
-    > .kf-btn-@{c} {
-      border-left: 1px solid darken(@@c, 10%);
-    }
-
-    .gcolor(@i + 1);
   }
 
   @sizeLen: length(@sizes);
@@ -37,20 +34,15 @@
     @br: extract(@brs, @i);
     @fs: extract(@fss, @i);
 
-    .kf-btn-@{s} {
+    .kf-btn.kf-@{s} {
       padding: @@vpad @@hpad;
       font-size: @@fs;
       border-radius: @@br;
     }
+    .kf-btn-group.kf-@{s} > .kf-btn {
+      padding: @@vpad @@hpad;
+      font-size: @@fs;
 
-    .size(@i + 1);
-  }
-
-  .gsize(@i: 1) when (@i <= @sizeLen) {
-    @s: extract(@sizes, @i);
-    @br: extract(@brs, @i);
-
-    > .kf-btn-@{s} {
       &:first-child {
         border-top-left-radius: @@br;
         border-bottom-left-radius: @@br;
@@ -61,37 +53,32 @@
       }
     }
 
-    .gsize(@i + 1);
+    .size(@i + 1);
   }
 
-  :global {
-    .kf-btn {
-      display: inline-block;
-      border: 1px solid transparent;
-      vertical-align: middle;
-      text-align: center;
-      white-space: nowrap;
-      line-height: 1;
-    }
-
-    .size();
-    .color();
-  }
-
-  :global {
-    .kf-btn-group {
-      display: inline-block;
-      > .kf-btn {
-        border-radius: 0;
-        &:first-child {
-          border-left: none;
-        }
-      }
-
-      .gcolor();
-      .gsize();
-    }
-  }
+  .size();
+  .color();
 }
 
-.define-kf-btn();
+:global {
+  .kf-btn {
+    display: inline-block;
+    border: 1px solid transparent;
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .kf-btn-group {
+    display: inline-block;
+    > .kf-btn {
+      border-radius: 0;
+      &:first-child {
+        border-left: none !important;
+      }
+    }
+  }
+
+  .define-kf-btn();
+}

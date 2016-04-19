@@ -1,21 +1,11 @@
 @import (reference) '../../style/color';
+@import (reference) '../../style/size';
 
-/**
-  @kf-comment-type  {LESS mixin}
-  @kf-comment-name  {kf-checkbox}
-  @kf-comment-how   {.kf-checkbox(@size, @color)}
-  @kf-comment-what  {设置kf-checkbox组件的样式.
-                     @size表示checkbox的大小
-                     @color表示checked状态下checkbox的前景色}
-*/
-.kf-checkbox(@size, @color, @borderColor: @gray) {
+.kf-checkbox-size(@vpad, @hpad, @size) {
+  margin: @vpad @hpad;
   & > input {
     width: @size;
     height: @size;
-
-    &:checked + i {
-      color: @color;
-    }
   }
 
   & > i {
@@ -23,12 +13,22 @@
   }
 
   & > span {
-    color: @borderColor;
     font-size: @size + 2;
   }
 
   & > label {
     font-size: @size;
+  }
+}
+.kf-checkbox-color(@color) {
+  & > input {
+    &:checked + i {
+      color: @color;
+    }
+  }
+
+  & > span {
+    color: @gray;
   }
 }
 
@@ -65,22 +65,78 @@
   }
 }
 
-/**
-  @kf-comment-type  {LESS mixin}
-  @kf-comment-name  {kf-checkbox-group}
-  @kf-comment-how   {.kf-checkbox-group(@size, @color, @itemGap)}
-  @kf-comment-what  {设置kf-checkbox组件的样式.
-                     @size表示checkbox的大小
-                     @color表示checked状态下checkbox的前景色
-                     @itemGap表示每个checkbox之间的间隔}
-*/
-.kf-checkbox-group(@size, @color, @gap, @borderColor: @gray) {
+.kf-checkbox-group-size(@vpad, @hpad, @size) {
   & > span {
-    .kf-checkbox(@size, @color, @borderColor);
-    margin-right: @gap;
+    .kf-checkbox-size(@vpad, @hpad, @size);
+  }
+}
+.kf-checkbox-group-color(@color) {
+  & > span {
+    .kf-checkbox-color(@color);
   }
 }
 
 .ckbgrp {
   display: inline-block;
+}
+
+.define-kf-checkbox() {
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-checkbox.kf-@{c} {
+      .kf-checkbox-color(@@c);
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    .kf-checkbox.kf-@{s} {
+      .kf-checkbox-size(@@vpad, @@hpad, @@fs);
+    }
+
+    .size(@i + 1);
+  }
+
+  .color();
+  .size();
+}
+
+.define-kf-checkbox-group() {
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-checkbox-group.kf-@{c} {
+      .kf-checkbox-group-color(@@c);
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    .kf-checkbox-group.kf-@{s} {
+      .kf-checkbox-group-size(@@vpad, @@hpad, @@fs);
+    }
+
+    .size(@i + 1);
+  }
+
+  .color();
+  .size();
+}
+
+:global {
+  .define-kf-checkbox();
+  .define-kf-checkbox-group();
 }

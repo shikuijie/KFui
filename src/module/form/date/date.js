@@ -1,6 +1,6 @@
 import vue from 'vue';
 import _ from 'lodash';
-import '../../slide/slide';
+import '../../rotator/rotator';
 import './date.css!';
 import cls from './date.css.map';
 import 'animate.css';
@@ -207,17 +207,17 @@ let datime = vue.extend({
         '<div :class="cls.slides">' +
           '<div @wheel.stop.prevent="scroll($event, yearObj)" :class="cls.year">' +
             '<span @click.stop="next(yearObj)"></span>' +
-            '<kf-circle-slide :class="cls.slide" axis="x" :current="yearObj.offset">' +
+            '<kf-rotator :class="cls.slide" axis="x" :current="yearObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="yearObj.idx == $index" v-for="y in yearObj.els" v-text="y + \'年\'"></span>' +
-            '</kf-circle-slide>' +
+            '</kf-rotator>' +
             '<span @click.stop="prev(yearObj)"></span>' +
           '</div>' +
 
           '<div @wheel.prevent.stop="scroll($event, monthObj)" :class="cls.month">' +
             '<span @click.stop="next(monthObj)"></span>' +
-            '<kf-circle-slide :class="cls.slide" axis="x" :current="monthObj.offset">' +
+            '<kf-rotator :class="cls.slide" axis="x" :current="monthObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="monthObj.idx == $index" v-for="m in monthObj.els" v-text="m + 1 + \'月\'"></span>' +
-            '</kf-circle-slide>' +
+            '</kf-rotator>' +
             '<span @click.stop="prev(monthObj)"></span>' +
           '</div>' +
         '</div>' +
@@ -236,25 +236,25 @@ let datime = vue.extend({
         '<div :class="cls.slides">' +
           '<div :class="cls.hour" @wheel.prevent.stop="scroll($event, hourObj)">' +
             '<span @click.stop="next(hourObj)"></span>' +
-            '<kf-circle-slide :class="cls.slide" axis="x" :current="hourObj.offset">' +
+            '<kf-rotator :class="cls.slide" axis="x" :current="hourObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="hourObj.idx == $index" v-for="h in hourObj.els" v-text="h + \'时\'"></span>' +
-            '</kf-circle-slide>' +
+            '</kf-rotator>' +
             '<span @click.stop="prev(hourObj)"></span>' +
           '</div>' +
 
           '<div :class="cls.minute" @wheel.prevent.stop="scroll($event, minuteObj)">' +
             '<span @click.stop="next(minuteObj)"></span>' +
-            '<kf-circle-slide :class="cls.slide" axis="x" :current="minuteObj.offset">' +
+            '<kf-rotator :class="cls.slide" axis="x" :current="minuteObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="minuteObj.idx == $index" v-for="m in minuteObj.els" v-text="m + \'分\'"></span>' +
-            '</kf-circle-slide>' +
+            '</kf-rotator>' +
             '<span @click.stop="prev(minuteObj)"></span>' +
           '</div>' +
 
           '<div v-if="hasSec" :class="cls.second" @wheel.prevent.stop="scroll($event, secondObj)">' +
             '<span @click.stop="next(secondObj)"></span>' +
-            '<kf-circle-slide :class="cls.slide" axis="x" :current="secondObj.offset">' +
+            '<kf-rotator :class="cls.slide" axis="x" :current="secondObj.offset">' +
               '<span :class="cls.el" :kf-datime-active="secondObj.idx == $index" v-for="h in secondObj.els" v-text="h + \'秒\'"></span>' +
-            '</kf-circle-slide>' +
+            '</kf-rotator>' +
             '<span @click.stop="prev(secondObj)"></span>' +
           '</div>' +
         '</div>' +

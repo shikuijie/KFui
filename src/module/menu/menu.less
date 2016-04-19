@@ -98,7 +98,7 @@
     @hpad: extract(@hpads, @i);
     @fs: extract(@fss, @i);
     @br: extract(@brs, @i);
-    .kf-menu-@{s} {
+    .kf-menu.kf-@{s} {
       .kf-menu-size(@@vpad, @@hpad, @@fs, @@br);
     }
 
@@ -108,7 +108,7 @@
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);
-    .kf-menu-@{c} {
+    .kf-menu.kf-@{c} {
       .kf-menu-color(@@c);
     }
 

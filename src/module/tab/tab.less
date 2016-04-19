@@ -79,7 +79,7 @@
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);
-    .kf-tab-@{c} {
+    .kf-tab.kf-@{c} {
       .kf-tab-color(@@c);
     }
 
@@ -93,17 +93,17 @@
     @hpad: extract(@hpads, @i);
     @fs: extract(@fss, @i);
     @br: extract(@brs, @i);
-    .kf-tab-@{s} {
+    .kf-tab.kf-@{s} {
       .kf-tab-size(@@vpad, @@hpad, @@fs, @@br);
     }
 
     .size(@i + 1);
   }
 
-  .kf-tab-horizontal {
+  .kf-tab.kf-horizontal {
     .kf-tab-direction(horizontal);
   }
-  .kf-tab-vertical {
+  .kf-tab.kf-vertical {
     .kf-tab-direction(vertical);
   }
 

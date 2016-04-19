@@ -1,6 +1,7 @@
 @import (reference) '../../style/color';
+@import (reference) '../../style/size';
 @import (reference) '../../style/caret';
-@import (reference) '../../slide/slide';
+@import (reference) '../../rotator/rotator';
 
 .kf-datime(@color) {
   //.date > .slides > div
@@ -139,23 +140,23 @@
 
         &.year .slide {
           line-height: 40px;
-          .kf-circle-slide(x, 100%, 40px, 12);
+          .kf-rotator(x, 100%, 40px, 12);
         }
         &.month .slide {
           line-height: 40px;
-          .kf-circle-slide(x, 100%, 40px, 12);
+          .kf-rotator(x, 100%, 40px, 12);
         }
         &.hour .slide {
           line-height: 41px;
-          .kf-circle-slide(x, 100%, 41px, 24);
+          .kf-rotator(x, 100%, 41px, 24);
         }
         &.minute .slide {
           line-height: 40px;
-          .kf-circle-slide(x, 100%, 40px, 60);
+          .kf-rotator(x, 100%, 40px, 60);
         }
         &.second .slide {
           line-height: 40px;
-          .kf-circle-slide(x, 100%, 40px, 60);
+          .kf-rotator(x, 100%, 40px, 60);
         }
 
         .slide {
@@ -231,23 +232,6 @@
         }
       }
     }
-  }
-}
-
-.kf-datime-picker(@color) {
-  border: 1px solid @color;
-  > [kf-datime] {
-    .kf-datime(@color);
-  }
-}
-
-.kf-datime-ranger(@color) {
-  border: 1px solid @color;
-  > div > [kf-datime] {
-    .kf-datime(@color);
-  }
-  button {
-    background-color: @color;
   }
 }
 
@@ -345,12 +329,11 @@
     > .confirm {
       text-align: right;
       > span {
-        color: @red;
+        color: @accent;
         margin-right: 10px;
       }
 
       > button {
-        // background-color: @primary;
         color: white;
         border-radius: 5px;
         padding: 5px 10px;
@@ -363,4 +346,98 @@
       }
     }
   }
+}
+
+.kf-datime-picker-color(@color) {
+  border: 1px solid @color;
+  > [kf-datime] {
+    .kf-datime(@color);
+  }
+}
+.kf-datime-picker-size(@vpad, @hpad, @fs, @br) {
+  padding: @vpad @hpad;
+  font-size: @fs;
+  border-radius: @br;
+}
+
+.kf-datime-ranger-color(@color) {
+  border: 1px solid @color;
+  > div > [kf-datime] {
+    .kf-datime(@color);
+  }
+  button {
+    background-color: @color;
+  }
+}
+.kf-datime-ranger-size(@vpad, @hpad, @fs, @br) {
+  padding: @vpad @hpad;
+  font-size: @fs;
+  border-radius: @br;
+}
+
+.define-kf-datime-picker() {
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-date-picker.kf-@{c},
+    .kf-input-group.kf-@{c} > .kf-date-picker {
+      .kf-datime-picker-color(@@c);
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    @br: extract(@brs, @i);
+    .kf-date-picker.kf-@{s},
+    .kf-input-group.kf-@{s} > .kf-date-picker {
+      .kf-datime-picker-size(@@vpad, @@hpad, @@fs, @@br);
+    }
+
+    .size(@i + 1);
+  }
+
+  .color();
+  .size();
+}
+
+.define-kf-datime-ranger() {
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-date-ranger.kf-@{c},
+    .kf-input-group.kf-@{c} > .kf-date-ranger {
+      .kf-datime-ranger-color(@@c);
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    @br: extract(@brs, @i);
+    .kf-date-ranger.kf-@{s},
+    .kf-input-group.kf-@{s} > .kf-date-ranger {
+      .kf-datime-ranger-size(@@vpad, @@hpad, @@fs, @@br);
+    }
+
+    .size(@i + 1);
+  }
+
+  .color();
+  .size();
+}
+
+:global {
+  .define-kf-datime-picker();
+  .define-kf-datime-ranger();
 }

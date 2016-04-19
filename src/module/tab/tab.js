@@ -1,12 +1,7 @@
 import vue from 'vue';
 import 'animate.css';
-import './pane.css!';
-import cls from './pane.css.map';
-
-vue.transition(cls.transition, {
-  enterClass: cls.enter,
-  leaveClass: cls.leave
-});
+import './tab.css!';
+import cls from './tab.css.map';
 
 vue.component('kf-tab-item', {
   props: {
@@ -76,11 +71,6 @@ vue.component('kf-tab', {
       titles: {},
       active: ''
     };
-  },
-  methods: {
-    getItemCls: function(title) {
-      return (this.active == title) ? cls.active : '';
-    }
   },
   template:
     '<div :class="cls.tabs">' +

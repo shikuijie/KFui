@@ -1,6 +1,8 @@
 @import (reference) '../../style/color';
+@import (reference) '../../style/size';
+@import (reference) '../../style/caret';
 
-.kf-select(@color, @inverse: false) {
+.kf-select-color(@color, @inverse: false) {
   & when (@inverse = false) {
     border: 1px solid @color;
 
@@ -35,11 +37,24 @@
     }
   }
 }
+.kf-select-size(@vpad, @hpad, @fs, @br) {
+  padding: @vpad @hpad;
+  font-size: @fs;
+  border-radius: @br;
+
+  > ul > li {
+    padding: min(8px, @vpad);
+    > div {
+      padding: @vpad @hpad;
+      border-radius: @br;
+    }
+  }
+}
 
 .select {
   position: relative;
   display: inline-block;
-  padding-right: 10px;
+  padding-right: 15px !important;
 
   > .bg {
     position: fixed;
@@ -72,22 +87,60 @@
     padding: 0;
     list-style: none;
     left: 0;
-    top: 0;
-    transform: translateX(10px) translateY(10px);
+    top: 100%;
     box-shadow: 2px 2px @light;
     border: 1px solid @light;
-    color: black;
     visibility: hidden;
     opacity: 0;
     transition: opacity .2s linear, visibility .2s linear;
+    color: @dark;
 
     li {
-      padding: 5px;
+      &:not(:last-child) {
+        padding-bottom: 0 !important;
+      }
       > div {
         cursor: pointer;
-        padding: 5px 10px;
-        border-radius: 3px;
       }
     }
   }
+}
+
+.define-kf-select() {
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-select.kf-@{c},
+    .kf-input-group.kf-@{c} > .kf-select:not(.kf-addon) {
+      .kf-select-color(@@c);
+    }
+
+    .kf-input-group.kf-@{c} > .kf-select.kf-addon {
+      .kf-select-color(@@c, true);
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    @br: extract(@brs, @i);
+    .kf-select.kf-@{s},
+    .kf-input-group.kf-@{s} > .kf-select {
+      .kf-select-size(@@vpad, @@hpad, @@fs, @@br);
+    }
+
+    .size(@i + 1);
+  }
+
+  .color();
+  .size();
+}
+
+:global {
+  .define-kf-select();
 }

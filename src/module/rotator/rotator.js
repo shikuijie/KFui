@@ -1,8 +1,8 @@
 import vue from 'vue';
-import cls from './slide.css.map';
-import './slide.css!';
+import cls from './rotator.css.map';
+import './rotator.css!';
 
-vue.component('kf-circle-slide', {
+vue.component('kf-rotator', {
   props: {
     axis: {
       type: String,
