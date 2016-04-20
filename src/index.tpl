@@ -43,6 +43,13 @@
       <br>
       <kf-checkbox class="kf-checkbox kf-primary kf-md" :model.sync="checkbox" :label="'123'" :value="'man'"></kf-checkbox>
       <br>
+      <div class="kf-btn-group kf-dark kf-md">
+        <input type="submit" class="kf-btn" value="提交信息">
+        <input type="reset" class="kf-btn" value="重置">
+      </div>
+      <kf-file class="kf-file kf-dark kf-md" url="upload.json" :success="onsuccess" :other="uploadParams" :multiple="true"></kf-file>
+      <button class="kf-btn kf-primary kf-md">按钮</button>
+      <br>
       <br>
       <div class="kf-input-group kf-primary kf-md">
         <label class="kf-addon">标签名称</label>

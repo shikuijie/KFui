@@ -11,6 +11,7 @@ html, body {
 
 body {
   color: @dark;
+  font-size: 14px;
 }
 
 ul {
@@ -33,11 +34,8 @@ input[type=button] {
   }
 }
 
-input:not([type=button]),
-input:not([type=reset]),
-input:not([type=submit]),
-input:not([type=checkbox]),
-input:not([type=radio]) {
+input[type=text],
+input[type=email] {
   background-color: transparent;
   appearance: none;
   font-size: inherit;

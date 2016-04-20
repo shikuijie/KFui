@@ -11,6 +11,7 @@ import './module/form/date/date';
 import './module/rotator/rotator';
 import './module/layout/layout';
 import './module/tab/tab';
+import './module/form/file/file';
 
 import './module/style/clearfix.css!';
 import './module/style/button.css!';
@@ -34,6 +35,12 @@ new vue({
     checkboxGroup: [],
     checkbox: '',
     select: 1,
+    uploadParams: {
+      name: 'Lagou'
+    },
+    onsuccess: function(event) {
+      console.log(event)
+    },
     menuData: {
       submenu: [{
         item: 'Item0',

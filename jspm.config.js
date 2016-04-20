@@ -36,6 +36,7 @@ System.config({
     "swiper": "npm:swiper@3.3.0",
     "text": "github:systemjs/plugin-text@0.0.4",
     "vue": "npm:vue@1.0.16",
+    "vue-resource": "npm:vue-resource@0.7.0",
     "zepto": "npm:zepto@1.0.1",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
