@@ -73,7 +73,7 @@ vue.component('kf-tab', {
     };
   },
   template:
-    '<div :class="cls.tabs">' +
+    '<div :class="cls.tabs" class="kf-tab">' +
       '<ul>' +
         '<li v-for="(title, visible) in titles" ' +
             '@click="this.active = title" ' +

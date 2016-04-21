@@ -11,14 +11,12 @@
       border: 1px solid @@c;
     }
     .kf-input-group.kf-@{c} {
-      > .kf-input {
+      > * {
         border: 1px solid @@c;
       }
       > .kf-addon {
         background-color: @@c;
-        & when not (@c = light) {
-          color: white;
-        }
+        color: white;
       }
     }
 
@@ -39,21 +37,10 @@
       border-radius: @@br;
     }
     .kf-input-group.kf-@{s} {
-      > .kf-input,
-      > .kf-addon {
+      > * {
         padding: @@vpad @@hpad;
         font-size: @@fs;
-      }
-
-      > * {
-        &:first-child {
-          border-top-left-radius: @@br !important;
-          border-bottom-left-radius: @@br !important;
-        }
-        &:last-child {
-          border-top-right-radius: @@br !important;
-          border-bottom-right-radius: @@br !important;
-        }
+        border-radius: @@br;
       }
     }
 
@@ -63,6 +50,11 @@
   :global {
     .kf-input {
       display: inline-block;
+
+      border: 1px solid @gray;
+      padding: @vpad-md @hpad-md;
+      font-size: @fs-md;
+      border-radius: @br-md;
     }
 
     .kf-input-group {
@@ -71,8 +63,30 @@
 
       > * {
         display: table-cell !important;
-        border-radius: 0 !important;
         white-space: nowrap;
+        border: 1px solid @gray;
+        padding: @vpad-md @hpad-md;
+        font-size: @fs-md;
+        border-radius: @br-md;
+
+        &:not(:first-child) {
+          border-left: none !important;
+        }
+
+        &:first-child {
+          border-top-right-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
+        &:last-child {
+          border-top-left-radius: 0 !important;
+          border-bottom-left-radius: 0 !important;
+        }
+        &:not(:first-child):not(:last-child) {
+          border-radius: 0 !important;
+        }
+      }
+      > .kf-addon {
+        background-color: white;
       }
     }
 

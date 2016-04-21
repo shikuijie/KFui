@@ -44,6 +44,7 @@
 
     > a {
       display: block;
+      text-decoration: none;
       &[kf-menu-link] {
         cursor: pointer;
       }
@@ -91,6 +92,10 @@
 }
 
 .define-kf-menu() {
+  .kf-menu {
+    .kf-menu-color(@dark);
+    .kf-menu-size(@vpad-md, @hpad-md, @fs-md, @br-md);
+  }
   @sizeLen: length(@sizes);
   .size(@i: 1) when (@i <= @sizeLen) {
     @s: extract(@sizes, @i);

@@ -76,6 +76,11 @@
 }
 
 .define-kf-tab() {
+  .kf-tab {
+    .kf-tab-color(@gray);
+    .kf-tab-size(@vpad-md, @hpad-md, @fs-md, @br-md);
+    .kf-tab-direction(horizontal);
+  }
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);

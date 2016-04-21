@@ -72,7 +72,7 @@ vue.component('kf-menu', {
     }
   },
   template:
-    '<ul :class="cls.menu">' +
+    '<ul :class="cls.menu" class="kf-menu">' +
       '<kf-menu-item v-for="item in menu[submenuKey]" ' +
                     ':href-key="hrefKey" ' +
                     ':item-data="item" ' +

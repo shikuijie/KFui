@@ -347,7 +347,7 @@ vue.component('kf-date-picker', {
     }
   },
   template:
-    '<div :class="cls.dtpicker" @click.stop="visible = true">' +
+    '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="visible = true">' +
       '<input type="text" :value="moment" readonly/>' +
       '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
       '<kf-datime kf-datime :class="datimeCls" :moment="moment" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
@@ -451,7 +451,7 @@ vue.component('kf-date-ranger', {
     },
   },
   template:
-    '<div :class="cls.dtranger" @click.stop="visible = true">' +
+    '<div :class="cls.dtranger" class="kf-date-ranger" @click.stop="visible = true">' +
       '<input type="text" :value="rangeStr" readonly/>' +
       '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
       '<div :class="rangeCls">' +

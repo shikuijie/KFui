@@ -3,9 +3,8 @@
 @import (reference) '../../style/caret';
 
 .kf-select-color(@color, @inverse: false) {
+  border: 1px solid @color;
   & when (@inverse = false) {
-    border: 1px solid @color;
-
     > span {
       .kf-tip-arrow(down, @color, 5px);
     }
@@ -88,12 +87,36 @@
     list-style: none;
     left: 0;
     top: 100%;
-    box-shadow: 2px 2px @light;
     border: 1px solid @light;
     visibility: hidden;
     opacity: 0;
     transition: opacity .2s linear, visibility .2s linear;
     color: @dark;
+
+    &.left.bottom {
+      box-shadow: 2px 2px @light;
+    }
+    &.left.top {
+      box-shadow: 2px -2px @light;
+    }
+    &.right.bottom {
+      box-shadow: -2px 2px @light;
+    }
+    &.right.top {
+      box-shadow: -2px -2px @light;
+    }
+
+    &.right {
+      right: 0;
+      left: auto;
+      box-shadow: inset;
+    }
+    &.top {
+      bottom: 100%;
+      top: auto;
+      margin-bottom: 3px;
+      margin-top: 0;
+    }
 
     li {
       &:not(:last-child) {
@@ -107,6 +130,13 @@
 }
 
 .define-kf-select() {
+  .kf-select,
+  .kf-input-group > .kf-select {
+    .kf-select-color(@dark);
+    .kf-select-size(@vpad-md, @hpad-md, @fs-md, @br-md);
+    border-color: @gray;
+  }
+
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);

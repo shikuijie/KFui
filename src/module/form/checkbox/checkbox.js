@@ -40,7 +40,7 @@ vue.component('kf-checkbox', {
     };
   },
   template:
-    '<span :class="cls.checkbox">' +
+    '<span :class="cls.checkbox" class="kf-checkbox">' +
       '<input type="checkbox" @click="click(value)" v-model="model" :true-value="value" :false-value="origModel"/>' +
       '<i class="fa fa-check" :class="cls.check"></i>' +
       '<span class="fa fa-square-o" :class="cls.box"></span>' +
@@ -82,7 +82,7 @@ vue.component('kf-checkbox-group', {
     }
   },
   template:
-    '<span :class="cls.ckbgrp">' +
+    '<span :class="cls.ckbgrp" class="kf-checkbox-group">' +
       '<span :class="cls.checkbox" v-for="label in labels">' +
         '<input type="checkbox" @click="onClick($index)" v-model="model" :value="values[$index]"/>' +
         '<i class="fa fa-check" :class="cls.check"></i>' +

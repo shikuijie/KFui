@@ -19,7 +19,7 @@ vue.component('kf-radio-group', {
     };
   },
   template:
-    '<span :class="cls.rdgrp">' +
+    '<span :class="cls.rdgrp" class="kf-radio-group">' +
       '<span v-for="label in labels">' +
         '<input type="radio" v-model="model" :value="values[$index]"/>' +
         '<i class="fa fa-dot-circle-o"></i>' +

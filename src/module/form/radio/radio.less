@@ -74,6 +74,11 @@
 }
 
 .define-kf-radio-group() {
+  .kf-radio-group {
+    .kf-radio-group-color(@dark);
+    .kf-radio-group-size(@vpad-md, @hpad-md, @fs-md);
+  }
+
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);

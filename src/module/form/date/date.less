@@ -376,6 +376,12 @@
 }
 
 .define-kf-datime-picker() {
+  .kf-date-picker {
+    .kf-datime-picker-color(@dark);
+    .kf-datime-picker-size(@vpad-md, @hpad-md, @fs-md, @br-md);
+    border: 1px solid @gray;
+  }
+
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);
@@ -407,6 +413,12 @@
 }
 
 .define-kf-datime-ranger() {
+  .kf-date-ranger {
+    .kf-datime-ranger-color(@dark);
+    .kf-datime-ranger-size(@vpad-md, @hpad-md, @fs-md, @br-md);
+    border: 1px solid @gray;
+  }
+
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);

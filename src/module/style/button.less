@@ -7,16 +7,11 @@
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);
 
-    .kf-btn.kf-@{c} {
+    .kf-btn.kf-@{c},
+    .kf-btn-group.kf-@{c} > .kf-btn,
+    .kf-btn-group > .kf-btn.kf-@{c} {
       background-color: @@c;
-      color: white;
-      &:focus {
-        background-color: darken(@@c, 10%);
-      }
-    }
-    .kf-btn-group.kf-@{c} > .kf-btn {
-      border-left: 1px solid darken(@@c, 10%);
-      background-color: @@c;
+      border: 1px solid darken(@@c, 10%);
       color: white;
       &:focus {
         background-color: darken(@@c, 10%);
@@ -34,23 +29,12 @@
     @br: extract(@brs, @i);
     @fs: extract(@fss, @i);
 
-    .kf-btn.kf-@{s} {
+    .kf-btn.kf-@{s},
+    .kf-btn-group.kf-@{s} > .kf-btn,
+    .kf-btn-group > .kf-btn.kf-@{s} {
       padding: @@vpad @@hpad;
       font-size: @@fs;
       border-radius: @@br;
-    }
-    .kf-btn-group.kf-@{s} > .kf-btn {
-      padding: @@vpad @@hpad;
-      font-size: @@fs;
-
-      &:first-child {
-        border-top-left-radius: @@br;
-        border-bottom-left-radius: @@br;
-      }
-      &:last-child {
-        border-top-right-radius: @@br;
-        border-bottom-right-radius: @@br;
-      }
     }
 
     .size(@i + 1);
@@ -63,19 +47,40 @@
 :global {
   .kf-btn {
     display: inline-block;
-    border: 1px solid transparent;
     vertical-align: middle;
     text-align: center;
     white-space: nowrap;
     line-height: 1;
+
+    border: 1px solid @gray;
+    border-radius: @br-md;
+    padding: @vpad-md @hpad-md;
+    background-color: white;
+    font-size: @fs-md;
+    &:focus {
+      background-color: lighten(@gray, 20%);
+    }
+  }
+  a.kf-btn {
+    text-decoration: none;
   }
 
   .kf-btn-group {
     display: inline-block;
     > .kf-btn {
-      border-radius: 0;
-      &:first-child {
+      &:not(:first-child) {
         border-left: none !important;
+      }
+      &:first-child {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+      &:last-child {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+      }
+      &:not(:first-child):not(:last-child) {
+        border-radius: 0 !important;
       }
     }
   }

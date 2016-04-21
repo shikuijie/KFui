@@ -21,7 +21,25 @@ vue.component('kf-select', {
     onSelect: {
       type: Function,
       default: () => {}
-    }
+    },
+    flip: {
+      type: Object,
+      default: function() {
+        return {bottom: true, left: true};
+      },
+      coerce: function(val) {
+        if((val.bottom && val.top) || (!val.bottom && !val.top)) {
+          val.bottom = true;
+          val.top = false;
+        }
+        if((val.left && val.right) || (!val.left && !val.right)) {
+          val.left = true;
+          val.right = false;
+        }
+
+        return val;
+      }
+    },
   },
   data: function() {
     let index = this.values.indexOf(this.model),
@@ -42,11 +60,17 @@ vue.component('kf-select', {
       this.onSelect(index);
     },
     getOptionsCls: function() {
-      if(this.visible) return cls.visible;
+      let res = {};
+      res[cls.visible] = this.visible;
+      res[cls.left] = this.flip.left;
+      res[cls.top] = this.flip.top;
+      res[cls.bottom] = this.flip.bottom;
+      res[cls.right] = this.flip.right;
+      return res;
     }
   },
   template:
-    '<div :class="cls.select" @click="visible = true">' +
+    '<div :class="cls.select" class="kf-select" @click="visible = true">' +
       '<input readonly type="text" :value="selectedLabel">' +
       '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
       '<span></span>' +

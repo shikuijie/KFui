@@ -81,6 +81,10 @@
 }
 
 .define-kf-checkbox() {
+  .kf-checkbox {
+    .kf-checkbox-color(@dark);
+    .kf-checkbox-size(@vpad-md, @hpad-md, @fs-md);
+  }
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);
@@ -109,6 +113,10 @@
 }
 
 .define-kf-checkbox-group() {
+  .kf-checkbox-group {
+    .kf-checkbox-group-color(@dark);
+    .kf-checkbox-group-size(@vpad-md, @hpad-md, @fs-md);
+  }
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
     @c: extract(@colors, @i);
