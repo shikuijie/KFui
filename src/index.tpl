@@ -20,18 +20,18 @@
     <div slot="middle" class="content">
       <kf-tab class="kf-lg kf-primary">
         <kf-tab-item label="蓝色">
-          <div style="height: 100px">蓝色</div>
+          <div style="height: 200px">蓝色</div>
         </kf-tab-item>
         <kf-tab-item label="绿色">
-          <div style="height: 200px">绿色</div>
+          <div style="height: 300px">绿色</div>
         </kf-tab-item>
         <kf-tab-item label="红色">
-          <div style="height: 50px">红色</div>
+          <div style="height: 200px">红色</div>
         </kf-tab-item>
       </kf-tab>
       <br>
-      <kf-date-picker :moment.sync="moment" class="kf-primary kf-md"></kf-date-picker>
-      <kf-date-ranger :start.sync="start" :end.sync="end" class="kf-lg"></kf-date-ranger>
+      <kf-date-picker :moment.sync="moment" :flip="{top: true}" class="kf-primary kf-md"></kf-date-picker>
+      <kf-date-ranger :start.sync="start" :end.sync="end" :flip="{top: true}" class="kf-lg"></kf-date-ranger>
       <div class="kf-input kf-primary kf-md">
         <input type="text">
       </div>
@@ -49,7 +49,6 @@
       </div>
       <kf-file class="kf-lg" url="upload.json" :success="onsuccess" :other="uploadParams" :multiple="true"></kf-file>
       <button class="kf-btn kf-primary kf-md">按钮</button>
-      <br>
       <br>
       <div class="kf-input-group kf-primary kf-md">
         <label class="kf-addon">标签名称</label>
@@ -85,7 +84,6 @@
         </div>
         <div class="kf-addon">标签2</div>
       </div>
-
       <br>
       <div class="kf-btn-group">
         <button class="kf-btn">BUTTON</button>
@@ -93,6 +91,8 @@
       </div>
       <button class="kf-btn">BUTTON</button>
       <button class="kf-btn kf-primary">BUTTON</button>
+      <br>
+      <kf-pager class="kf-primary" :total-entries="100" :on-change="onChange"></kf-pager>
     </div>
 
     <div slot="right">RIGHT SIDEBAR</div>

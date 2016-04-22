@@ -10,10 +10,10 @@
 :global {
   .layout {
     @media (min-width: 768px) {
-      .kf-layout(6vh, 5vh, 150px, 100px, @dark);
+      .kf-layout(5vh, 5vh, 150px, 100px, @dark);
     }
     @media (max-width: 768px) {
-      .kf-layout(6vh, 5vh, 150px, 100px, @dark, small);
+      .kf-layout(5vh, 5vh, 150px, 100px, @dark, small);
     }
   }
 
@@ -34,6 +34,7 @@
 
   div[slot=middle].content {
     padding: 10px;
+    height: 1000px;
     .kf-btn-group {
       margin-bottom: 5px;
     }

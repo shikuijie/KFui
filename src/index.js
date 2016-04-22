@@ -12,6 +12,7 @@ import './module/rotator/rotator';
 import './module/layout/layout';
 import './module/tab/tab';
 import './module/form/file/file';
+import './module/pager/pager';
 
 import './module/style/clearfix.css!';
 import './module/style/button.css!';
@@ -40,6 +41,9 @@ new vue({
     },
     onsuccess: function(event) {
       console.log(event)
+    },
+    onChange: function(page, entry) {
+      console.log(page, entry)
     },
     menuData: {
       submenu: [{
