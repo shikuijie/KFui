@@ -1,6 +1,7 @@
 import vue from 'vue';
 import '../code/code';
 import _ from 'lodash';
+import './table.css!';
 
 let thead = vue.extend({
   props: ['tableData', 'headData'],
@@ -79,7 +80,7 @@ vue.component('kf-stable', {
     table: Object
   },
   template:
-    '<table>' +
+    '<table class="kf-table">' +
       '<thead is="kf-thead" v-if="table.__thead" :head-data="headData" :table-data="table"></thead>' +
       '<tbody v-if="table.__tbody">' +
         '<tr is="kf-srow" v-for="row in table.__tbody" :row-data="row" :col-keys="colKeys" :table-data="table"></tr>' +
@@ -88,10 +89,10 @@ vue.component('kf-stable', {
     '</table>',
   computed: {
     headData: function() {
-      return parseHeadFoot(this.table.__thead);
+      return this.table.__thead;
     },
     footData: function() {
-      return parseHeadFoot(this.table.__tfoot);
+      return this.table.__tfoot;
     }
   }
 });
@@ -195,7 +196,7 @@ vue.component('kf-ttable', {
     }
   },
   template:
-    '<table>' +
+    '<table class="kf-table">' +
       '<thead is="kf-thead" v-if="table.__thead" :table-data="table" :head-data="table.__thead"></thead>' +
       '<tbody v-if="table.__tbody">' +
         '<tr is="kf-trow" v-for="row in tbody" ' +

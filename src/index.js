@@ -28,6 +28,14 @@ new vue({
       this.$broadcast('kf-layout-toggle', side);
     }
   },
+  ready: function() {
+    kfTable.setHead(this.tableData, ['姓名', '手机', '邮箱', '工作']);
+    kfTable.setBody(this.tableData, [{
+      name: 'Lagou', phone: '17710532312', email: 'shimoo@lagou.com', job: 'saler'
+    }, {
+      name: 'LAGOU', phone: '15641879798', email: 'shimoo@163.com', job: 'programmer'
+    }]);
+  },
   data: {
     moment: '',
     start: '',
@@ -45,6 +53,9 @@ new vue({
     onChange: function(page, entry) {
       console.log(page, entry)
     },
+    tableData: {
+    },
+    colKeys: ['name', 'phone', 'email', 'job'],
     menuData: {
       submenu: [{
         item: 'Item0',
