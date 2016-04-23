@@ -133,7 +133,7 @@ let mrow = vue.extend({
   }
 });
 
-let mtable = vue.component('kf-mtable', {
+vue.component('kf-mtable', {
   components: {
     'kf-thead': thead,
     'kf-tfoot': tfoot,

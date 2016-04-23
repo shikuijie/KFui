@@ -6,55 +6,84 @@
     width: 100%;
     max-width: 100%;
     background-color: white;
+    line-height: 10/7;
+    border: 1px solid @gray;
+
+    > thead > tr > th {
+      font-weight: bold;
+      vertical-align: bottom;
+    }
+    > tfoot > tr > th {
+      font-weight: bold;
+      vertical-align: top;
+    }
+    > tbody > tr > td {
+      vertical-align: middle;
+    }
+
+    > thead > tr > th,
+    > tfoot > tr > th,
+    > tbody > tr > td {
+      padding: @vpad-md @hpad-md;
+      text-align: center;
+    }
+    > thead + tbody > tr:first-child > td {
+      border-top: 2px solid @gray !important;
+    }
+    > tfoot > tr:first-child > th {
+      border-top: 2px solid @gray !important;
+    }
   }
 
   .kf-table.kf-border {
-    border-spacing: 0;
-    border-collapse: collapse;
-    border: 1px solid @gray;
-
-    > thead {
-      > tr {
-        > th {
-          border-top: 0;
-          border-bottom: 2px solid @gray;
-          font-weight: bold;
-          padding: @vpad-md @hpad-md;
-          text-align: left;
-        }
-      }
-    }
-
-    > tfoot {
-      > tr {
-        > th {
-          border-top: 2px solid @gray;
-          border-bottom: 0;
-          font-weight: bold;
-          padding: @vpad-md @hpad-md;
-        }
-      }
-    }
-
-    > tbody {
-      > tr {
-        > td {
-          border-bottom: 1px solid @gray;
-          padding: @vpad-md @hpad-md;
-        }
-      }
-      &:first-child {
-        > tr:first-child > td {
-          border-top: 0;
-        }
-      }
-      &:last-child {
-        > tr:last-child > td {
-          border-bottom: 0;
-        }
-      }
+    > thead > tr > th,
+    > tfoot > tr > th,
+    > tbody > tr > td {
+      border: 1px solid @gray;
     }
   }
+
+  .kf-table.kf-stripe-odd {
+    > tbody > tr:nth-child(odd) {
+      background-color: @light;
+    }
+  }
+  .kf-table.kf-stripe-even {
+    > tbody > tr:nth-child(even) {
+      background-color: @light;
+    }
+  }
+
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-table.kf-stripe-even.kf-@{c} > tbody > tr:nth-child(even),
+    .kf-table.kf-stripe-odd.kf-@{c} > tbody > tr:nth-child(odd) {
+      background-color: @@c;
+      color: white;
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    .kf-table.kf-@{s} {
+      > thead > tr > th,
+      > tbody > tr > td,
+      > tfoot > tr > td {
+        padding: @@vpad @@hpad;
+      }
+    }
+
+    .size(@i + 1);
+  }
+
+  .color();
+  .size();
 }
 
 :global {

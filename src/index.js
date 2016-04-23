@@ -29,12 +29,13 @@ new vue({
     }
   },
   ready: function() {
-    kfTable.setHead(this.tableData, ['姓名', '手机', '邮箱', '工作']);
-    kfTable.setBody(this.tableData, [{
-      name: 'Lagou', phone: '17710532312', email: 'shimoo@lagou.com', job: 'saler'
+    kfTable.setHead(this.stable, ['姓名', '手机', '邮箱', '工作', '地址']);
+    kfTable.setBody(this.stable, [{
+      name: 'Lagou', phone: '17710532312', email: 'shimoo@lagou.com', job: 'saler', address: {city: '北京', street: '龙岗路'}
     }, {
-      name: 'LAGOU', phone: '15641879798', email: 'shimoo@163.com', job: 'programmer'
+      name: 'LAGOU', phone: '15641879798', email: 'shimoo@163.com', job: 'programmer', address: {city: '北京', street: '海淀大街'}
     }]);
+    kfTable.setFoot(this.stable, ['姓名', '手机', '邮箱', '工作', '地址']);
   },
   data: {
     moment: '',
@@ -53,9 +54,9 @@ new vue({
     onChange: function(page, entry) {
       console.log(page, entry)
     },
-    tableData: {
+    stable: {
     },
-    colKeys: ['name', 'phone', 'email', 'job'],
+    colKeys: ['name', 'phone', 'email', 'job', 'address.street'],
     menuData: {
       submenu: [{
         item: 'Item0',

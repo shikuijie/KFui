@@ -94,8 +94,7 @@
       <br>
       <kf-pager class="kf-primary" :total-entries="100" :on-change="onChange"></kf-pager>
       <br>
-      <button class="kf-btn kf-dark" @click="generateTable()">生成表格</button>
-      <kf-stable class="kf-border" :table="tableData" :col-keys="colKeys"></kf-stable>
+      <kf-stable class="kf-border kf-sm" :table="stable" :col-keys="colKeys"></kf-stable>
     </div>
 
     <div slot="right">RIGHT SIDEBAR</div>
