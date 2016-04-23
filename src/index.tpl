@@ -9,28 +9,32 @@
 <body>
   <kf-layout class="layout">
     <div slot="header">
-      <button class="kf-btn kf-primary kf-md" @click="toggleSidebar()"><i class="fa fa-bars"></i></button>
-      <button class="kf-btn kf-primary kf-md" @click="toggleSidebar('right')"><i class="fa fa-bars"></i></button>
+      <!-- <button class="kf-btn kf-primary kf-md" @click="toggleSidebar()"><i class="fa fa-bars"></i></button>
+      <button class="kf-btn kf-primary kf-md" @click="toggleSidebar('right')"><i class="fa fa-bars"></i></button> -->
     </div>
 
     <div slot="left">
-      <kf-menu class="menu" :menu="menuData"></kf-menu>
+      <!-- <kf-menu class="menu" :menu="menuData"></kf-menu> -->
     </div>
 
     <div slot="middle" class="content">
-      <kf-tab class="kf-lg kf-primary">
-        <kf-tab-item label="蓝色">
-          <div style="height: 200px">蓝色</div>
+      <kf-tab class="kf-lg kf-primary kf-vertical">
+        <kf-tab-item label="表格">
+          <div class="stableWrapper">
+            <div class="kf-btn-group kf-dark">
+              <button class="kf-btn" @click="stable.appendRow()">后插行</button>
+              <button class="kf-btn" @click="stable.prependRow()">前插行</button>
+            </div>
+            <kf-stable class="stable kf-border" :table="stable" :col-keys="stable.colKeys"></kf-stable>
+          </div>
         </kf-tab-item>
-        <kf-tab-item label="绿色">
-          <div style="height: 300px">绿色</div>
+        <kf-tab-item label="树">
         </kf-tab-item>
-        <kf-tab-item label="红色">
-          <div style="height: 200px">红色</div>
+        <kf-tab-item label="布局">
         </kf-tab-item>
       </kf-tab>
       <br>
-      <kf-date-picker :moment.sync="moment" :flip="{top: true}" class="kf-primary kf-md"></kf-date-picker>
+      <!-- <kf-date-picker :moment.sync="moment" :flip="{top: true}" class="kf-primary kf-md"></kf-date-picker>
       <kf-date-ranger :start.sync="start" :end.sync="end" :flip="{top: true}" class="kf-lg"></kf-date-ranger>
       <div class="kf-input kf-primary kf-md">
         <input type="text">
@@ -90,16 +94,19 @@
         <button class="kf-btn">BUTTON</button>
       </div>
       <button class="kf-btn">BUTTON</button>
-      <button class="kf-btn kf-primary">BUTTON</button>
+      <button class="kf-btn kf-primary" @click="addRow()">添加</button>
       <br>
       <kf-pager class="kf-primary" :total-entries="100" :on-change="onChange"></kf-pager>
       <br>
-      <kf-stable class="kf-border kf-sm" :table="stable" :col-keys="colKeys"></kf-stable>
+      <br>
+      <kf-mtable class="kf-border" :table="mtable" :col-keys="mcolKeys"></kf-mtable>
+      <br>
+      <kf-ttable class="kf-border" :table="ttable" :col-keys="tcolKeys"></kf-mtable> -->
     </div>
 
-    <div slot="right">RIGHT SIDEBAR</div>
+    <div slot="right"></div>
 
-    <div slot="footer">FOOTER</div>
+    <div slot="footer"></div>
   </kf-layout>
 
   <script>

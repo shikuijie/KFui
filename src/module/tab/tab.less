@@ -78,7 +78,6 @@
   .kf-tab {
     .kf-tab-color(@gray);
     .kf-tab-size(@vpad-md, @hpad-md, @fs-md, @br-md);
-    .kf-tab-direction(horizontal);
   }
   @colorLen: length(@colors);
   .color(@i: 1) when (@i <= @colorLen) {
@@ -104,7 +103,7 @@
     .size(@i + 1);
   }
 
-  .kf-tab.kf-horizontal {
+  .kf-tab:not(.kf-vertical) {
     .kf-tab-direction(horizontal);
   }
   .kf-tab.kf-vertical {

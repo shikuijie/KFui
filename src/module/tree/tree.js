@@ -7,7 +7,7 @@ import cls from './tree.css.map';
 vue.component('kf-tree', {
   components: {
     'kf-tree-node': {
-      props: ['nodeData', 'dragEnable', 'nodeKey', 'subtreeKey', 'showIcon', 'hideIcon', 'waitIcon'],
+      props: ['nodeData', 'dragEnable', 'nodeKey', 'subtreeKey'],
       data: function() {
         vue.set(this.nodeData, '__EXPAND', false);
         vue.set(this.nodeData, '__DRAGOVER', false);
@@ -30,15 +30,14 @@ vue.component('kf-tree', {
       },
       computed: {
         icon: function() {
-          if(this.nodeData[this.subtreeKey] && this.nodeData[this.subtreeKey].length) {
-            if(this.nodeData.__EXPAND) {
-              return this.showIcon;
-            }
-            else {
-              return this.hideIcon;
+          if(this.nodeData.__EXPAND) {
+            if(this.nodeData[this.subtreeKey] && this.nodeData[this.subtreeKey].length) {
+              return 'fa fa-minus-square-o';
+            } else {
+              return 'fa fa-spin fa-spinner';
             }
           } else {
-            return this.waitIcon;
+            return 'fa fa-plus-square-o';
           }
         }
       },
@@ -111,10 +110,7 @@ vue.component('kf-tree', {
                       ':tree="nodeData" ' +
                       ':draggable="dragEnable" ' +
                       ':node-key="nodeKey" ' +
-                      ':subtree-key="subtreeKey" ' +
-                      ':show-icon="showIcon" ' +
-                      ':hide-icon="hideIcon" ' +
-                      ':wait-icon="waitIcon">' +
+                      ':subtree-key="subtreeKey">' +
             '</kf-tree>' +
           '</div>' +
         '</li>',
@@ -136,18 +132,6 @@ vue.component('kf-tree', {
     subtreeKey: {
       type: String,
       default: 'subtree'
-    },
-    hideIcon: {
-      type: String,
-      default: 'fa fa-plus-square-o'
-    },
-    showIcon: {
-      type: String,
-      default: 'fa fa-minus-square-o'
-    },
-    waitIcon: {
-      type: String,
-      default: 'fa fa-spin fa-spinner'
     }
   },
   data: function() {
@@ -182,10 +166,7 @@ vue.component('kf-tree', {
                   ':drag-enable="draggable" ' +
                   ':node-data="node" ' +
                   ':node-key="nodeKey" ' +
-                  ':subtree-key="subtreeKey" ' +
-                  ':show-icon="showIcon" ' +
-                  ':hide-icon="hideIcon" ' +
-                  ':wait-icon="waitIcon">' +
+                  ':subtree-key="subtreeKey">' +
     '</kf-tree-node>' +
   '</ul>'
 });
