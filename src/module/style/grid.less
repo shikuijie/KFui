@@ -2,6 +2,31 @@
 
 @columns: 12;
 
+.define-kf-justify(@col: 1) when (@col <= @columns) {
+  @rest: @columns - @col;
+
+  .kf-justify-@{col}-@{rest} {
+    display: flex;
+    justify-content: space-between;
+
+    > * {
+      display: flex;
+      align-items: center;
+    }
+
+    > *:first-child {
+      flex: 0 0 percentage(@col/@columns);
+      justify-content: flex-start;
+    }
+    > *:last-child {
+      flex: 0 0 percentage(@rest/@columns);
+      justify-content: flex-end;
+    }
+  }
+
+  .define-kf-justify(@col + 1);
+}
+
 .define-kf-grid-col(@size, @col: 1) when (@col <= @columns) {
   .kf-col-@{size}-@{col} {
     display: inline-block;
@@ -19,6 +44,8 @@
 }
 
 :global {
+  .define-kf-justify();
+
   @media (max-width: 768px) {
     .define-kf-grid-col(xs);
     .define-kf-grid-offset(xs);

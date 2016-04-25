@@ -26,16 +26,9 @@
     line-height: 10/7;
     border: 1px solid @gray;
 
-    > thead > tr > th {
-      font-weight: bold;
-      vertical-align: bottom;
-    }
+    > thead > tr > th,
     > tfoot > tr > th {
       font-weight: bold;
-      vertical-align: top;
-    }
-    > tbody > tr > td {
-      vertical-align: middle;
     }
 
     > thead > tr > th,
@@ -43,6 +36,7 @@
     > tbody > tr > td {
       padding: @vpad-md @hpad-md;
       text-align: center;
+      vertical-align: middle;
     }
     > thead + tbody > tr:first-child > td {
       border-top: 2px solid @gray !important;

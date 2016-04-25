@@ -613,5 +613,10 @@ export var kfTable = {
     if(table.__TABLE && autoLeaf && coll.length == 0) {
       row.__PARENT[table.__CHILDREN_KEY] = undefined;
     }
+  },
+  iterate: function(table, cb) {
+    _.forEach(table.__TBODY, function(row) {
+      cb(row);
+    });
   }
 };

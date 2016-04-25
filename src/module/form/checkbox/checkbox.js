@@ -15,33 +15,33 @@ import './checkbox.css!';
 */
 vue.component('kf-checkbox', {
   props: {
-    click: {
+    onChange: {
       type: Function,
       default: () => {}
     },
-    label: {
-      type: String,
-      required: true
-    },
+    label: String,
     value: {
       type: null,
-      required: true
+      default: true
     },
     model: {
       twoWay: true,
-      type: null,
       required: true
     }
   },
   data: function() {
     return {
-      cls: cls,
-      origModel: this.model
+      cls: cls
     };
+  },
+  methods: {
+    click: function() {
+      this.onChange(this.model ? false : this.value);
+    }
   },
   template:
     '<span :class="cls.checkbox" class="kf-checkbox">' +
-      '<input type="checkbox" @click="click(value)" v-model="model" :true-value="value" :false-value="origModel"/>' +
+      '<input type="checkbox" @click="click()" v-model="model" :true-value="value" :false-value="false"/>' +
       '<i class="fa fa-check" :class="cls.check"></i>' +
       '<span class="fa fa-square-o" :class="cls.box"></span>' +
       '<label v-text="label"></label>' +

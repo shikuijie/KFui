@@ -20,17 +20,52 @@
     <div slot="middle" class="content">
       <kf-tab class="kf-lg kf-primary kf-vertical">
         <kf-tab-item label="表格">
-          <div class="stableWrapper">
+          <div class="stable-title kf-justify-3-9">
+            <h3>单行表格</h3>
             <div class="kf-btn-group kf-dark">
-              <button class="kf-btn" @click="stable.appendRow()">后插行</button>
-              <button class="kf-btn" @click="stable.prependRow()">前插行</button>
+              <button class="kf-btn" @click="stable.prependRow()">前插</button>
+              <button class="kf-btn" @click="stable.appendRow()">后插</button>
+              <button class="kf-btn" @click="stable.iterateRows()">遍历</button>
             </div>
+          </div>
+          <div class="stable-body">
+            <kf-modal :open.sync="stable.modal.editOpen">
+              <h2 slot="title">编辑行</h2>
+              <div slot="content" style="width: 600px">
+                <form class="kf-form" style="margin: 0 auto; width: 400px">
+                  <div class="kf-control kf-justify-3-9">
+                    <label class="kf-label">姓名</label>
+                    <div class="kf-input">
+                      <input type="text" v-model="stable.modal.currentRow.name">
+                      <div class="kf-error">请输入姓名</div>
+                    </div>
+                  </div>
+
+                  <div class="kf-control kf-justify-3-9">
+                    <label>邮箱</label>
+                    <div class="kf-input">
+                      <input type="text" v-model="stable.modal.currentRow.email">
+                    </div>
+                  </div>
+
+                  <div class="kf-control kf-justify-3-9">
+                    <label>地址</label>
+                    <div class="kf-input">
+                      <input type="text" v-model="stable.modal.currentRow.address">
+                    </div>
+                  </div>
+
+                  <div class="kf-btn-group kf-primary kf-lg">
+                    <input type="submit" class="kf-btn" @click="stable.modal.confirmEdit()" value="确定"></button>
+                    <input type="reset" class="kf-btn" @click="stable.modal.editOpen = false" value="取消"></button>
+                  </div>
+                </form>
+              </div>
+            </kf-modal>
             <kf-stable class="stable kf-border" :table="stable" :col-keys="stable.colKeys"></kf-stable>
           </div>
         </kf-tab-item>
         <kf-tab-item label="树">
-        </kf-tab-item>
-        <kf-tab-item label="布局">
         </kf-tab-item>
       </kf-tab>
       <br>
