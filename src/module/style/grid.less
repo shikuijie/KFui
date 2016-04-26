@@ -17,10 +17,30 @@
     > *:first-child {
       flex: 0 0 percentage(@col/@columns);
       justify-content: flex-start;
+
+      &.kf-left {
+        justify-content: flex-start;
+      }
+      &.kf-middle {
+        justify-content: center;
+      }
+      &.kf-right {
+        justify-content: flex-end;
+      }
     }
     > *:last-child {
       flex: 0 0 percentage(@rest/@columns);
       justify-content: flex-end;
+
+      &.kf-left {
+        justify-content: flex-start;
+      }
+      &.kf-middle {
+        justify-content: center;
+      }
+      &.kf-right {
+        justify-content: flex-end;
+      }
     }
   }
 

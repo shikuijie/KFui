@@ -22,5 +22,10 @@ new vue({
   },
   data: {
     stable: stable
+  },
+  methods: {
+    blur: function(event) {
+      console.log(event)
+    }
   }
 });

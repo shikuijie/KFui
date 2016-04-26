@@ -1,5 +1,6 @@
 import {kfTable} from '../module/table/table';
 import '../module/form/checkbox/checkbox';
+import '../module/form/validate/validate';
 
 function getAction(func, label) {
   return '<button class="kf-btn kf-xs" @click="TABLE.' + func + '(ROW)">' + label + '</button>';
@@ -15,7 +16,17 @@ function getCheckbox(head, label) {
 export var stable = {
   modal: {
     editOpen: false,
-    currentRow: {name: '', email: '', address: ''}
+    currentRow: {name: '', email: '', address: ''},
+    error: {
+      name: {required: '请输入姓名字段!'},
+      email: {required: '请输入邮箱字段!', email: '邮箱格式不对!'},
+      address: {required: '请输入地址字段!', pattern: '请输入5-10个字符!'}
+    },
+    confirmEdit: function(event) {
+      if(stable.modal.error.formValid) {
+        stable.modal.editOpen = false;
+      }
+    }
   },
   checked: false,
   onReady: function() {
@@ -50,7 +61,8 @@ export var stable = {
   },
   edit: function(row) {
     this.modal.editOpen = true;
-    this.modal.currentRow = row;
+    this.modal.currentRow.row = row;
+    _.extend(this.modal.currentRow, row);
   },
   colKeys: ['checkbox', 'name', 'email', 'address', 'action'],
   thead: [getCheckbox(true, '全部'), '姓名', '邮箱', '地址', '操作'],

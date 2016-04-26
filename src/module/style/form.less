@@ -2,17 +2,17 @@
 
 :global {
   .kf-form > .kf-control > * {
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+
+    &:first-child {
+      > .kf-asterisk {
+        margin-left: 2px;
+        color: @accent;
+      }
+    }
     &:last-child {
       position: relative;
-      > .kf-error {
-        position: absolute;
-        left: 0;
-        top: 100%;
-        color: @accent;
-        margin-top: 5px;
-        font-size: 12px;
-      }
     }
   }
 }

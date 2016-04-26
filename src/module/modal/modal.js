@@ -26,9 +26,9 @@ vue.component('kf-modal', {
   template:
     '<section class="kf-modal" :class="getCls()">' +
       '<div :class="cls.center">' +
-        '<header><slot name="title"></slot></header>' +
-        '<main><slot name="content"></slot></main>' +
-        '<footer><slot name="action"></slot></footer>' +
+        '<header><slot name="head"></slot></header>' +
+        '<main><slot name="body"></slot></main>' +
+        '<footer><slot name="tail"></slot></footer>' +
       '</div>' +
     '</section>'
 });

@@ -30,34 +30,33 @@
           </div>
           <div class="stable-body">
             <kf-modal :open.sync="stable.modal.editOpen">
-              <h2 slot="title">编辑行</h2>
-              <div slot="content" style="width: 600px">
-                <form class="kf-form" style="margin: 0 auto; width: 400px">
+              <h2 slot="head">编辑行</h2>
+              <div slot="body" style="width: 600px">
+                <form novalidate v-kf-validate="stable.modal.error" class="kf-form" style="margin: 0 auto; width: 500px">
                   <div class="kf-control kf-justify-3-9">
-                    <label class="kf-label">姓名</label>
+                    <label>姓名<span class="kf-asterisk">*</span></label>
                     <div class="kf-input">
-                      <input type="text" v-model="stable.modal.currentRow.name">
-                      <div class="kf-error">请输入姓名</div>
+                      <input type="text" name="name" required v-model="stable.modal.currentRow.name">
                     </div>
                   </div>
 
                   <div class="kf-control kf-justify-3-9">
-                    <label>邮箱</label>
+                    <label>邮箱<span class="kf-asterisk">*</span></label>
                     <div class="kf-input">
-                      <input type="text" v-model="stable.modal.currentRow.email">
+                      <input type="email" required name="email" v-model="stable.modal.currentRow.email">
                     </div>
                   </div>
 
                   <div class="kf-control kf-justify-3-9">
-                    <label>地址</label>
+                    <label>地址<span class="kf-asterisk">*</span></label>
                     <div class="kf-input">
-                      <input type="text" v-model="stable.modal.currentRow.address">
+                      <input type="text" required name="address" v-model="stable.modal.currentRow.address">
                     </div>
                   </div>
 
-                  <div class="kf-btn-group kf-primary kf-lg">
-                    <input type="submit" class="kf-btn" @click="stable.modal.confirmEdit()" value="确定"></button>
-                    <input type="reset" class="kf-btn" @click="stable.modal.editOpen = false" value="取消"></button>
+                  <div class="kf-btn-group kf-primary">
+                    <input type="submit" class="kf-btn" @click.prevent="stable.modal.confirmEdit($event)" value="确定">
+                    <input type="reset" class="kf-btn" @click="stable.modal.editOpen = false" value="取消">
                   </div>
                 </form>
               </div>
