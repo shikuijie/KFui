@@ -31,11 +31,6 @@ let vm = {
     ttable: ttable,
     modal: {open: false},
     form: form
-  },
-  methods: {
-    blur: function(event) {
-      console.log(event)
-    }
   }
 };
 

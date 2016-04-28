@@ -56,18 +56,6 @@
             <kf-ttable class="kf-border" :table="ttable" :col-keys="ttable.colKeys"></kf-ttable>
           </div>
         </kf-tab-item>
-        <kf-tab-item label="弹窗">
-          <button class="kf-btn kf-primary" style="margin-left: 10px" @click="modal.open=true">打开弹窗</button>
-          <kf-modal :open.sync="modal.open">
-            <div slot="body" style="padding: 10px 20px; color: red">
-              警告！网络错误，请告知网络管理员
-
-              <div style="margin-top: 30px; text-align: right">
-                <button class="kf-btn kf-accent" @click="modal.open=false">确定</button>
-              </div>
-            </div>
-          </kf-modal>
-        </kf-tab-item>
         <kf-tab-item label="表单及验证">
           <style>
             .kf-form {
@@ -145,6 +133,18 @@
               </div>
             </div>
           </form>
+        </kf-tab-item>
+        <kf-tab-item label="弹窗">
+          <button class="kf-btn kf-primary" style="margin-left: 10px" @click="modal.open=true">打开弹窗</button>
+          <kf-modal :open.sync="modal.open">
+            <div slot="body" style="padding: 10px 20px; color: red">
+              警告！网络错误，请告知网络管理员
+
+              <div style="margin-top: 30px; text-align: right">
+                <button class="kf-btn kf-accent" @click="modal.open=false">确定</button>
+              </div>
+            </div>
+          </kf-modal>
         </kf-tab-item>
       </kf-tab>
       <br>
