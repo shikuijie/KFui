@@ -5,7 +5,7 @@
 .kf-select-color(@color, @inverse: false) {
   border: 1px solid @color;
   & when (@inverse = false) {
-    > span {
+    > i {
       .kf-tip-arrow(down, @color, 5px);
     }
   }
@@ -16,7 +16,7 @@
       color: white;
     }
 
-    > span {
+    > i {
       .kf-tip-arrow(down, white, 5px);
     }
   }
@@ -55,6 +55,10 @@
   display: inline-block;
   padding-right: 15px !important;
 
+  > input {
+    cursor: pointer;
+  }
+
   > .bg {
     position: fixed;
     left: 0;
@@ -65,7 +69,7 @@
     opacity: 0;
   }
 
-  > span {
+  > i {
     position: absolute;
     display: inline-block;
     top: 50%;

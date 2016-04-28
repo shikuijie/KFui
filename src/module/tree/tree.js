@@ -171,7 +171,7 @@ vue.component('kf-tree', {
   '</ul>'
 });
 
-export var kfTree = {
+export default {
   appendNodes: function(parent, nodes) {
     let subkey = parent.__ROOT.__SUBTREE_KEY;
     if(!parent[subkey]) {

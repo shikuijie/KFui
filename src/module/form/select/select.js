@@ -2,6 +2,7 @@ import vue from 'vue';
 import '../../code/code';
 import cls from './select.css.map';
 import './select.css!';
+import {blur} from '../util';
 
 vue.component('kf-select', {
   props: {
@@ -18,7 +19,12 @@ vue.component('kf-select', {
       type: Array,
       required: true
     },
-    onSelect: {
+    name: String,
+    required: {
+      type: Boolean,
+      default: false
+    },
+    onChange: {
       type: Function,
       default: () => {}
     },
@@ -41,23 +47,33 @@ vue.component('kf-select', {
       }
     },
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   data: function() {
-    let index = this.values.indexOf(this.model),
-        label = (index != -1) ? this.labels[index] : ''
     return {
       cls: cls,
-      selectedIndex: index,
-      selectedLabel: label,
       visible: false
     };
   },
+  watch: {
+    model: function(val) {
+      this.onChange(val);
+      this.name && blur(this.input);
+    }
+  },
+  computed: {
+    selectedIndex: function() {
+      return this.values.indexOf(this.model);
+    },
+    selectedLabel: function() {
+      return this.labels[this.selectedIndex];
+    }
+  },
   methods: {
     select: function(index) {
-      this.selectedIndex = index;
-      this.selectedLabel = this.labels[index];
       this.model = this.values[index];
       this.visible = false;
-      this.onSelect(index);
     },
     getOptionsCls: function() {
       let res = {};
@@ -67,13 +83,16 @@ vue.component('kf-select', {
       res[cls.bottom] = this.flip.bottom;
       res[cls.right] = this.flip.right;
       return res;
+    },
+    hide: function() {
+      this.visible = false;
     }
   },
   template:
     '<div :class="cls.select" class="kf-select" @click="visible = true">' +
-      '<input readonly type="text" :value="selectedLabel">' +
-      '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
-      '<span></span>' +
+      '<input type="text" autocomplete="off" :name="name" :required="required" :value="selectedLabel">' +
+      '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
+      '<i></i>' +
       '<ul :class="getOptionsCls()">' +
         '<li v-for="label in labels" ' +
             ':kf-selected="selectedIndex == $index" ' +

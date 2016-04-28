@@ -6,9 +6,10 @@
     display: flex;
 
     > ul {
-      flex: 0;
+      flex-grow: 0;
       border-bottom: none !important;
       > li {
+        text-align: right;
         &[kf-tab-active] {
           border-right: none !important;
           border-top-right-radius: 0 !important;
@@ -19,7 +20,7 @@
     }
 
     > div {
-      flex: 1;
+      flex-grow: 1;
     }
   }
 

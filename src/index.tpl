@@ -20,122 +20,134 @@
     <div slot="middle" class="content">
       <kf-tab class="kf-lg kf-primary kf-vertical">
         <kf-tab-item label="表格">
-          <div class="stable-title kf-justify-3-9">
-            <h3>单行表格</h3>
-            <div class="kf-btn-group kf-dark">
-              <button class="kf-btn" @click="stable.prependRow()">前插</button>
-              <button class="kf-btn" @click="stable.appendRow()">后插</button>
-              <button class="kf-btn" @click="stable.iterateRows()">遍历</button>
-            </div>
-          </div>
-          <div class="stable-body">
-            <kf-modal :open.sync="stable.modal.editOpen">
-              <h2 slot="head">编辑行</h2>
-              <div slot="body" style="width: 600px">
-                <form novalidate v-kf-validate="stable.modal.error" class="kf-form" style="margin: 0 auto; width: 500px">
-                  <div class="kf-control kf-justify-3-9">
-                    <label>姓名<span class="kf-asterisk">*</span></label>
-                    <div class="kf-input">
-                      <input type="text" name="name" required v-model="stable.modal.currentRow.name">
-                    </div>
-                  </div>
-
-                  <div class="kf-control kf-justify-3-9">
-                    <label>邮箱<span class="kf-asterisk">*</span></label>
-                    <div class="kf-input">
-                      <input type="email" required name="email" v-model="stable.modal.currentRow.email">
-                    </div>
-                  </div>
-
-                  <div class="kf-control kf-justify-3-9">
-                    <label>地址<span class="kf-asterisk">*</span></label>
-                    <div class="kf-input">
-                      <input type="text" required name="address" v-model="stable.modal.currentRow.address">
-                    </div>
-                  </div>
-
-                  <div class="kf-btn-group kf-primary">
-                    <input type="submit" class="kf-btn" @click.prevent="stable.modal.confirmEdit($event)" value="确定">
-                    <input type="reset" class="kf-btn" @click="stable.modal.editOpen = false" value="取消">
-                  </div>
-                </form>
+          <div style="margin: 10px">
+            <div class="kf-justify-3-9" style="margin-bottom: 10px">
+              <h3 class="kf-bottom">单行表格</h3>
+              <div class="kf-btn-group kf-dark">
+                <button class="kf-btn" @click="stable.prependRow()">前插</button>
+                <button class="kf-btn" @click="stable.appendRow()">后插</button>
+                <button class="kf-btn" @click="stable.iterateRows()">遍历</button>
               </div>
-            </kf-modal>
-            <kf-stable class="stable kf-border" :table="stable" :col-keys="stable.colKeys"></kf-stable>
+            </div>
+            <kf-stable class="kf-border" :table="stable" :col-keys="stable.colKeys"></kf-stable>
+          </div>
+
+          <div style="margin: 10px">
+            <div class="kf-justify-3-9" style="margin-bottom: 10px">
+              <h3 class="kf-bottom">多行表格</h3>
+              <div class="kf-btn-group kf-dark">
+                <button class="kf-btn" @click="mtable.prependRow()">前插</button>
+                <button class="kf-btn" @click="mtable.appendRow()">后插</button>
+                <button class="kf-btn" @click="mtable.iterateRows()">遍历</button>
+              </div>
+            </div>
+            <kf-mtable class="kf-border" :table="mtable" :col-keys="mtable.colKeys"></kf-mtable>
+          </div>
+
+          <div style="margin: 10px">
+            <div class="kf-justify-3-9" style="margin-bottom: 10px">
+              <h3 class="kf-bottom">树行表格</h3>
+              <div class="kf-btn-group kf-dark">
+                <button class="kf-btn" @click="ttable.prependRow()">前插</button>
+                <button class="kf-btn" @click="ttable.appendRow()">后插</button>
+                <button class="kf-btn" @click="ttable.iterateRows()">遍历</button>
+              </div>
+            </div>
+            <kf-ttable class="kf-border" :table="ttable" :col-keys="ttable.colKeys"></kf-ttable>
           </div>
         </kf-tab-item>
-        <kf-tab-item label="树">
+        <kf-tab-item label="弹窗">
+          <button class="kf-btn kf-primary" style="margin-left: 10px" @click="modal.open=true">打开弹窗</button>
+          <kf-modal :open.sync="modal.open">
+            <div slot="body" style="padding: 10px 20px; color: red">
+              警告！网络错误，请告知网络管理员
+
+              <div style="margin-top: 30px; text-align: right">
+                <button class="kf-btn kf-accent" @click="modal.open=false">确定</button>
+              </div>
+            </div>
+          </kf-modal>
+        </kf-tab-item>
+        <kf-tab-item label="表单及验证">
+          <style>
+            .kf-form {
+              margin: 20px auto;
+              width: 500px;
+              border: 1px solid #ecf0f1;
+              border-radius: 8px;
+              padding: 10px;
+            }
+          </style>
+          <form novalidate v-kf-validate="form.validator" class="kf-form">
+            <div class="kf-control kf-justify-3-9">
+              <label>姓名<span class="kf-asterisk">*</span></label>
+              <div class="kf-input">
+                <input type="text" name="name" required v-model="form.currentRow.name">
+              </div>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label>日期<span class="kf-asterisk">*</span></label>
+              <kf-date-picker :moment.sync="form.currentRow.date" name="date" :required="true"></kf-date-picker>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label>起始日期<span class="kf-asterisk">*</span></label>
+              <kf-date-ranger :start.sync="form.currentRow.start" :end.sync="form.currentRow.end" name="range" :required="true"></kf-date-ranger>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label>部门<span class="kf-asterisk">*</span></label>
+              <kf-select name="department" :required="true" :model.sync="form.currentRow.department" :values="form.departEN" :labels="form.departCN"></kf-select>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label>邮箱<span class="kf-asterisk">*</span></label>
+              <div class="kf-input">
+                <input type="email" required name="email" v-model="form.currentRow.email">
+              </div>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label>地址<span class="kf-asterisk">*</span></label>
+              <div class="kf-input">
+                <input type="text" required name="address" v-model="form.currentRow.address">
+              </div>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label>技能</label>
+              <kf-checkbox-group name="skills" class="kf-left" :model.sync="form.currentRow.skills" :values="['c++', 'js', 'css']" name="agree" :required="true" label="同意"></kf-checkbox-group>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label>薪资</label>
+              <kf-radio-group name="salary" :required="true" class="kf-left" :model.sync="form.currentRow.salary" :values="['8k', '12k', '15k']" name="agree" :required="true" label="同意"></kf-radio-group>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label>头像</label>
+              <div class="kf-left">
+                <kf-file url="upload.json" accept=".pdf"></kf-file>
+              </div>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label></label>
+              <kf-checkbox class="kf-left" :model.sync="form.currentRow.agree" name="agree" :required="true" label="同意"></kf-checkbox>
+            </div>
+
+            <div class="kf-control kf-justify-3-9">
+              <label></label>
+              <div class="kf-btn-group kf-primary">
+                <input type="submit" class="kf-btn" @click.prevent="form.confirm($event)" value="确定">
+                <input type="reset" class="kf-btn" @click.prevent value="取消">
+              </div>
+            </div>
+          </form>
         </kf-tab-item>
       </kf-tab>
       <br>
-      <!-- <kf-date-picker :moment.sync="moment" :flip="{top: true}" class="kf-primary kf-md"></kf-date-picker>
-      <kf-date-ranger :start.sync="start" :end.sync="end" :flip="{top: true}" class="kf-lg"></kf-date-ranger>
-      <div class="kf-input kf-primary kf-md">
-        <input type="text">
-      </div>
-      <kf-select :flip="{top: true}" :model.sync="select" :values="[1, 2, 3]" :labels="['option1', 'option2', 'option3']"></kf-select>
-      <br>
-      <kf-radio-group :model.sync="radioGroup" :labels="[123, 345]" :values="[true, false]"></kf-radio-group>
-      <br>
-      <kf-checkbox-group :model.sync="checkboxGroup" :labels="[123, 345]" :values="['man', 'woman']"></kf-checkbox-group>
-      <br>
-      <kf-checkbox class="kf-primary kf-md" :model.sync="checkbox" :label="'123'" :value="'man'"></kf-checkbox>
-      <br>
-      <div class="kf-btn-group kf-dark kf-md">
-        <input type="submit" class="kf-btn" value="提交信息">
-        <input type="reset" class="kf-btn" value="重置">
-      </div>
-      <kf-file class="kf-lg" url="upload.json" :success="onsuccess" :other="uploadParams" :multiple="true"></kf-file>
-      <button class="kf-btn kf-primary kf-md">按钮</button>
-      <br>
-      <div class="kf-input-group kf-primary kf-md">
-        <label class="kf-addon">标签名称</label>
-        <div class="kf-input">
-          <input type="text">
-        </div>
-      </div>
-      <br>
-      <div class="kf-input-group kf-primary kf-lg">
-        <label class="kf-addon">标签名称</label>
-        <kf-select :model.sync="select" :values="[1, 2, 3]" :labels="['option1', 'option2', 'option3']"></kf-select>
-      </div>
-      <br>
-      <div class="kf-input-group kf-primary kf-md">
-        <label class="kf-addon">标签名称</label>
-        <kf-date-picker :moment.sync="moment" class="kf-date-picker"></kf-date-picker>
-      </div>
-      <br>
-      <div class="kf-input-group kf-primary kf-md">
-        <label class="kf-addon">标签名称</label>
-        <kf-date-ranger :start.sync="start" :end.sync="end"></kf-date-ranger>
-      </div>
-      <br>
-      <div class="kf-input-group kf-primary" style="width: 30%">
-        <kf-select style="width: 25%" class="kf-addon" :model.sync="select" :values="[1, 2, 3]" :labels="['option1', 'option2', 'option3']"></kf-select>
-        <kf-date-ranger :start.sync="start" :end.sync="end"></kf-date-ranger>
-      </div>
-      <br>
-      <div class="kf-input-group">
-        <div class="kf-addon">标签1</div>
-        <div class="kf-input">
-          <input type="text">
-        </div>
-        <div class="kf-addon">标签2</div>
-      </div>
-      <br>
-      <div class="kf-btn-group">
-        <button class="kf-btn">BUTTON</button>
-        <button class="kf-btn">BUTTON</button>
-      </div>
-      <button class="kf-btn">BUTTON</button>
-      <button class="kf-btn kf-primary" @click="addRow()">添加</button>
-      <br>
-      <kf-pager class="kf-primary" :total-entries="100" :on-change="onChange"></kf-pager>
-      <br>
-      <br>
-      <kf-mtable class="kf-border" :table="mtable" :col-keys="mcolKeys"></kf-mtable>
-      <br>
-      <kf-ttable class="kf-border" :table="ttable" :col-keys="tcolKeys"></kf-mtable> -->
     </div>
 
     <div slot="right"></div>

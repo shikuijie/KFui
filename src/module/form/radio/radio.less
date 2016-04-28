@@ -4,6 +4,13 @@
 .kf-radio-group-size(@vpad, @hpad, @size) {
   & > span {
     margin: @vpad @hpad;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+
     > input[type=radio] {
       width: @size;
       height: @size;

@@ -13,19 +13,30 @@ import './module/style/grid.css!';
 import './module/style/reset.css!';
 import './index.css!';
 
-import {stable} from './demo/stable';
+import stable from './demo/stable';
+import mtable from './demo/mtable';
+import ttable from './demo/ttable';
+import form from './demo/form';
 
-new vue({
+let vm = {
   el: 'body',
   ready: function() {
     stable.onReady();
+    mtable.onReady();
+    ttable.onReady();
   },
   data: {
-    stable: stable
+    stable: stable,
+    mtable: mtable,
+    ttable: ttable,
+    modal: {open: false},
+    form: form
   },
   methods: {
     blur: function(event) {
       console.log(event)
     }
   }
-});
+};
+
+new vue(vm);

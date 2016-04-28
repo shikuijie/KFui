@@ -1,6 +1,5 @@
-import {kfTable} from '../module/table/table';
+import kfTable from '../module/table/table';
 import '../module/form/checkbox/checkbox';
-import '../module/form/validate/validate';
 
 function getAction(func, label) {
   return '<button class="kf-btn kf-xs" @click="TABLE.' + func + '(ROW)">' + label + '</button>';
@@ -13,21 +12,7 @@ function getCheckbox(head, label) {
           (label ? ' :on-change="TABLE.checkAll"' : '') + '></kf-checkbox>';
 }
 
-export var stable = {
-  modal: {
-    editOpen: false,
-    currentRow: {name: '', email: '', address: ''},
-    error: {
-      name: {required: '请输入姓名字段!'},
-      email: {required: '请输入邮箱字段!', email: '邮箱格式不对!'},
-      address: {required: '请输入地址字段!', pattern: '请输入5-10个字符!'}
-    },
-    confirmEdit: function(event) {
-      if(stable.modal.error.formValid) {
-        stable.modal.editOpen = false;
-      }
-    }
-  },
+export default {
   checked: false,
   onReady: function() {
     kfTable.setHead(this, this.thead);
@@ -41,7 +26,8 @@ export var stable = {
   sampleRow: function(func, label) {
     return {
       checked: false, checkbox: getCheckbox(),
-      name: 'Lagou', email: 'lagou@lagou.com',
+      name: 'Lagou', date: '2016-01-21', start: '2016-02-28', end: '2016-03-12',
+      department: '平台运营部', email: 'lagou@lagou.com',
       address: '海置创投大厦', action: getAction(func, label)
     };
   },
@@ -60,15 +46,13 @@ export var stable = {
     kfTable.deleteRow(row);
   },
   edit: function(row) {
-    this.modal.editOpen = true;
-    this.modal.currentRow.row = row;
-    _.extend(this.modal.currentRow, row);
+    alert('可以在此打开一个弹窗来编辑内容');
   },
-  colKeys: ['checkbox', 'name', 'email', 'address', 'action'],
-  thead: [getCheckbox(true, '全部'), '姓名', '邮箱', '地址', '操作'],
+  colKeys: ['checkbox', 'name', 'email', 'department', 'address', 'action'],
+  thead: [getCheckbox(true, '全部'), '姓名', '邮箱', '部门', '地址', '操作'],
   tbody: [{
     checked: false, checkbox: getCheckbox(),
-    name: 'Shimoo', email: 'shimoo@lagou.com',
+    name: 'Shimoo', department: 'platform', email: 'shimoo@lagou.com',
     address: '中关村创业大街', action: getAction('edit', '编辑')
   }]
 };

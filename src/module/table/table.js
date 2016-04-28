@@ -569,7 +569,7 @@ function parseTrows(table, rows, childrenKey) {
   }
 }
 
-export var kfTable = {
+export default {
   setHead: function(table, headData) {
     vue.set(table, '__THEAD', headData);
   },
@@ -614,8 +614,26 @@ export var kfTable = {
       row.__PARENT[table.__CHILDREN_KEY] = undefined;
     }
   },
-  iterate: function(table, cb) {
-    _.forEach(table.__TBODY, function(row) {
+  iterate: function(target, cb) {
+    if(target.__TABLE) {
+      let self = this, table = target.__TABLE;
+      let subrowKey = table.__CHILDREN_KEY;
+
+      if(target === table) {
+        _.forEach(target.__TBODY, function(child) {
+          self.iterate(child, cb);
+        });
+      } else {
+        cb(target);
+        _.forEach(target[subrowKey], function(child) {
+          self.iterate(child, cb);
+        });
+      }
+
+      return;
+    }
+
+    _.forEach(target.__TBODY, function(row) {
       cb(row);
     });
   }

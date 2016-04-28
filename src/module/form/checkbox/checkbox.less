@@ -2,7 +2,7 @@
 @import (reference) '../../style/size';
 
 .kf-checkbox-size(@vpad, @hpad, @size) {
-  margin: @vpad @hpad;
+  margin: @vpad 0;
   & > input {
     width: @size;
     height: @size;
@@ -68,6 +68,9 @@
 .kf-checkbox-group-size(@vpad, @hpad, @size) {
   & > span {
     .kf-checkbox-size(@vpad, @hpad, @size);
+    &:not(:last-child) {
+      margin-right: @hpad;
+    }
   }
 }
 .kf-checkbox-group-color(@color) {

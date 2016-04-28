@@ -4,6 +4,7 @@ import '../../code/code';
 import cls from './checkbox.css.map';
 import 'font-awesome';
 import './checkbox.css!';
+import {blur} from '../util';
 
 /**
   @kf-comment-type  {VUE component}
@@ -27,24 +28,33 @@ vue.component('kf-checkbox', {
     model: {
       twoWay: true,
       required: true
+    },
+    name: String,
+    required: {
+      type: Boolean,
+      default: false
     }
+  },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
   },
   data: function() {
     return {
       cls: cls
     };
   },
-  methods: {
-    click: function() {
-      this.onChange(this.model ? false : this.value);
+  watch: {
+    model: function(val) {
+      this.onChange(val);
+      this.name && blur(this.input);
     }
   },
   template:
     '<span :class="cls.checkbox" class="kf-checkbox">' +
-      '<input type="checkbox" @click="click()" v-model="model" :true-value="value" :false-value="false"/>' +
+      '<input :name="name" :required="required" type="checkbox" v-model="model" :true-value="value" :false-value="false"/>' +
       '<i class="fa fa-check" :class="cls.check"></i>' +
       '<span class="fa fa-square-o" :class="cls.box"></span>' +
-      '<label v-text="label"></label>' +
+      '<label v-text="label || value"></label>' +
     '</span>'
 });
 
@@ -58,13 +68,15 @@ vue.component('kf-checkbox', {
 */
 vue.component('kf-checkbox-group', {
   props: {
-    onClick: {
+    onChange: {
       type: Function,
-      default: ()=>{}
+      default: () => {}
     },
     labels: {
       type: Array,
-      required: true
+      default: function() {
+        return [];
+      }
     },
     values: {
       type: Array,
@@ -74,20 +86,31 @@ vue.component('kf-checkbox-group', {
       type: Array,
       twoWay: true,
       required: true
-    }
+    },
+    name: String
+  },
+  ready: function() {
+    this.inputs = this.$el.querySelectorAll('input');
   },
   data: function() {
     return {
       cls: cls,
     }
   },
+  watch: {
+    model: function(val) {
+      let input = this.inputs[0];
+      this.onChange(val);
+      this.name && blur(input);
+    }
+  },
   template:
     '<span :class="cls.ckbgrp" class="kf-checkbox-group">' +
-      '<span :class="cls.checkbox" v-for="label in labels">' +
-        '<input type="checkbox" @click="onClick($index)" v-model="model" :value="values[$index]"/>' +
+      '<span :class="cls.checkbox" v-for="value in values">' +
+        '<input :name="name" type="checkbox" v-model="model" :value="value"/>' +
         '<i class="fa fa-check" :class="cls.check"></i>' +
         '<span class="fa fa-square-o" :class="cls.box"></span>' +
-        '<label v-text="label"></label>' +
+        '<label v-text="labels[$index] || value"></label>' +
       '</span>' +
     '</span>'
 });

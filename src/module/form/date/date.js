@@ -3,7 +3,7 @@ import _ from 'lodash';
 import '../../rotator/rotator';
 import './date.css!';
 import cls from './date.css.map';
-import 'animate.css';
+import {blur} from '../util';
 
 let datime = vue.extend({
   props: ['moment', 'hasSec', 'hasTime', 'name', 'min', 'max'],
@@ -282,10 +282,19 @@ let datime = vue.extend({
 
 vue.component('kf-date-picker', {
   props: {
+    onChange: {
+      type: Function,
+      default: (val) => {}
+    },
     moment: {
       twoWay: true,
       type: String,
       required: true
+    },
+    name: String,
+    required: {
+      type: Boolean,
+      default: false
     },
     flip: {
       type: Object,
@@ -320,6 +329,9 @@ vue.component('kf-date-picker', {
       visible: false
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   computed: {
     datimeCls: function() {
       let res = {};
@@ -332,9 +344,18 @@ vue.component('kf-date-picker', {
       return res;
     }
   },
+  watch: {
+    moment: function(val) {
+      this.onChange(val);
+      this.name && blur(this.input);
+    }
+  },
   methods: {
     clear: function() {
       this.moment = '';
+    },
+    hide: function() {
+      this.visible = false;
     }
   },
   components: {
@@ -348,8 +369,8 @@ vue.component('kf-date-picker', {
   },
   template:
     '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="visible = true">' +
-      '<input type="text" :value="moment" readonly/>' +
-      '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
+      '<input autocomplete="off" type="text" :name="name" :value="moment" :required="required"/>' +
+      '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<kf-datime kf-datime :class="datimeCls" :moment="moment" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
       '<i class="fa fa-times" @click.stop="clear()"></i>' +
     '</div>'
@@ -357,6 +378,10 @@ vue.component('kf-date-picker', {
 
 vue.component('kf-date-ranger', {
   props: {
+    onChange: {
+      type: Function,
+      default: () => {}
+    },
     start: {
       twoWay: true,
       type: String,
@@ -366,6 +391,11 @@ vue.component('kf-date-ranger', {
       twoWay: true,
       type: String,
       required: true
+    },
+    name: String,
+    required: {
+      type: Boolean,
+      default: false
     },
     flip: {
       type: Object,
@@ -395,14 +425,22 @@ vue.component('kf-date-ranger', {
     }
   },
   data: function() {
-    let now = formatDate(new Date(), false, false);
     return {
       cls: cls,
       visible: false,
-      range: {start: this.start || now, end: this.end || now},
+      range: {start: '', end: ''},
       rangeStr: '',
       rangerr: ''
     };
+  },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
+  watch: {
+    '[start, end]': function(val) {
+      this.onChange(val[0], val[1]);
+      this.name && blur(this.input);
+    }
   },
   computed: {
     rangeCls: function() {
@@ -415,6 +453,9 @@ vue.component('kf-date-ranger', {
       res[cls.range] = true;
 
       return res;
+    },
+    rangeStr: function() {
+      return this.start && this.end && ('From ' + this.start + ' To ' + this.end) || '';
     }
   },
   methods: {
@@ -425,6 +466,9 @@ vue.component('kf-date-ranger', {
     },
     chooseRange: function() {
       this.$broadcast('kf-datime-ask');
+    },
+    hide: function() {
+      this.visible = false;
     }
   },
   components: {
@@ -442,7 +486,6 @@ vue.component('kf-date-ranger', {
       this.start = this.range.start;
       this.end = this.range.end;
 
-      this.rangeStr = 'From ' + this.start + ' To ' + this.end;
       this.rangerr = '';
       this.visible = false;
     },
@@ -452,14 +495,14 @@ vue.component('kf-date-ranger', {
   },
   template:
     '<div :class="cls.dtranger" class="kf-date-ranger" @click.stop="visible = true">' +
-      '<input type="text" :value="rangeStr" readonly/>' +
-      '<div :class="cls.bg" v-show="visible" @click.stop="visible = false"></div>' +
+      '<input autocomplete="off" type="text" :name="name" :required="required" :value="rangeStr"/>' +
+      '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<div :class="rangeCls">' +
         '<kf-datime kf-datime name="start" :moment="start" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
         '<kf-datime kf-datime name="end" :moment="end" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
         '<div :class="cls.confirm">' +
           '<span v-show="rangerr" v-text="rangerr"></span>' +
-          '<button @click.stop="chooseRange()">确定</button>' +
+          '<button @click.prevent.stop="chooseRange()">确定</button>' +
         '</div>' +
       '</div>' +
       '<i class="fa fa-times" @click.stop="clear()"></i>' +

@@ -1,4 +1,5 @@
 import vue from 'vue';
+import _ from 'lodash';
 import './file.css!';
 import cls from './file.css.map';
 
@@ -6,11 +7,11 @@ let dragStart = null, dragOver = null, dragEnd = null;
 
 vue.component('kf-file', {
   props: {
-    success: {
+    onSuccess: {
       type: Function,
       default: () => {}
     },
-    error: {
+    onError: {
       type: Function,
       default: () => {}
     },
@@ -22,14 +23,13 @@ vue.component('kf-file', {
       type: String,
       required: true
     },
-    name: {
-      type: String,
-      default: 'file'
-    },
-    other: {
+    append: {
       type: Object,
-      default: {}
+      default: function() {
+        return {};
+      }
     },
+    accept: String,
     label: {
       type: String,
       default: '上传'
@@ -66,6 +66,9 @@ vue.component('kf-file', {
       dragging: false
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   methods: {
     change: function(event) {
       processFiles(this, event.target.files);
@@ -97,6 +100,7 @@ vue.component('kf-file', {
     dragDrop: function(event) {
       this.fileOver = false;
       this.dragging = false;
+
       processFiles(this, event.dataTransfer.files);
     },
     abort: function(f) {
@@ -115,7 +119,7 @@ vue.component('kf-file', {
       '<span @click.stop="listVisible = true">' +
         '<i class="fa fa-caret-down"></i>' +
       '</span>' +
-      '<input type="file" :multiple="multiple" @change="change($event)">' +
+      '<input :accept="accept" type="file" :multiple="multiple" @change="change($event)">' +
       '<div :class="cls.bg" v-show="files.length && listVisible" @click.stop="listVisible = false"></div>' +
       '<ul :class="getListCls()">' +
         '<li v-for="f in files">' +
@@ -208,6 +212,6 @@ function processFiles(self, fileList) {
     self.listVisible = true;
     self.files = files;
     _.forEach(files, function(f) {
-      startUpload(self.url, self.name, f, self.other, self.success, self.error);
+      startUpload(self.url, self.name, f, self.append, self.onSuccess, self.onError);
     });
 }
