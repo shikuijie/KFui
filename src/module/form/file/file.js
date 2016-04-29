@@ -23,7 +23,7 @@ vue.component('kf-file', {
     },
     validate: {
       type: Function,
-      default: () => {return '文件太大';}
+      default: () => {}
     },
     url: String,
     appendum: {
@@ -74,10 +74,13 @@ vue.component('kf-file', {
     }
   },
   ready: function() {
+    if(!this.auto && !this.model) {
+      throw '如果不选择自动上传，请通过model参数指定接收变量!';
+    }
     this.input = this.$el.querySelector('input');
   },
   watch: {
-    model: function() {
+    files: function() {
       blur(this.input);
     }
   },
@@ -243,7 +246,7 @@ function processFiles(self, fileList) {
   }
 
   if(!_.isUndefined(self.model)) {
-    self.model = self.multiple ? files : files[0];
+    self.model = fileList;
   }
 
   if(self.preview) {
