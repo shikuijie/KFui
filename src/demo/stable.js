@@ -12,7 +12,7 @@ function getCheckbox(head, label) {
           (label ? ' :on-change="TABLE.checkAll"' : '') + '></kf-checkbox>';
 }
 
-export default {
+let stable = {
   checked: false,
   onReady: function() {
     kfTable.setHead(this, this.thead);
@@ -56,3 +56,5 @@ export default {
     address: '中关村创业大街', action: getAction('edit', '编辑')
   }]
 };
+
+export default stable;

@@ -4,7 +4,11 @@ import '../../code/code';
 import cls from './checkbox.css.map';
 import 'font-awesome';
 import './checkbox.css!';
-import {blur} from '../util';
+
+function blur(elem) {
+  let event = new FocusEvent('blur');
+  elem.dispatchEvent(event);
+}
 
 /**
   @kf-comment-type  {VUE component}
@@ -54,7 +58,7 @@ vue.component('kf-checkbox', {
       '<input :name="name" :required="required" type="checkbox" v-model="model" :true-value="value" :false-value="false"/>' +
       '<i class="fa fa-check" :class="cls.check"></i>' +
       '<span class="fa fa-square-o" :class="cls.box"></span>' +
-      '<label v-text="label || value"></label>' +
+      '<label v-text="label"></label>' +
     '</span>'
 });
 
@@ -95,7 +99,7 @@ vue.component('kf-checkbox-group', {
   data: function() {
     return {
       cls: cls,
-    }
+    };
   },
   watch: {
     model: function(val) {

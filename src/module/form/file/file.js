@@ -3,10 +3,16 @@ import _ from 'lodash';
 import './file.css!';
 import cls from './file.css.map';
 
-let dragStart = null, dragOver = null, dragEnd = null;
+function blur(elem) {
+  let event = new FocusEvent('blur');
+  elem.dispatchEvent(event);
+}
 
 vue.component('kf-file', {
   props: {
+    model: {
+      twoWay: true
+    },
     onSuccess: {
       type: Function,
       default: () => {}
@@ -17,24 +23,34 @@ vue.component('kf-file', {
     },
     validate: {
       type: Function,
-      default: (f) => { return true; }
+      default: () => {return '文件太大';}
     },
-    url: {
-      type: String,
-      required: true
-    },
-    append: {
+    url: String,
+    appendum: {
       type: Object,
       default: function() {
         return {};
       }
     },
+    preview: Function,
     accept: String,
     label: {
       type: String,
       default: '上传'
     },
     multiple: {
+      type: Boolean,
+      default: false
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    required: {
+      type: Boolean,
+      default: false
+    },
+    auto: {
       type: Boolean,
       default: false
     },
@@ -55,6 +71,14 @@ vue.component('kf-file', {
 
         return val;
       }
+    }
+  },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
+  watch: {
+    model: function() {
+      blur(this.input);
     }
   },
   data: function() {
@@ -119,7 +143,7 @@ vue.component('kf-file', {
       '<span @click.stop="listVisible = true">' +
         '<i class="fa fa-caret-down"></i>' +
       '</span>' +
-      '<input :accept="accept" type="file" :multiple="multiple" @change="change($event)">' +
+      '<input :accept="accept" :name="name" :required="required" type="file" :multiple="multiple" @change="change($event)">' +
       '<div :class="cls.bg" v-show="files.length && listVisible" @click.stop="listVisible = false"></div>' +
       '<ul :class="getListCls()">' +
         '<li v-for="f in files">' +
@@ -173,9 +197,6 @@ function startUpload(url, name, file, other, success, error) {
     error(event.target);
   });
 
-  xhr.addEventListener('abort', function(event) {
-  });
-
   xhr.upload.addEventListener('progress', function(event) {
     if(event.lengthComputable) {
       file.progress = Math.floor(event.loaded/event.total * 10000)/100 + '%';
@@ -193,25 +214,51 @@ function startUpload(url, name, file, other, success, error) {
 }
 
 function processFiles(self, fileList) {
-    let files = _.map(fileList, function(f) {
-      if(!self.validate(f)) return;
+  let hasError = false;
+  let files = _.map(fileList, function(f) {
+    let error = self.validate(f);
+    if(error) {
+      hasError = true;
+    }
 
-      return {
-        name: f.name,
-        size: normalize(f.size),
-        file: f,
-        progress: 0,
-        doing: false,
-        done: false,
-        error: false,
-        abort: false
+    return {
+      name: f.name,
+      size: normalize(f.size),
+      file: f,
+      progress: 0,
+      doing: false,
+      done: false,
+      error: error,
+      abort: false
+    };
+  });
+  if(!files.length) return;
+
+  self.files = files;
+  if(hasError || self.auto) {
+    self.listVisible = true;
+  }
+  if(hasError) {
+    return;
+  }
+
+  if(!_.isUndefined(self.model)) {
+    self.model = self.multiple ? files : files[0];
+  }
+
+  if(self.preview) {
+    _.forEach(files, function(f) {
+      let reader = new FileReader();
+      reader.readAsDataURL(f.file);
+      reader.onload = function(e) {
+        self.preview(e.target.result);
       };
     });
-    if(!files.length) return;
+  }
 
-    self.listVisible = true;
-    self.files = files;
-    _.forEach(files, function(f) {
-      startUpload(self.url, self.name, f, self.append, self.onSuccess, self.onError);
+  if(self.auto) {
+    _.forEach(self.files, function(f) {
+      startUpload(self.url, self.name, f, self.appendum, self.onSuccess, self.onError);
     });
+  }
 }

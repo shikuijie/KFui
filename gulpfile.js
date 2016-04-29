@@ -34,10 +34,9 @@ var fs = require('fs'),
     distDir = 'dist',
 
     mockJs = path.join(mockDir, '/**/*.js'),
+    srcHtml = path.join(srcDir, '/**/*.html'),
     srcJs = path.join(srcDir, '/**/*.js'),
     srcCss = path.join(srcDir, '/**/*.css'),
-    srcHtml = path.join(srcDir, '/**/*.html'),
-    srcTpl = path.join(srcDir, '/**/*.tpl'),
     srcAll = path.join(srcDir, '/**/*'),
     srcLess = path.join(srcDir, '/**/*.less');
 
@@ -61,7 +60,7 @@ params[type] = paramGroups.reduce(function(res, grp) {
 }, {});
 /*****************/
 
-gulp.task('dev', ['dev:init', 'dev:tpl', 'dev:css', 'dev:watch', 'dev:reload', 'server']);
+gulp.task('dev', ['dev:init', 'dev:css', 'dev:watch', 'dev:reload', 'server']);
 
 /** 初始化, 比如生成文件夹 **/
 gulp.task('dev:init', function() {
@@ -69,23 +68,6 @@ gulp.task('dev:init', function() {
   mkdirp.sync(mockDir);
 });
 /************************/
-
-/** 处理html文件 **/
-gulp.task('dev:tpl', function(cb) {
-  gulp.src(srcTpl)
-      .pipe(through2.obj(function(file, encoding, done) {
-        var content = String(file.contents);
-
-        content = content.replace(/>\s+</g, '><');
-
-        file.contents = new Buffer(content);
-        this.push(file);
-        done();
-      }))
-      .pipe(rename({extname: '.html'}))
-      .pipe(gulp.dest(srcDir));
-})
-/*****************/
 
 /** 处理.less文件 **/
 gulp.task('dev:css', function(cb) {
@@ -137,45 +119,6 @@ gulp.task('dev:watch', function() {
       var paths = getPaths(absFilePath);
 
       console.log(paths.srcPath + ' deleted');
-    });
-
-  watch(srcTpl)
-    .on('change', function(absFilePath) {
-      var paths = getPaths(absFilePath);
-
-      gulp.src(paths.srcPath)
-          .pipe(through2.obj(function(file, encoding, done) {
-            var content = String(file.contents);
-
-            content = content.replace(/>\s+</g, '><');
-
-            file.contents = new Buffer(content);
-            this.push(file);
-            done();
-          }))
-          .pipe(rename({extname: '.html'}))
-          .pipe(gulp.dest(path.dirname(paths.srcPath)));
-    })
-    .on('add', function(absFilePath) {
-      var paths = getPaths(absFilePath);
-
-      gulp.src(paths.srcPath)
-          .pipe(through2.obj(function(file, encoding, done) {
-            var content = String(file.contents);
-
-            content = content.replace(/>\s+</g, '');
-
-            file.contents = new Buffer(content);
-            this.push(file);
-            done();
-          }))
-          .pipe(rename({extname: '.html'}))
-          .pipe(gulp.dest(path.dirname(paths.srcPath)));
-    })
-    .on('unlink', function(absFilePath) {
-      var paths = getPaths(absFilePath);
-
-      del(paths.srcPath.replace('.tpl', '.html'));
     });
 
   watch(srcLess)

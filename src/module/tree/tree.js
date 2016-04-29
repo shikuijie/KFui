@@ -7,7 +7,7 @@ import cls from './tree.css.map';
 vue.component('kf-tree', {
   components: {
     'kf-tree-node': {
-      props: ['nodeData', 'dragEnable', 'nodeKey', 'subtreeKey'],
+      props: ['nodeData', 'draggable', 'nodeKey', 'subtreeKey', 'toggleKey', 'dropKey'],
       data: function() {
         vue.set(this.nodeData, '__EXPAND', false);
         vue.set(this.nodeData, '__DRAGOVER', false);
@@ -24,8 +24,7 @@ vue.component('kf-tree', {
         return {
           TREE: this.nodeData.__ROOT,
           NODE: this.nodeData,
-          cls: cls,
-          draggable: this.dragEnable ? 'true' : 'false'
+          cls: cls
         };
       },
       computed: {
@@ -39,76 +38,64 @@ vue.component('kf-tree', {
           } else {
             return 'fa fa-plus-square-o';
           }
+        },
+        dragStatus: function() {
+          return this.draggable ? 'true' : 'false';
         }
       },
       methods: {
         toggle: function() {
           this.nodeData.__EXPAND = !this.nodeData.__EXPAND;
-          let toggle = this.nodeData.__ROOT.toggle;
-          toggle && toggle(this.nodeData.__EXPAND, this.nodeData);
+          let root = this.nodeData.__ROOT;
+          let toggle = root[this.toggleKey];
+          toggle && toggle(this.nodeData, this.nodeData.__EXPAND);
         },
         dragStart: function(event) {
-          event.stopPropagation();
           this.nodeData.__DRAGGING = true;
           this.nodeData.__ROOT.__DRAGGING_NODE = this.nodeData;
 
           event.dataTransfer.setData('text/plain', this.nodeData.__ID);
         },
         dragEnter: function(event) {
-          event.stopPropagation();
           this.nodeData.__DRAGOVER = true;
         },
-        dragOver: function(event) {
-          event.preventDefault();
-          event.stopPropagation();
-        },
         dragLeave: function(event) {
-          event.stopPropagation();
           this.nodeData.__DRAGOVER = false;
         },
         drop: function(event) {
-          event.stopPropagation();
-          event.preventDefault();
-
           let id = event.dataTransfer.getData('text/plain'),
-              src = this.nodeData.__ROOT.__ID_MAP[id],
+              root = this.nodeData.__ROOT,
+              src = root.__ID_MAP[id],
               target = this.nodeData,
-              drop = this.nodeData.__ROOT.drop;
+              drop = root[this.dropKey];
 
           if(drop) {
-            let after = drop(src, target);
-            if(after && after.then) {
-              after.then(function() {
-                target.__DRAGOVER = false;
-                target.__ROOT.__DRAGGING_NODE.__DRAGGING = false;
-              });
-            } else {
-              target.__DRAGOVER = false;
-              target.__ROOT.__DRAGGING_NODE.__DRAGGING = false;
-            }
+            drop(src, target);
           }
+          target.__DRAGOVER = false;
+          target.__ROOT.__DRAGGING_NODE.__DRAGGING = false;
         }
       },
       template:
-        '<li :draggable="draggable" ' +
+        '<li :draggable="dragStatus" ' +
             ':kf-tree-node-dragover="nodeData.__DRAGOVER" ' +
             ':kf-tree-node-dragging="nodeData.__DRAGGING" ' +
-            '@dragstart="dragStart($event)" ' +
-            '@dragenter="dragEnter($event)" ' +
-            '@dragleave="dragLeave($event)" ' +
-            '@dragover="dragOver($event)" ' +
-            '@drop="drop($event)">' +
-          '<div>' +
-            '<span></span>' +
+            '@dragstart.stop="dragStart($event)" ' +
+            '@dragenter.stop="dragEnter($event)" ' +
+            '@dragleave.stop="dragLeave($event)" ' +
+            '@dragover.stop.prevent ' +
+            '@drop.stop.prevent="drop($event)">' +
+          '<div :class="cls.node">' +
+            '<span :class="cls.hborder" :kf-tree-hborder-long="!nodeData[subtreeKey]"></span>' +
             '<i @click="toggle()" :class="icon" v-if="nodeData[subtreeKey]"></i>' +
             '<div v-kf-code="nodeData[nodeKey]"></div>' +
           '</div>' +
-          '<div v-show="nodeData.__EXPAND">' +
-            '<span></span>' +
-            '<span></span>' +
+          '<div v-show="nodeData.__EXPAND" :class="cls.subtreeWrapper">' +
+            '<span :class="cls.vborder"></span>' +
+            '<span :class="cls.overlap"></span>' +
             '<kf-tree :class="cls.subtree" v-if="nodeData[subtreeKey]" ' +
                       ':tree="nodeData" ' +
-                      ':draggable="dragEnable" ' +
+                      ':draggable="draggable" ' +
                       ':node-key="nodeKey" ' +
                       ':subtree-key="subtreeKey">' +
             '</kf-tree>' +
@@ -128,6 +115,14 @@ vue.component('kf-tree', {
     nodeKey: {
       type: String,
       default: 'node'
+    },
+    toggleKey: {
+      type: String,
+      default: 'onToggle'
+    },
+    dropKey: {
+      type: String,
+      default: 'onDrop'
     },
     subtreeKey: {
       type: String,
@@ -161,11 +156,13 @@ vue.component('kf-tree', {
     };
   },
   template:
-  '<ul :class="cls.tree">' +
+  '<ul :class="cls.tree" class="kf-tree">' +
     '<kf-tree-node v-for="node in tree[subtreeKey]" ' +
-                  ':drag-enable="draggable" ' +
+                  ':draggable="draggable" ' +
                   ':node-data="node" ' +
                   ':node-key="nodeKey" ' +
+                  ':drop-key="dropKey" ' +
+                  ':toggle-key="toggleKey" ' +
                   ':subtree-key="subtreeKey">' +
     '</kf-tree-node>' +
   '</ul>'
@@ -188,7 +185,7 @@ export default {
 
     parent[subkey].push(node);
   },
-  deleteNode: function(node, autoDownGrade) {
+  deleteNode: function(node, autoLeaf) {
     let subkey = node.__ROOT.__SUBTREE_KEY,
         coll = node.__PARENT[subkey],
         idx = coll.indexOf(node);
@@ -198,7 +195,7 @@ export default {
     }
     coll.splice(idx, 1);
 
-    if(autoDownGrade && coll.length == 0) {
+    if(autoLeaf && coll.length == 0) {
       delete node.__PARENT[subkey];
     }
   }

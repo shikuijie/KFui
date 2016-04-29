@@ -6,7 +6,7 @@ import '../module/form/validate/validate';
 import '../module/form/file/file';
 import '../module/form/radio/radio';
 
-export default {
+let form = {
   currentRow: {name: '', email: '', address: '', date: '', start: '', end: '', department: '', skills: [], salary: '', agree: false},
   departCN: ['平台运营部', '技术研发部', '设计部'],
   departEN: ['platform', 'tech', 'design'],
@@ -25,5 +25,12 @@ export default {
   confirm: function(event) {
     if(form.validator.formValid) {
     }
+  },
+  upload: '',
+  photoURL: '',
+  preview: function(dataURL) {
+    form.photoURL = dataURL;
   }
 };
+
+export default form;

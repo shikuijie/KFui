@@ -3,7 +3,11 @@ import _ from 'lodash';
 import '../../rotator/rotator';
 import './date.css!';
 import cls from './date.css.map';
-import {blur} from '../util';
+
+function blur(elem) {
+  let event = new FocusEvent('blur');
+  elem.dispatchEvent(event);
+}
 
 let datime = vue.extend({
   props: ['moment', 'hasSec', 'hasTime', 'name', 'min', 'max'],

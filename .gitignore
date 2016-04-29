@@ -38,9 +38,6 @@ jspm_packages
 # mock data
 mock
 
-# html
-*.html
-
 # css and cssmap
 *.css
 *.css.map.js

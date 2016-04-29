@@ -1,66 +1,40 @@
-.kf-tree-size(@lineIconGap, @iconFontSize, @iconWidth, @iconNodeGap) {
+@import (reference) '../style/size';
+@import (reference) '../style/color';
+
+@iconWidth-md: 11px;
+
+.kf-tree-size(@vpad, @hpad, @fs, @iconWidth) {
   li > {
     > div:first-child {
       > span {
-        width: @lineIconGap - 3px;
-        left: -@lineIconGap;
+        width: @hpad - 3px;
+        left: -@hpad;
+        &[kf-tree-hborder-long] {
+          width: @hpad + 3px;
+        }
       }
 
       > i {
-        font-size: @iconFontSize;
-        margin-right: @iconNodeGap;
-      }
-    }
-
-    > div:nth-child(2) {
-      padding-left: @lineIconGap + @iconWidth/2;
-
-      > span:first-child {
-        left: @iconWidth/2;
+        font-size: @fs;
       }
 
-      > span:nth-child(2) {
-        left: -@lineIconGap;
+      > div {
+        padding: @vpad @hpad/2;
+        font-size: @fs;
       }
-    }
-  }
-}
-
-.kf-tree-color(@lineColor, @bgColor) {
-  li > {
-    &:last-child > div:first-child > span {
-      border-left: 1px solid @bgColor;
     }
 
     &:last-child > div:nth-child(2) > span:nth-child(2) {
-      border-left: 1px solid @bgColor;
+      left: -@hpad;
     }
-
-    > div:first-child {
-      > span {
-        border-top: 1px solid @lineColor;
-      }
-    }
-
     > div:nth-child(2) {
+      padding-left: @hpad + @iconWidth/2;
+
       > span:first-child {
-        border-left: 1px solid @lineColor;
+        left: @iconWidth/2;
+        border-left: 1px solid @gray;
       }
     }
-  }
-}
-
-.kf-tree-title(@nodeStyle) {
-  li > div:first-child > div {
-    .kf-tree-item(@nodeStyle, common);
-  }
-
-  li[kf-tree-node-dragover] > div:first-child > div {
-    .kf-tree-item(@nodeStyle, dragover);
-  }
-
-  li[kf-tree-node-dragging] > div:first-child > div {
-    .kf-tree-item(@nodeStyle, dragging);
   }
 }
 
@@ -69,27 +43,40 @@
   padding: 0;
   list-style: none;
 
-  &:not(.subtree) > li > div:first-child > span {
-    border: none;
+  &:not(.subtree) > li > .node > .hborder {
+    border: none !important;
   }
-  &:not(.subtree) > li > div:nth-child(2) > span:nth-child(2) {
-    border: none;
+  &:not(.subtree) > li > .subtreeWrapper > .overlap {
+    border: none !important;
   }
 
   li > {
     position: relative;
-
-    &:last-child > div:first-child > span {
-      height: 50%;
+    &[kf-tree-node-dragging] > .node > div {
+      box-shadow: 2px 2px 5px @gray;
+    }
+    &[kf-tree-node-dragover] > .node > div {
+      box-shadow: 2px 2px 5px @gray;
     }
 
-    > div:first-child {
+    &:last-child > .node > .hborder {
+      height: 50%;
+      border-left: 1px solid white;
+    }
+    &:last-child > .subtreeWrapper > .overlap {
+      height: 100%;
+      top: 0;
+      border-left: 1px solid white;
+    }
+
+    > .node {
       position: relative;
 
-      > span {
+      > .hborder {
         display: block;
         position: absolute;
         top: 50%;
+        border-top: 1px solid @gray;
       }
 
       > i {
@@ -101,22 +88,53 @@
       }
     }
 
-    > div:nth-child(2) {
+    > .subtreeWrapper {
       position: relative;
 
-      > span:first-child {
+      > .vborder {
         display: block;
         position: absolute;
         height: 100%;
         top: 0;
+        margin-top: -5px;
       }
 
-      > span:nth-child(2) {
+      > .overlap {
         display: block;
         position: absolute;
-        height: 100%;
-        top: 0;
       }
     }
   }
+}
+
+.define-kf-tree() {
+  @icon-xs: 9.42px;
+  @icon-sm: 9.42px;
+  @icon-md: 11px;
+  @icon-lg: 12.56px;
+  @iconWidths: icon-xs, icon-sm, icon-md, icon-lg;
+
+  .kf-tree {
+    .kf-tree-size(@vpad-md, @hpad-md, @fs-md, @icon-md);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    @icon: extract(@iconWidths, @i);
+
+    .kf-tree.kf-@{s} {
+      .kf-tree-size(@@vpad, @@hpad, @@fs, @@icon);
+    }
+
+    .size(@i + 1);
+  }
+  .size();
+}
+
+:global {
+  .define-kf-tree();
 }

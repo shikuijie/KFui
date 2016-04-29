@@ -2,7 +2,11 @@ import vue from 'vue';
 import '../../code/code';
 import cls from './select.css.map';
 import './select.css!';
-import {blur} from '../util';
+
+function blur(elem) {
+  let event = new FocusEvent('blur');
+  elem.dispatchEvent(event);
+}
 
 vue.component('kf-select', {
   props: {

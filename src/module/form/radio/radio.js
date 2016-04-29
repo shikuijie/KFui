@@ -3,7 +3,11 @@ import 'font-awesome';
 import '../../code/code';
 import './radio.css!';
 import cls from './radio.css.map';
-import {blur} from '../util';
+
+function blur(elem) {
+  let event = new FocusEvent('blur');
+  elem.dispatchEvent(event);
+}
 
 vue.component('kf-radio-group', {
   props: {

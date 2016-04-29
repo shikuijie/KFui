@@ -16,6 +16,7 @@ import './index.css!';
 import stable from './demo/stable';
 import mtable from './demo/mtable';
 import ttable from './demo/ttable';
+import tree from './demo/tree';
 import form from './demo/form';
 
 let vm = {
@@ -29,6 +30,7 @@ let vm = {
     stable: stable,
     mtable: mtable,
     ttable: ttable,
+    tree: tree,
     modal: {open: false},
     form: form
   }

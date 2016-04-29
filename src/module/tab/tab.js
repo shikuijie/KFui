@@ -1,5 +1,4 @@
 import vue from 'vue';
-import 'animate.css';
 import './tab.css!';
 import cls from './tab.css.map';
 
@@ -46,17 +45,6 @@ vue.component('kf-tab-item', {
     }
 
     vue.set(this.pdata.titles, this.label, this.visible);
-  },
-  destroyed: function() {
-    if(this.pdata.active == this.label) {
-      _.forEach(this.pdata.titles, function(visible, title) {
-        if(!visible) return;
-        this.pdata.active = title;
-        return true;
-      });
-    }
-
-    delete this.pdata.titles[this.label];
   },
   template:
     '<div v-show="pdata.titles[label] && pdata.active == label">' +

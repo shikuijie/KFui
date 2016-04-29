@@ -3,7 +3,6 @@ import _ from 'lodash';
 import './menu.css!';
 import '../code/code';
 import cls from './menu.css.map';
-import 'animate.css';
 
 vue.component('kf-menu', {
   components: {
