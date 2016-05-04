@@ -24,11 +24,7 @@ vue.component('kf-file', {
     },
     validate: {
       type: Function,
-<<<<<<< HEAD
-      default: () => {}
-=======
       default: (f) => {}
->>>>>>> shimoo
     },
     url: String,
     appendum: {
@@ -66,15 +62,6 @@ vue.component('kf-file', {
       }
     }
   },
-<<<<<<< HEAD
-  ready: function() {
-    if(!this.auto && !this.model) {
-      throw '如果不选择自动上传，请通过model参数指定接收变量!';
-    }
-    this.input = this.$el.querySelector('input');
-  },
-=======
->>>>>>> shimoo
   watch: {
     files: function() {
       blur(this.input);
@@ -254,14 +241,7 @@ function processFiles(self, fileList) {
   if(hasError) {
     return;
   }
-<<<<<<< HEAD
-
-  if(!_.isUndefined(self.model)) {
-    self.model = fileList;
-  }
-=======
   self.onChange(self.name && self.name || fileList, self.name && fileList);
->>>>>>> shimoo
 
   if(self.preview) {
     _.forEach(files, function(f) {

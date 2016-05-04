@@ -100,14 +100,10 @@
             <kf-radio-group class="kf-7-10 kf-left" name="salary" :on-change="form.setField" :required="true" :value="form.currentRow.salary" :options="['8k', '12k', '15k']" name="agree" :required="true" label="同意"></kf-radio-group>
           </div>
 
-            <div class="kf-control kf-grid">
-              <label class="kf-3-10">头像</label>
-              <div class="kf-left kf-5-10">
-                <kf-file url="upload.json" accept=".jpg" :required="true" :auto="true" name="file" :preview="form.preview" :multiple="true"></kf-file>
-              </div>
-              <div class="kf-2-10">
-                <img style="position: absolute; bottom: 0;" width="100%" :src="form.photoURL" alt="">
-              </div>
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">头像</label>
+            <div class="kf-left kf-5-10">
+              <kf-file url="upload.json" accept=".jpg" :required="true" :auto="true" name="file" :preview="form.preview" :multiple="true"></kf-file>
             </div>
             <div class="kf-2-10">
               <img style="position: absolute; bottom: 0;" width="100%" :src="form.photoURL" alt="">
@@ -117,7 +113,6 @@
           <div class="kf-control kf-grid">
             <label class="kf-3-10"></label>
             <kf-checkbox class="kf-7-10 kf-left" :on-change="form.setField" :value="form.currentRow.agree" :option="true" name="agree" :required="true" label="同意"></kf-checkbox>
-
           </div>
 
           <div class="kf-control kf-grid">
