@@ -38,6 +38,8 @@ jspm_packages
 # mock data
 mock
 
+.DS_Store
+
 # css and cssmap
 *.css
 *.css.map.js

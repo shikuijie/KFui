@@ -65,12 +65,20 @@
             }
           </style>
           <form novalidate v-kf-validate="form.validator" class="kf-form">
+
             <div class="kf-control kf-grid">
               <label class="kf-3-10">姓名<span class="kf-asterisk">*</span></label>
               <div class="kf-7-10 kf-input">
-                <input type="text" name="name" required v-model="form.currentRow.name">
+                <kf-autofill name="name" required :value="form.currentRow.name" :options="options" :on-change="onChange" :get-value="getValue"></kf-autofill>
               </div>
             </div>
+
+            <!-- <div class="kf-control kf-grid">
+              <label class="kf-3-10">公司<span class="kf-asterisk">*</span></label>
+              <div class="kf-7-10 kf-input">
+                <kf-autofill name="company" required :value.sync="form.currentRow.company"></kf-autofill>
+              </div>
+            </div> -->
 
             <div class="kf-control kf-grid">
               <label class="kf-3-10">日期<span class="kf-asterisk">*</span></label>
@@ -149,6 +157,9 @@
               </div>
             </div>
           </kf-modal>
+          <button class="kf-btn kf-primary" style="margin-left: 10px" @click="success()">弹出成功</button>
+          <button class="kf-btn kf-accent" style="margin-left: 10px" @click="error()">弹出失败</button>
+          <kf-toaster :data="toaster" :delay="5000"></kf-toaster>
         </kf-tab-item>
       </kf-tab>
       <br>

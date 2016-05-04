@@ -1,66 +1,68 @@
 import vue from 'vue';
 import './toaster.css!';
+import 'font-awesome';
 import cls from './toaster.css.map';
 
 vue.transition('fade', {
-  enterClass: 'fadeIn',
-  leaveClass: 'fadeOut'
+  enterClass: cls.show,
+  leaveClass: cls.hide
 });
 
 vue.component('kf-toaster', {
   props: {
-    tipData: {
+    data: {
       type: Object,
 			required: true
     },
-    tipDelay: {
-      type: Number,
-      default: 5000
+    delay: {
+      type: Number
     }
   },
   watch: {
-    'tipData': {
+    'data': {
       handler: function(n, o) {
-				console.log(n);
-        this.tipObjs.unshift(n.tipDataObj);
+        this.objs.unshift(n.dataObj);
         var self = this;
+        if(!this.delay){
+          return;
+        }
         setTimeout(function() {
-          self.tipObjs.pop();
-        }, this.tipDelay);
+          self.objs.pop();
+        }, this.delay);
       },
 			deep: true
     }
   },
   data: function() {
     return {
-      tipObjs: [],
+      objs: [],
       cls: cls
     }
   },
   methods: {
     close: function(index) {
-      this.tipObjs.splice(index, 1);
+      this.objs.splice(index, 1);
     }
   },
   template:
 		'<ul :class="cls.tips">' +
-	    '<li v-for="obj in tipObjs" :class="cls.tipItem" class="animated" transition="fade">' +
+	    '<li v-for="obj in objs" :class="cls.item" transition="fade">' +
 		    '<div v-if="obj.success" :class="cls.success">' +
-			    '<i class="fa fa-check-circle"></i>' +
+			    '<i class="fa fa-check-circle" :class="cls.icon"></i>' +
 			    '{{obj.tip}}' +
-			    '<a href="javascript:;" class="fa fa-close" :class="cls.close" @click="close($index)"></a>' +
+			    '<i class="fa fa-close" :class="cls.close" @click="close($index)"></i>' +
 		    '</div>' +
 		    '<div v-else :class="cls.error">' +
-			    '<i class="fa fa-times-circle"></i>' +
+			    '<i class="fa fa-times-circle" :class="cls.icon"></i>' +
 			    '{{obj.tip}}' +
-			    '<a href="javascript:;" class="fa fa-close" :class="cls.close" @click="close($index)"></a>' +
+			    '<i class="fa fa-close close" :class="cls.close" @click="close($index)"></i>' +
 		    '</div>' +
 	    '</li>' +
     '</ul>'
 });
 
 export default {
-  addTip: function(obj){
-		vue.set(this,'tipDataObj',obj);
+  add: function(obj, data){
+    vue.set(obj,'dataObj',data);
   }
-};
+}
