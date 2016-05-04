@@ -268,7 +268,7 @@
 }
 
 .dtpicker > .datime,
-.dtranger > .range {
+.dtranger > .drop {
   position: absolute;
   left: 0;
   top: 100%;
@@ -314,15 +314,17 @@
 .dtranger {
   font-size: 12px;
 
-  > .range {
-    width: 400px;
+  > .drop {
     padding: 5px;
     border: 1px solid @light;
 
-    > .datime {
-      display: inline-block;
-      & + .datime {
-        margin-left: 15px;
+    > .range {
+      white-space: nowrap;
+      > .datime {
+        display: inline-block;
+        & + .datime {
+          margin-left: 15px;
+        }
       }
     }
 
@@ -362,7 +364,7 @@
 
 .kf-datime-ranger-color(@color) {
   border: 1px solid @color;
-  > div > [kf-datime] {
+  > div > div > [kf-datime] {
     .kf-datime(@color);
   }
   button {

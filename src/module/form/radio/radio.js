@@ -19,14 +19,11 @@ vue.component('kf-radio-group', {
       type: Array,
       default: () => { return []; }
     },
-    values: {
+    options: {
       type: Array,
       required: true
     },
-    model: {
-      twoWay: true,
-      type: null
-    },
+    value: {},
     name: String,
     required: {
       type: Boolean,
@@ -42,18 +39,18 @@ vue.component('kf-radio-group', {
     };
   },
   watch: {
-    model: function(val) {
-      this.onChange(val);
+    value: function(val) {
+      this.onChange(this.name && this.name || val, this.name && val);
       this.name && blur(this.inputs[0]);
     }
   },
   template:
     '<span :class="cls.rdgrp" class="kf-radio-group">' +
-      '<span v-for="value in values">' +
-        '<input :name="name" :required="required" type="radio" v-model="model" :value="value"/>' +
+      '<span v-for="option in options">' +
+        '<input :name="name" :required="required" type="radio" v-model="value" :value="option"/>' +
         '<i class="fa fa-dot-circle-o"></i>' +
         '<span class="fa fa-circle-o"></span>' +
-        '<label v-text="labels[$index] || value"></label>' +
+        '<label v-text="labels[$index] || option"></label>' +
       '</span>' +
     '</span>'
 })
