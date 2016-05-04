@@ -58,12 +58,13 @@
     }
 
     .kf-input-group {
-      display: table;
-      table-layout: fixed;
+      // display: table;
+      // table-layout: fixed;
+      display: flex;
 
       > * {
-        display: table-cell !important;
-        white-space: nowrap;
+        // display: table-cell !important;
+        flex-grow: 1;
         border: 1px solid @gray;
         padding: @vpad-md @hpad-md;
         font-size: @fs-md;
@@ -86,7 +87,9 @@
         }
       }
       > .kf-addon {
+        white-space: nowrap;
         background-color: white;
+        flex-grow: 0;
       }
     }
 

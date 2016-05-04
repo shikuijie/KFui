@@ -3,7 +3,7 @@ import 'font-awesome';
 
 import './module/layout/layout';
 import './module/tab/tab';
-import './module/modal/modal';
+import kfModal from './module/modal/modal';
 
 import './module/style/clearfix.css!';
 import './module/style/button.css!';
@@ -31,7 +31,14 @@ let vm = {
     mtable: mtable,
     ttable: ttable,
     tree: tree,
-    modal: {open: false},
+    modal: {
+      open: function() {
+        kfModal.open(this);
+      },
+      close: function() {
+        kfModal.close(this);
+      }
+    },
     form: form
   }
 };

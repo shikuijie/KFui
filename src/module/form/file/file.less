@@ -139,9 +139,6 @@
 
     > li {
       padding: 5px;
-      &:first-child {
-        text-align: center;
-      }
       &:not(:last-child) {
         padding-bottom: 0;
       }
@@ -152,25 +149,25 @@
         &:hover {
           color: white;
           cursor: pointer;
+          text-align: center;
           > span:not(:first-child) {
             display: none;
           }
         }
 
         > span {
-          display: inline-block;
           white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
           &:first-child {
-            flex: 4;
-            text-overflow: ellipsis;
-            overflow: hidden;
+            flex-grow: 4;
           }
           &:nth-child(2) {
-            flex: 2;
+            flex-grow: 2;
             text-align: right;
           }
           &:last-child {
-            flex: 1;
+            flex-grow: 1;
             text-align: right;
             > .error {
               color: @accent;

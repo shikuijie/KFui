@@ -41,3 +41,6 @@ mock
 # css and cssmap
 *.css
 *.css.map.js
+
+# dist
+dist
