@@ -1,5 +1,3 @@
-import '../module/ui.bundle';
-
 let form = {
   currentRow: {name: '', email: '', address: '', date: '2016-05-12', start: '2016-05-02', end: '2016-06-12', department: '', skills: ['c++', 'js', 'css'], salary: '8k', agree: true},
   departCN: ['平台运营部', '技术研发部', '设计部'],

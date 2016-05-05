@@ -1,3 +1,4 @@
+import 'font-awesome';
 import vue from 'vue';
 import _ from 'lodash';
 

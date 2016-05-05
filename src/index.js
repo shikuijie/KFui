@@ -1,6 +1,9 @@
 import {vue, _, kfTable} from 'kfui';
-console.log(vue)
-console.log(_)
+import stable from './demo/stable';
+import mtable from './demo/mtable';
+import ttable from './demo/ttable';
+import form from './demo/form';
+import tree from './demo/tree';
 
 let vm = {
   el: 'body',
