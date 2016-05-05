@@ -40,9 +40,5 @@ jspm_packages
 # mock data
 mock
 
-# css and cssmap
-*.css
-*.css.map.js
-
 # dist
 dist

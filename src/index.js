@@ -1,4 +1,5 @@
-import {vue, kfTable} from './module/ui';
+import {vue, kfTable} from 'kfui';
+console.log(vue)
 
 let vm = {
   el: 'body',
