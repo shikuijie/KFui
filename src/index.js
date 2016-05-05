@@ -1,3 +1,5 @@
+import {vue, kfTable} from './module/ui';
+
 let vm = {
   el: 'body',
   ready: function() {
