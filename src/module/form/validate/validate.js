@@ -7,16 +7,47 @@ function getErrorMsg(msgs, name, type, def) {
   return msgs[name] && msgs[name][type] || msgs[name] || msgs[type] || def;
 }
 
+let formMap = new Map();
+
 vue.directive('kf-validate', {
   bind: function(val) {
-    let self = this, node = self.el.nodeName.toLowerCase();
+    let el = this.el;
+    let node = el.nodeName.toLowerCase();
     if(node != 'form') {
       return;
     }
 
-    this.toggleError = function(target, name, type) {
+    let that = new vue(), self = that;
+    that.el = el;
+    formMap.set(el, that);
+
+    that.inputs = [];
+    _.forEach(that.el.querySelectorAll('[kf-validate]'), function(el) {
+      el.__BUS = that;
+      that.inputs.push(el.querySelector('input') || el);
+
+      let node = el.nodeName.toLowerCase();
+      if(node == 'input') {
+        el.addEventListener('change', function(event) {
+          toggleError(el);
+        });
+      }
+    });
+
+    that.$on('kf.validate.change', function(el, noerror) {
+      toggleError(el.querySelector('input'), noerror);
+    });
+
+    function toggleError(target, noerror) {
+      if(noerror) {
+        self.errorEls.get(target).innerHTML = '';
+        return '';
+      }
+
       let validity = target.validity;
       let msg = '', errorType = '';
+      let name = target.getAttribute('name');
+      let type = target.getAttribute('type');
 
       if(!validity.valid) {
         if(validity.valueMissing) {
@@ -35,35 +66,24 @@ vue.directive('kf-validate', {
         msg = self.errorMsg[name].validation() || '';
       }
 
-      self.errorEls[name].innerHTML = msg;
+      self.errorEls.get(target).innerHTML = msg;
       return msg;
     };
 
-    this.inputs = this.el.querySelectorAll('input[name]');
-    this.errorEls = {};
-    this.blurs = {};
-    this.focus = {};
+    that.errorEls = new Map();
 
-    _.forEach(this.inputs, function(input) {
-      let name = input.getAttribute('name'),
-          type = input.getAttribute('type');
-
+    _.forEach(that.inputs, function(input) {
       let span = document.createElement('strong');
       span.className = cls.error;
       input.parentElement.appendChild(span);
-      self.errorEls[name] = self.errorEls[name] || span;
-      self.blurs[name] = self.blurs[name] || function(event) {
-        self.toggleError(event.target, name, type);
-      };
-
-      input.addEventListener('blur', self.blurs[name]);
+      self.errorEls.set(input, span);
     });
 
-    this.submit = this.el.querySelector('input[type=submit]');
-    this.submitFunc = function(event) {
+    that.submit = that.el.querySelector('input[type=submit]');
+    that.submitFunc = function(event) {
       let valid = true;
       _.forEach(self.inputs, function(input) {
-        let msg = self.toggleError(input, input.getAttribute('name'), input.getAttribute('type'));
+        let msg = toggleError(input);
 
         if(msg) {
           valid = false;
@@ -72,30 +92,43 @@ vue.directive('kf-validate', {
 
       self.errorMsg.formValid = valid;
     };
-    this.submit && this.submit.addEventListener('click', this.submitFunc);
+    that.submit && that.submit.addEventListener('click', that.submitFunc);
 
-    this.reset = this.el.querySelector('input[type=reset]');
-    this.resetFunc = function(event) {
+    that.reset = that.el.querySelector('input[type=reset]');
+    that.resetFunc = function(event) {
       _.forEach(self.el.querySelectorAll('.' + cls.error), function(error) {
         error.innerHTML = '';
       });
     };
-    this.reset && this.reset.addEventListener('click', this.resetFunc);
+    that.reset && that.reset.addEventListener('click', that.resetFunc);
   },
   update: function(val) {
-    this.errorMsg = val;
+    let el = this.el;
+    if(el.nodeName.toLowerCase() != 'form') {
+      return;
+    }
+
+    let that = formMap.get(el);
+    that.errorMsg = val;
   },
   unbind: function() {
-    let self = this;
-    _.forEach(this.inputs, function(input) {
+    let el = this.el;
+    if(el.nodeName.toLowerCase() != 'form') {
+      return;
+    }
+
+    let that = formMap.get(el), self = that;
+    _.forEach(that.inputs, function(input) {
       let name = input.getAttribute('name');
       input.removeEventListener('blur', self.blurs[name]);
     });
-    _.forEach(this.errorEls, function(el) {
+    _.forEach(that.errorEls, function(el) {
       el.remove();
     });
 
-    this.submit && this.submit.removeEventListener('click', this.submitFunc);
-    this.reset && this.reset.removeEventListener('click', this.resetFunc);
+    that.submit && that.submit.removeEventListener('click', that.submitFunc);
+    that.reset && that.reset.removeEventListener('click', that.resetFunc);
+
+    formMap.delete(el);
   }
 });

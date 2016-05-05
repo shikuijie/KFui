@@ -4,11 +4,6 @@ import './rotator';
 import './date.css!';
 import cls from './date.css.map';
 
-function blur(elem) {
-  let event = new FocusEvent('blur');
-  elem.dispatchEvent(event);
-}
-
 let datime = vue.extend({
   props: ['moment', 'hasSec', 'hasTime', 'name', 'min', 'max'],
   data: function() {
@@ -360,13 +355,11 @@ vue.component('kf-date-picker', {
   watch: {
     value: function(val, oval) {
       if(val == oval) return;
-
       this.onChange(this.name && this.name || val, this.name && val);
-      this.name && blur(this.input);
+      this.$el.__BUS.$emit('kf.validate.change', this.$el);
     }
   },
   ready: function() {
-    this.input = this.$el.querySelector('input');
     this.$on('kf.datime.selected', function(data) {
       this.value = formatDate(data.date, this.hasTime, this.hasSec);
       this.visible = false;
@@ -470,9 +463,8 @@ vue.component('kf-date-ranger', {
   watch: {
     '[start, end]': function(val, oval) {
       if(val[0] == oval[0] && val[1] == oval[1]) return;
-
       this.onChange(this.name && this.name || val[0], this.name && val[0] || val[1], this.name && val[1]);
-      this.name && blur(this.input);
+      this.$el.__BUS.$emit('kf.validate.change', this.$el);
     }
   },
   created: function() {
@@ -482,14 +474,20 @@ vue.component('kf-date-ranger', {
     });
   },
   ready: function() {
-    this.input = this.$el.querySelector('input');
-
     this.$on('kf.datime.selected', function(data) {
       this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
     });
 
+    let count = 0;
     this.$on('kf.datime.answer', function(data) {
+      count++;
       this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
+      if(count < 2) {
+        return;
+      } else {
+        count = 0;
+      }
+
       if(this.range.start > this.range.end) {
         this.rangerr = '结束时间不能在开始时间之前';
         return;

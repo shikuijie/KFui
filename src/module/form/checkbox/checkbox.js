@@ -4,11 +4,6 @@ import '../../code/code';
 import cls from './checkbox.css.map';
 import './checkbox.css!';
 
-function blur(elem) {
-  let event = new FocusEvent('blur');
-  elem.dispatchEvent(event);
-}
-
 vue.component('kf-checkbox', {
   props: {
     onChange: {
@@ -27,9 +22,6 @@ vue.component('kf-checkbox', {
       default: false
     }
   },
-  ready: function() {
-    this.input = this.$el.querySelector('input');
-  },
   data: function() {
     return {
       cls: cls
@@ -38,7 +30,7 @@ vue.component('kf-checkbox', {
   watch: {
     value: function(val) {
       this.onChange(this.name && this.name || val, this.name && val);
-      this.name && blur(this.input);
+      this.$el.__BUS.$emit('kf.validate.change', this.$el);
     }
   },
   template:
@@ -69,9 +61,6 @@ vue.component('kf-checkbox-group', {
     value: {},
     name: String
   },
-  ready: function() {
-    this.inputs = this.$el.querySelectorAll('input');
-  },
   data: function() {
     return {
       cls: cls,
@@ -79,9 +68,8 @@ vue.component('kf-checkbox-group', {
   },
   watch: {
     value: function(val) {
-      let input = this.inputs[0];
       this.onChange(this.name && this.name || val, this.name && val);
-      this.name && blur(input);
+      this.$el.__BUS.$emit('kf.validate.change', this.$el);
     }
   },
   template:

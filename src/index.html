@@ -57,53 +57,53 @@
           <div class="kf-control kf-grid">
             <label class="kf-3-10">姓名<span class="kf-asterisk">*</span></label>
             <div class="kf-7-10 kf-input">
-              <input type="text" name="name" required v-model="form.currentRow.name">
+              <input type="text" kf-validate name="name" required v-model="form.currentRow.name">
             </div>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">日期<span class="kf-asterisk">*</span></label>
-            <kf-date-picker class="kf-7-10" :on-change="form.setField" :value="form.currentRow.date" name="date" :required="true"></kf-date-picker>
+            <label class="kf-3-10">日期</label>
+            <kf-date-picker kf-validate class="kf-7-10" :required="true" :on-change="form.setField" :value="form.currentRow.date" name="date"></kf-date-picker>
           </div>
 
           <div class="kf-control kf-grid">
             <label class="kf-3-10">起始日期<span class="kf-asterisk">*</span></label>
-            <kf-date-ranger class="kf-7-10" :on-change="form.setField" :start="form.currentRow.start" :end="form.currentRow.end" name="range" :required="true"></kf-date-ranger>
+            <kf-date-ranger kf-validate class="kf-7-10" :on-change="form.setField" :start="form.currentRow.start" :end="form.currentRow.end" name="range" :required="true"></kf-date-ranger>
           </div>
 
           <div class="kf-control kf-grid">
             <label class="kf-3-10">部门<span class="kf-asterisk">*</span></label>
-            <kf-select :on-change="form.setField" class="kf-7-10" name="department" :required="true" :value="form.currentRow.department" :options="form.departEN" :labels="form.departCN"></kf-select>
+            <kf-select kf-validate :on-change="form.setField" class="kf-7-10" name="department" :required="true" :value="form.currentRow.department" :options="form.departEN" :labels="form.departCN"></kf-select>
           </div>
 
           <div class="kf-control kf-grid">
             <label class="kf-3-10">邮箱<span class="kf-asterisk">*</span></label>
             <div class="kf-input kf-7-10">
-              <input type="email" required name="email" v-model="form.currentRow.email">
+              <input type="email" kf-validate required name="email" v-model="form.currentRow.email">
             </div>
           </div>
 
           <div class="kf-control kf-grid">
             <label class="kf-3-10">地址<span class="kf-asterisk">*</span></label>
             <div class="kf-input kf-7-10">
-              <input type="text" required name="address" v-model="form.currentRow.address">
+              <input type="text" kf-validate required name="address" v-model="form.currentRow.address">
             </div>
           </div>
 
           <div class="kf-control kf-grid">
             <label class="kf-3-10">技能</label>
-            <kf-checkbox-group class="kf-7-10 kf-left" name="skills" :on-change="form.setField" :value="form.currentRow.skills" :options="['c++', 'js', 'css']" name="agree" :required="true" label="同意"></kf-checkbox-group>
+            <kf-checkbox-group kf-validate class="kf-7-10 kf-left" name="skills" :on-change="form.setField" :value="form.currentRow.skills" :options="['c++', 'js', 'css']" name="agree" :required="true" label="同意"></kf-checkbox-group>
           </div>
 
           <div class="kf-control kf-grid">
             <label class="kf-3-10">薪资</label>
-            <kf-radio-group class="kf-7-10 kf-left" name="salary" :on-change="form.setField" :required="true" :value="form.currentRow.salary" :options="['8k', '12k', '15k']" name="agree" :required="true" label="同意"></kf-radio-group>
+            <kf-radio-group kf-validate class="kf-7-10 kf-left" name="salary" :on-change="form.setField" :required="true" :value="form.currentRow.salary" :options="['8k', '12k', '15k']" name="agree" :required="true" label="同意"></kf-radio-group>
           </div>
 
           <div class="kf-control kf-grid">
             <label class="kf-3-10">头像</label>
             <div class="kf-left kf-5-10">
-              <kf-file url="upload.json" accept=".jpg" :required="true" :auto="true" name="file" :preview="form.preview" :multiple="true"></kf-file>
+              <kf-file url="upload.json" kf-validate accept=".jpg" :required="true" :auto="true" name="file" :preview="form.preview" :multiple="true"></kf-file>
             </div>
             <div class="kf-2-10">
               <img style="position: absolute; bottom: 0;" width="100%" :src="form.photoURL" alt="">
@@ -112,7 +112,7 @@
 
           <div class="kf-control kf-grid">
             <label class="kf-3-10"></label>
-            <kf-checkbox class="kf-7-10 kf-left" :on-change="form.setField" :value="form.currentRow.agree" :option="true" name="agree" :required="true" label="同意"></kf-checkbox>
+            <kf-checkbox class="kf-7-10 kf-left" kf-validate :on-change="form.setField" :value="form.currentRow.agree" :option="true" name="agree" :required="true" label="同意"></kf-checkbox>
           </div>
 
           <div class="kf-control kf-grid">

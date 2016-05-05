@@ -3,11 +3,6 @@ import '../../code/code';
 import './radio.css!';
 import cls from './radio.css.map';
 
-function blur(elem) {
-  let event = new FocusEvent('blur');
-  elem.dispatchEvent(event);
-}
-
 vue.component('kf-radio-group', {
   props: {
     onChange: {
@@ -29,18 +24,18 @@ vue.component('kf-radio-group', {
       default: false
     }
   },
-  ready: function() {
-    this.inputs = this.$el.querySelectorAll('input');
-  },
   data: function() {
     return {
       cls: cls
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   watch: {
     value: function(val) {
       this.onChange(this.name && this.name || val, this.name && val);
-      this.name && blur(this.inputs[0]);
+      this.$el.__BUS.$emit('kf.validate.change', this.$el);
     }
   },
   template:

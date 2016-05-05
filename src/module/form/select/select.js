@@ -3,11 +3,6 @@ import '../../code/code';
 import cls from './select.css.map';
 import './select.css!';
 
-function blur(elem) {
-  let event = new FocusEvent('blur');
-  elem.dispatchEvent(event);
-}
-
 vue.component('kf-select', {
   props: {
     value: {},
@@ -37,9 +32,6 @@ vue.component('kf-select', {
       }
     },
   },
-  ready: function() {
-    this.input = this.$el.querySelector('input');
-  },
   data: function() {
     return {
       cls: cls,
@@ -49,7 +41,7 @@ vue.component('kf-select', {
   watch: {
     value: function(val) {
       this.onChange(this.name && this.name || val, this.name && val);
-      this.name && blur(this.input);
+      this.$el.__BUS.$emit('kf.validate.change', this.$el);
     }
   },
   computed: {

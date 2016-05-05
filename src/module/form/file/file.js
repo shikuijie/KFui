@@ -3,11 +3,6 @@ import _ from 'lodash';
 import './file.css!';
 import cls from './file.css.map';
 
-function blur(elem) {
-  let event = new FocusEvent('blur');
-  elem.dispatchEvent(event);
-}
-
 vue.component('kf-file', {
   props: {
     onChange: {
@@ -62,11 +57,6 @@ vue.component('kf-file', {
       }
     }
   },
-  watch: {
-    files: function() {
-      blur(this.input);
-    }
-  },
   data: function() {
     return {
       cls: cls,
@@ -75,9 +65,6 @@ vue.component('kf-file', {
       fileOver: false,
       dragging: false
     };
-  },
-  ready: function() {
-    this.input = this.$el.querySelector('input');
   },
   computed: {
     flipObj: function() {
@@ -242,6 +229,7 @@ function processFiles(self, fileList) {
     return;
   }
   self.onChange(self.name && self.name || fileList, self.name && fileList);
+  self.$el.__BUS.$emit('kf.validate.change', self.$el, true);
 
   if(self.preview) {
     _.forEach(files, function(f) {
