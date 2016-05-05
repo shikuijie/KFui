@@ -1,0 +1,135 @@
+.kf-input {
+  display: inline-block;
+  border: 1px solid #bdc3c7;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.kf-input-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.kf-input-group > * {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  border: 1px solid #bdc3c7;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.kf-input-group > *:not(:first-child) {
+  border-left: none !important;
+}
+.kf-input-group > *:first-child {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.kf-input-group > *:last-child {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.kf-input-group > *:not(:first-child):not(:last-child) {
+  border-radius: 0 !important;
+}
+.kf-input-group > .kf-addon {
+  white-space: nowrap;
+  background-color: white;
+  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+}
+.kf-input.kf-primary {
+  border: 1px solid #30c9e8;
+}
+.kf-input-group.kf-primary > * {
+  border: 1px solid #30c9e8;
+}
+.kf-input-group.kf-primary > .kf-addon {
+  background-color: #30c9e8;
+  color: white;
+}
+.kf-input.kf-accent {
+  border: 1px solid #e74c3c;
+}
+.kf-input-group.kf-accent > * {
+  border: 1px solid #e74c3c;
+}
+.kf-input-group.kf-accent > .kf-addon {
+  background-color: #e74c3c;
+  color: white;
+}
+.kf-input.kf-gray {
+  border: 1px solid #bdc3c7;
+}
+.kf-input-group.kf-gray > * {
+  border: 1px solid #bdc3c7;
+}
+.kf-input-group.kf-gray > .kf-addon {
+  background-color: #bdc3c7;
+  color: white;
+}
+.kf-input.kf-dark {
+  border: 1px solid #34495e;
+}
+.kf-input-group.kf-dark > * {
+  border: 1px solid #34495e;
+}
+.kf-input-group.kf-dark > .kf-addon {
+  background-color: #34495e;
+  color: white;
+}
+.kf-input.kf-light {
+  border: 1px solid #ecf0f1;
+}
+.kf-input-group.kf-light > * {
+  border: 1px solid #ecf0f1;
+}
+.kf-input-group.kf-light > .kf-addon {
+  background-color: #ecf0f1;
+  color: white;
+}
+.kf-input.kf-xs {
+  padding: 3px 5px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.kf-input-group.kf-xs > * {
+  padding: 3px 5px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.kf-input.kf-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.kf-input-group.kf-sm > * {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.kf-input.kf-md {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.kf-input-group.kf-md > * {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.kf-input.kf-lg {
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+}
+.kf-input-group.kf-lg > * {
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+}

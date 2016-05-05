@@ -1,0 +1,1 @@
+export default {"tips":"_tips_1uxx7_1","tipItem":"_tipItem_1uxx7_7","success":"_success_1uxx7_16","error":"_error_1uxx7_20","close":"_close_1uxx7_24"}

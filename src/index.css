@@ -1,0 +1,17 @@
+[v-cloak] {
+  display: none;
+}
+div[slot=right],
+div[slot=header],
+div[slot=footer] {
+  height: 100%;
+  background-color: #34495e;
+  color: white;
+  text-align: center;
+}
+div[slot=left] .menu {
+  width: 150px;
+}
+div[slot=main].content {
+  padding: 10px;
+}
