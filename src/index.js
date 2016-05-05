@@ -1,4 +1,4 @@
-import {vue, _, kfTable} from 'kfui';
+import {vue, _, kfTable} from './module/ui';
 import stable from './demo/stable';
 import mtable from './demo/mtable';
 import ttable from './demo/ttable';
