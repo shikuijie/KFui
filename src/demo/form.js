@@ -7,7 +7,7 @@ import '../module/form/file/file';
 import '../module/form/radio/radio';
 
 let form = {
-  currentRow: {name: 2, email: '', address: '', date: '', start: '', end: '', department: '', skills: [], salary: '', agree: false},
+  currentRow: {name: '', email: '', address: '', date: '', start: '', end: '', department: '', skills: [], salary: '', agree: false},
   departCN: ['平台运营部', '技术研发部', '设计部'],
   departEN: ['platform', 'tech', 'design'],
   validator: {

@@ -5,7 +5,7 @@ import './module/layout/layout';
 import './module/tab/tab';
 import './module/modal/modal';
 import './module/toaster/toaster';
-import './module/autofill/autofill';
+import './module/form/autoinput/autoinput';
 
 import './module/style/clearfix.css!';
 import './module/style/button.css!';
@@ -49,14 +49,14 @@ let vm = {
       toaster.showError('失败提示信息！');
     },
     onChange: function(val){
-      console.log(val);
       var self = this;
+      if(!val) return;
       setTimeout(function(){
-        self.options = [1,2];
+        self.options.push(Math.round((Math.random()*100)));
       }, 300);
     },
     getValue: function(val){
-      console.log('input final value = '+val);
+      console.log('instant value = '+val);
     }
   }
 };
