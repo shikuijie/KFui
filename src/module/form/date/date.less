@@ -1,7 +1,7 @@
 @import (reference) '../../style/color';
 @import (reference) '../../style/size';
 @import (reference) '../../style/caret';
-@import (reference) '../../rotator/rotator';
+@import (reference) './rotator';
 
 .kf-datime(@color) {
   //.date > .slides > div
@@ -272,7 +272,6 @@
   position: absolute;
   left: 0;
   top: 100%;
-  z-index: 2016;
   background-color: white;
   border-radius: 3px;
   margin-top: 3px;
@@ -302,10 +301,11 @@
     margin-top: 0;
   }
 
-  transition: opacity .2s linear, visibility .2s linear;
+  transition: all .2s linear;
   visibility: hidden;
   opacity: 0;
   &.visible {
+    z-index: 2016;
     visibility: visible;
     opacity: 1;
   }
@@ -330,21 +330,18 @@
 
     > .confirm {
       text-align: right;
+      margin-top: 5px;
       > span {
         color: @accent;
         margin-right: 10px;
       }
 
-      > button {
+      > a {
         color: white;
         border-radius: 5px;
         padding: 5px 10px;
         font-size: 12px;
-        border: 1px solid transparent;
-        margin-top: 5px;
-        &:focus {
-          outline: none;
-        }
+        cursor: pointer;
       }
     }
   }
@@ -367,7 +364,7 @@
   > div > div > [kf-datime] {
     .kf-datime(@color);
   }
-  button {
+  a {
     background-color: @color;
   }
 }

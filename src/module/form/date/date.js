@@ -1,6 +1,6 @@
 import vue from 'vue';
 import _ from 'lodash';
-import '../../rotator/rotator';
+import './rotator';
 import './date.css!';
 import cls from './date.css.map';
 
@@ -179,19 +179,6 @@ let datime = vue.extend({
           min = this.min.split(' ')[0],
           max = this.max.split(' ')[0];
       return min < el && el < max;
-    },
-    getRotatorCls: function(obj, index) {
-      let res = {};
-      res[cls.el] = true;
-      res[cls.active] = obj.idx == index;
-      return res;
-    },
-    getDateCls: function(d) {
-      let res = {};
-      res[cls.invalid] = !d.valid;
-      res[cls.active] = d.valid && (d.value == this.date);
-      res[cls.inrange] = this.inRange(d);
-      return res;
     }
   },
   ready: function() {
@@ -531,7 +518,7 @@ vue.component('kf-date-ranger', {
         '</div>' +
         '<div :class="cls.confirm">' +
           '<span v-show="rangerr" v-text="rangerr"></span>' +
-          '<button @click.prevent.stop="chooseRange()">确定</button>' +
+          '<a @click.prevent.stop="chooseRange()">确定</a>' +
         '</div>' +
       '</div>' +
       '<i class="fa fa-times" @click.stop="clear()"></i>' +

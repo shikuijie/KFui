@@ -281,13 +281,17 @@ gulp.task('dist:bundle', ['dist:url'], function(cb) {
           console.log(cmd);
 
           var headTail = /<\/\s*head\s*>/;
+          var footTail = /<\s*script\s*>/;
           var pathCssBundle = pathJs.replace('.js', '.bundle.css');
           var pathJsBundle = pathJs.replace('.js', '.bundle.js');
 
           contents = contents.replace(headTail, function(s0) {
             var cssLink = '<link rel="stylesheet" href="' + pathCssBundle + '"/>';
+            return cssLink + '\n' + s0;
+          });
+          contents = contents.replace(footTail, function(s0) {
             var jsScript = '<script src="' + pathJsBundle + '"></script>';
-            return cssLink + '\n' + jsScript + '\n' + s0;
+            return jsScript + '\n' + s0;
           });
 
           file.contents = new Buffer(contents);

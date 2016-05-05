@@ -2,7 +2,6 @@ import _ from 'lodash';
 import vue from 'vue';
 import '../../code/code';
 import cls from './checkbox.css.map';
-import 'font-awesome';
 import './checkbox.css!';
 
 function blur(elem) {

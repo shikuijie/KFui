@@ -1,6 +1,5 @@
 import vue from 'vue';
 import _ from 'lodash';
-import 'font-awesome';
 import '../code/code';
 import './table.css!';
 import cls from './table.css.map';

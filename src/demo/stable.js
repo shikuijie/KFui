@@ -1,5 +1,4 @@
-import kfTable from '../module/table/table';
-import '../module/form/checkbox/checkbox';
+import {kfTable} from '../module/ui.bundle';
 
 function getAction(func, label) {
   return '<button class="kf-btn kf-xs" @click="TABLE.' + func + '(ROW)">' + label + '</button>';

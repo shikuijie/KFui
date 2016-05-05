@@ -1,5 +1,4 @@
 import vue from 'vue';
-import 'font-awesome';
 import '../../code/code';
 import './radio.css!';
 import cls from './radio.css.map';

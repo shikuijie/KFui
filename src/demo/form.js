@@ -1,10 +1,4 @@
-import '../module/form/select/select';
-import '../module/form/date/date';
-import '../module/form/checkbox/checkbox';
-import '../module/form/radio/radio';
-import '../module/form/validate/validate';
-import '../module/form/file/file';
-import '../module/form/radio/radio';
+import '../module/ui.bundle';
 
 let form = {
   currentRow: {name: '', email: '', address: '', date: '2016-05-12', start: '2016-05-02', end: '2016-06-12', department: '', skills: ['c++', 'js', 'css'], salary: '8k', agree: true},

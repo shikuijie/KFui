@@ -1,20 +1,8 @@
-@import (reference) './module/menu/menu';
-@import (reference) './module/form/checkbox/checkbox';
-@import (reference) './module/form/radio/radio';
-@import (reference) './module/form/select/select';
-@import (reference) './module/tree/tree';
-@import (reference) './module/rotator/rotator';
-@import (reference) './module/form/date/date';
-@import (reference) './module/layout/layout';
+@import (reference) './module/style/color';
 
 :global {
-  .layout {
-    @media (min-width: 768px) {
-      .kf-layout(5vh, 5vh, 150px, 100px, @dark);
-    }
-    @media (max-width: 768px) {
-      .kf-layout(5vh, 5vh, 150px, 100px, @dark, small);
-    }
+  [v-cloak] {
+    display: none;
   }
 
   div[slot=right],
