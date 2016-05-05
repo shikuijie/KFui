@@ -46,7 +46,6 @@
       "font-awesome": "npm:font-awesome@^4.5.0",
       "image": "github:systemjs/plugin-image@^0.1.0",
       "json": "github:systemjs/plugin-json@^0.1.0",
-      "kfui": "github:shikuijie/KFui@0.0.2",
       "lodash": "npm:lodash@^4.6.1",
       "reflect-metadata": "npm:reflect-metadata@^0.1.3",
       "text": "github:systemjs/plugin-text@^0.0.4",

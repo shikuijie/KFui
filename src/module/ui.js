@@ -1,4 +1,14 @@
 import vue from 'vue';
-import kfTable from './table/table';
+import _ from 'lodash';
 
-export {vue, kfTable};
+import './style/style';
+import './code/code';
+import './form/form';
+import './pager/pager';
+import './tab/tab';
+
+import kfTable from './table/table';
+import kfTree from './tree/tree';
+import kfModal from './modal/modal';
+
+export {vue, _, kfModal, kfTree, kfTable};

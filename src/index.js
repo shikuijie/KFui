@@ -1,5 +1,6 @@
-import {vue, kfTable} from 'kfui';
+import {vue, _, kfTable} from 'kfui';
 console.log(vue)
+console.log(_)
 
 let vm = {
   el: 'body',
