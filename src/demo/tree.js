@@ -1,4 +1,4 @@
-import {kfTree} from '../module/ui';
+import {kfTree} from './module/ui';
 
 let tree = {
   onDrop: function(src, target) {
