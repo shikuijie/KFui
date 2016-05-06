@@ -1,4 +1,4 @@
-import {kfTable} from './module/ui';
+import {kfTable} from '../module/ui';
 
 function getAction(func, label) {
   return '<button class="kf-btn kf-xs" @click="TABLE.' + func + '(ROW)">' + label + '</button>';
