@@ -9,7 +9,7 @@ function getErrorMsg(msgs, name, type, def) {
 
 let formMap = new Map();
 
-vue.directive('kf-validate', {
+vue.directive('kf-form', {
   bind: function(val) {
     let el = this.el;
     let node = el.nodeName.toLowerCase();
@@ -22,24 +22,43 @@ vue.directive('kf-validate', {
     formMap.set(el, that);
 
     that.inputs = [];
-    _.forEach(that.el.querySelectorAll('[kf-validate]'), function(el) {
-      el.__BUS = that;
-      that.inputs.push(el.querySelector('input') || el);
+    _.forEach(that.el.querySelectorAll('input'), function(input) {
+      let type = input.getAttribute('type');
+      if(type == 'submit' || type == 'reset') {
+        return;
+      }
 
-      let node = el.nodeName.toLowerCase();
-      if(node == 'input') {
-        el.addEventListener('change', function(event) {
+      if(type == 'checkbox' || type == 'radio') {
+        let last = that.inputs[that.inputs.length-1];
+        if(input.parentElement.parentElement === last.parentElement.parentElement) {
+          return;
+        }
+      }
+
+      that.inputs.push(input);
+    });
+
+    _.forEach(that.inputs, function(el) {
+      el.__BUS = that;
+
+      let type = el.getAttribute('type');
+      if((type == 'text') || (type == 'email') || (type == 'url')) {
+        el.onchange = function(event) {
+          el.__VALUE = el.value;
           toggleError(el);
-        });
+          that.setfield(el.getAttribute('name'), el.value);
+        };
       }
     });
 
-    that.$on('kf.validate.change', function(el, noerror) {
-      toggleError(el.querySelector('input'), noerror);
+    that.$on('kf.form.change', function(el, val) {
+      el.__VALUE = val;
+      toggleError(el);
+      that.setfield(el.getAttribute('name'), val);
     });
 
-    function toggleError(target, noerror) {
-      if(noerror) {
+    function toggleError(target) {
+      if(target.__NOERR) {
         self.errorEls.get(target).innerHTML = '';
         return '';
       }
@@ -63,7 +82,7 @@ vue.directive('kf-validate', {
       }
 
       if(self.errorMsg[name] && self.errorMsg[name].validation) {
-        msg = self.errorMsg[name].validation() || '';
+        msg = self.errorMsg[name].validation(target.__VALUE) || '';
       }
 
       self.errorEls.get(target).innerHTML = msg;
@@ -90,9 +109,9 @@ vue.directive('kf-validate', {
         }
       });
 
-      self.errorMsg.formValid = valid;
+      self.errorMsg.alid = valid;
     };
-    that.submit && that.submit.addEventListener('click', that.submitFunc);
+    that.submit.addEventListener('click', that.submitFunc);
 
     that.reset = that.el.querySelector('input[type=reset]');
     that.resetFunc = function(event) {
@@ -100,7 +119,7 @@ vue.directive('kf-validate', {
         error.innerHTML = '';
       });
     };
-    that.reset && that.reset.addEventListener('click', that.resetFunc);
+    that.reset.addEventListener('click', that.resetFunc);
   },
   update: function(val) {
     let el = this.el;
@@ -109,7 +128,12 @@ vue.directive('kf-validate', {
     }
 
     let that = formMap.get(el);
-    that.errorMsg = val;
+    let mds = Object.keys(this.modifiers);
+    that.setfield = val.setfield;
+    that.errorMsg = val.validator;
+    if(!_.isFunction(val.setfield) || !_.isObject(val.validator)) {
+      throw 'v-kf-form指令参数至少有两个成员：validator提供验证信息对象，setfield设置成员变量的函数';
+    }
   },
   unbind: function() {
     let el = this.el;
@@ -118,10 +142,15 @@ vue.directive('kf-validate', {
     }
 
     let that = formMap.get(el), self = that;
+    that.$off('kf.form.change');
+
     _.forEach(that.inputs, function(input) {
-      let name = input.getAttribute('name');
-      input.removeEventListener('blur', self.blurs[name]);
+      let type = input.getAttribute('type');
+      if(type == 'text' || type == 'email' || type == 'url') {
+        input.onchange = null;
+      }
     });
+
     _.forEach(that.errorEls, function(el) {
       el.remove();
     });

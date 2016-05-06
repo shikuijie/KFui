@@ -353,13 +353,13 @@ vue.component('kf-date-picker', {
     'kf-datime': datime
   },
   watch: {
-    value: function(val, oval) {
-      if(val == oval) return;
+    value: function(val) {
       this.onChange(this.name && this.name || val, this.name && val);
-      this.$el.__BUS.$emit('kf.validate.change', this.$el);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
   ready: function() {
+    this.input = this.$el.querySelector('input');
     this.$on('kf.datime.selected', function(data) {
       this.value = formatDate(data.date, this.hasTime, this.hasSec);
       this.visible = false;
@@ -370,7 +370,7 @@ vue.component('kf-date-picker', {
   },
   template:
     '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="visible = true">' +
-      '<input autocomplete="off" type="text" :name="name" :value="value" :required="required"/>' +
+      '<input autocomplete="off" type="picker" :name="name" :value="value" :required="required"/>' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<kf-datime kf-datime :class="datimeCls" :moment="value" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
       '<i class="fa fa-times" @click.stop="clear()"></i>' +
@@ -462,9 +462,8 @@ vue.component('kf-date-ranger', {
   },
   watch: {
     '[start, end]': function(val, oval) {
-      if(val[0] == oval[0] && val[1] == oval[1]) return;
       this.onChange(this.name && this.name || val[0], this.name && val[0] || val[1], this.name && val[1]);
-      this.$el.__BUS.$emit('kf.validate.change', this.$el);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
   created: function() {
@@ -474,6 +473,7 @@ vue.component('kf-date-ranger', {
     });
   },
   ready: function() {
+    this.input = this.$el.querySelector('input');
     this.$on('kf.datime.selected', function(data) {
       this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
     });
@@ -507,7 +507,7 @@ vue.component('kf-date-ranger', {
   },
   template:
     '<div :class="cls.dtranger" class="kf-date-ranger" @click.stop="visible = true">' +
-      '<input autocomplete="off" type="text" :name="name" :required="required" :value="rangeStr"/>' +
+      '<input autocomplete="off" type="ranger" :name="name" :required="required" :value="rangeStr"/>' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<div :class="dropCls">' +
         '<div :class="cls.range">' +

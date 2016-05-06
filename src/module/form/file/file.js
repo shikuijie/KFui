@@ -66,6 +66,9 @@ vue.component('kf-file', {
       dragging: false
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   computed: {
     flipObj: function() {
       let val = this.flip;
@@ -139,7 +142,7 @@ vue.component('kf-file', {
             '<span v-text="f.errorInfo || f.size"></span>' +
             '<span>' +
               '<i class="fa fa-check-circle" v-show="f.done"></i>' +
-              '<i class="fa fa-times-circle" v-show="f.doing"></i>' +
+              '<i class="fa fa-spin fa-spinner" v-show="f.doing"></i>' +
               '<i class="fa fa-exclamation-circle" :class="cls.error" v-show="f.error"></i>' +
             '</span>' +
           '</div>' +
@@ -229,7 +232,8 @@ function processFiles(self, fileList) {
     return;
   }
   self.onChange(self.name && self.name || fileList, self.name && fileList);
-  self.$el.__BUS.$emit('kf.validate.change', self.$el, true);
+  self.input.__NOERR = true;
+  self.input.__BUS && self.input.__BUS.$emit('kf.form.change', self.input, fileList);
 
   if(self.preview) {
     _.forEach(files, function(f) {

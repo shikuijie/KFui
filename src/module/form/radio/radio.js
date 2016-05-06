@@ -17,7 +17,7 @@ vue.component('kf-radio-group', {
       type: Array,
       required: true
     },
-    value: {},
+    value: null,
     name: String,
     required: {
       type: Boolean,
@@ -35,7 +35,7 @@ vue.component('kf-radio-group', {
   watch: {
     value: function(val) {
       this.onChange(this.name && this.name || val, this.name && val);
-      this.$el.__BUS.$emit('kf.validate.change', this.$el);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
   template:

@@ -15,7 +15,7 @@ vue.component('kf-checkbox', {
       type: null,
       default: true
     },
-    value: {},
+    value: null,
     name: String,
     required: {
       type: Boolean,
@@ -27,10 +27,13 @@ vue.component('kf-checkbox', {
       cls: cls
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   watch: {
     value: function(val) {
       this.onChange(this.name && this.name || val, this.name && val);
-      this.$el.__BUS.$emit('kf.validate.change', this.$el);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
   template:
@@ -58,7 +61,12 @@ vue.component('kf-checkbox-group', {
       type: Array,
       required: true
     },
-    value: {},
+    value: {
+      type: Array,
+      default: function() {
+        return [];
+      }
+    },
     name: String
   },
   data: function() {
@@ -66,10 +74,14 @@ vue.component('kf-checkbox-group', {
       cls: cls,
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   watch: {
     value: function(val) {
-      this.onChange(this.name && this.name || val, this.name && val);
-      this.$el.__BUS.$emit('kf.validate.change', this.$el);
+      let value = [].slice.apply(val);
+      this.onChange(this.name && this.name || value, this.name && value);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, value);
     }
   },
   template:

@@ -38,10 +38,13 @@ vue.component('kf-select', {
       visible: false
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   watch: {
     value: function(val) {
       this.onChange(this.name && this.name || val, this.name && val);
-      this.$el.__BUS.$emit('kf.validate.change', this.$el);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
   computed: {
@@ -85,7 +88,7 @@ vue.component('kf-select', {
   },
   template:
     '<div :class="cls.select" class="kf-select" @click="visible = true">' +
-      '<input type="text" autocomplete="off" :name="name" :required="required" :value="selectedLabel">' +
+      '<input type="select" autocomplete="off" :name="name" :required="required" :value="selectedLabel">' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<i></i>' +
       '<ul :class="getOptionsCls()">' +
