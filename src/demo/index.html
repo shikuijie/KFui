@@ -15,37 +15,40 @@
         <div style="margin: 10px">
           <div class="kf-grid" style="margin-bottom: 10px">
             <h3 class="kf-3-10 kf-bottom">单行表格</h3>
-            <div class="kf-7-10 kf-right kf-btn-group kf-dark">
+            <div class="kf-7-10 kf-right kf-btn-group">
               <button class="kf-btn" @click="stable.prependRow()">前插</button>
               <button class="kf-btn" @click="stable.appendRow()">后插</button>
               <button class="kf-btn" @click="stable.iterateRows()">遍历</button>
             </div>
           </div>
           <kf-stable class="kf-border" :table="stable" :col-keys="stable.colKeys"></kf-stable>
+          <kf-pager style="margin-top: 10px" :page-entries="[20,50,100]" :total-entries="1000" :current-page="3" :visible-pages="8"></kf-pager>
         </div>
 
         <div style="margin: 10px">
           <div class="kf-grid" style="margin-bottom: 10px">
             <h3 class="kf-3-10 kf-bottom">多行表格</h3>
-            <div class="kf-7-10 kf-right kf-btn-group kf-dark">
+            <div class="kf-7-10 kf-right kf-btn-group kf-accent">
               <button class="kf-btn" @click="mtable.prependRow()">前插</button>
               <button class="kf-btn" @click="mtable.appendRow()">后插</button>
               <button class="kf-btn" @click="mtable.iterateRows()">遍历</button>
             </div>
           </div>
           <kf-mtable class="kf-border" :table="mtable" :col-keys="mtable.colKeys"></kf-mtable>
+          <kf-pager class="kf-accent" style="margin-top: 10px" :page-entries="[20,50,100]" :total-entries="1000" :current-page="3" :visible-pages="8"></kf-pager>
         </div>
 
         <div style="margin: 10px">
           <div class="kf-grid" style="margin-bottom: 10px">
             <h3 class="kf-3-10 kf-bottom">树行表格</h3>
-            <div class="kf-7-10 kf-right kf-btn-group kf-dark">
+            <div class="kf-7-10 kf-right kf-btn-group kf-primary">
               <button class="kf-btn" @click="ttable.prependRow()">前插</button>
               <button class="kf-btn" @click="ttable.appendRow()">后插</button>
               <button class="kf-btn" @click="ttable.iterateRows()">遍历</button>
             </div>
           </div>
           <kf-ttable class="kf-border" :table="ttable" :col-keys="ttable.colKeys"></kf-ttable>
+          <kf-pager class="kf-primary" style="margin-top: 10px" :page-entries="[20,50,100]" :total-entries="1000" :current-page="3" :visible-pages="8"></kf-pager>
         </div>
       </kf-tab-item>
       <kf-tab-item label="表单">
