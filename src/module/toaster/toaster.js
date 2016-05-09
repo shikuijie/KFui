@@ -10,10 +10,6 @@ vue.transition('kf-toaster-fade', {
 
 vue.component('kf-toaster', {
   props: {
-    // data: {
-    //   type: Object,
-		// 	required: true
-    // },
     toaster: {
       type: Object,
       required: true

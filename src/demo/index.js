@@ -1,4 +1,4 @@
-import {vue, modal, toaster} from 'kfui';
+import {vue, kfModal, kfToaster} from 'kfui';
 import stable from './stable';
 import mtable from './mtable';
 import ttable from './ttable';
@@ -20,18 +20,18 @@ let vm = {
     form: form,
     modal: {
       open: function() {
-        modal.open(this);
+        kfModal.open(this);
       },
       close: function() {
-        modal.close(this);
+        kfModal.close(this);
       }
     },
     toaster: {
-      showSuccess: function(t) {
-        toaster.succeed(t, '成功了!');
+      showSuccess: function() {
+        kfToaster.succeed(this, '成功了!');
       },
-      showError: function(t) {
-        toaster.fail(t, '出错啦!');
+      showError: function() {
+        kfToaster.fail(this, '出错啦!');
       }
     }
   }
