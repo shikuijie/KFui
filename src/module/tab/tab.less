@@ -1,0 +1,120 @@
+@import (reference) '../style/color';
+@import (reference) '../style/size';
+
+.kf-tab-direction(@dir) {
+  & when (@dir = vertical) {
+    display: flex;
+
+    > ul {
+      flex-grow: 0;
+      border-bottom: none !important;
+      > li {
+        text-align: right;
+        &[kf-tab-active] {
+          border-right: none !important;
+          border-top-right-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+          left: 1px;
+        }
+      }
+    }
+
+    > div {
+      flex-grow: 1;
+    }
+  }
+
+  & when (@dir = horizontal) {
+    > ul {
+      border-right: none !important;
+      > li {
+        display: inline-block;
+        &[kf-tab-active] {
+          border-bottom: white !important;
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+          top: 1px;
+        }
+      }
+    }
+  }
+}
+.kf-tab-size(@vpad, @hpad, @fs, @br) {
+  > ul > li {
+    padding: @vpad @hpad;
+    font-size: @fs;
+    &[kf-tab-active] {
+      border-radius: @br;
+    }
+  }
+}
+.kf-tab-color(@color) {
+  > ul {
+    background-color: white;
+    border-bottom: 1px solid @color;
+    border-right: 1px solid @color;
+
+    > li {
+      &[kf-tab-active] {
+        border: 1px solid @color;
+      }
+    }
+  }
+}
+
+.tabs {
+  > ul {
+    > li {
+      cursor: pointer;
+      white-space: nowrap;
+      background-color: white;
+      &[kf-tab-active] {
+        position: relative;
+      }
+    }
+  }
+}
+
+.define-kf-tab() {
+  .kf-tab {
+    .kf-tab-color(@gray);
+    .kf-tab-size(@vpad-md, @hpad-md, @fs-md, @br-md);
+  }
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-tab.kf-@{c} {
+      .kf-tab-color(@@c);
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    @br: extract(@brs, @i);
+    .kf-tab.kf-@{s} {
+      .kf-tab-size(@@vpad, @@hpad, @@fs, @@br);
+    }
+
+    .size(@i + 1);
+  }
+
+  .kf-tab:not(.kf-vertical) {
+    .kf-tab-direction(horizontal);
+  }
+  .kf-tab.kf-vertical {
+    .kf-tab-direction(vertical);
+  }
+
+  .color();
+  .size();
+}
+
+:global {
+  .define-kf-tab();
+}

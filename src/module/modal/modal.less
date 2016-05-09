@@ -1,0 +1,64 @@
+@import (reference) '../style/color';
+@import (reference) '../style/size';
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 2017;
+  visibility: hidden;
+  background-color: transparent;
+  overflow-y: auto;
+  transition: visibility .5s ease,
+              background-color .5s ease;
+
+  > .center {
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    opacity: 0;
+    transition: top .5s ease, opacity .5s ease;
+
+    > header {
+      border-bottom: 1px solid @gray;
+    }
+    > footer {
+      border-top: 1px solid @gray;
+    }
+  }
+
+  &.open {
+    visibility: visible;
+    background-color: rgba(0,0,0,.3);
+    > .center {
+      top: 10%;
+      opacity: 1;
+    }
+  }
+}
+
+:global {
+  .kf-modal {
+    > div {
+      border-radius: @br-lg;
+
+      > header,
+      > main,
+      > footer {
+        &:not(:empty) {
+          padding: @vpad-md @hpad-md;
+        }
+      }
+
+      > header {
+        &:not(:empty) {
+          padding: @vpad-lg @hpad-lg;
+        }
+      }
+    }
+  }
+}

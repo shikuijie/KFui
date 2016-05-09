@@ -1,0 +1,20 @@
+.kf-clearfix() {
+  &:before {
+    display: table;
+    content: " ";
+  }
+  &:after {
+    display: table;
+    content: " ";
+    clear: both;
+  }
+}
+
+.define-kf-clearfix() {
+  :global {
+    .kf-clearfix {
+      .kf-clearfix();
+    }
+  }
+}
+.define-kf-clearfix();

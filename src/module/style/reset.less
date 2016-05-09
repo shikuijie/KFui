@@ -1,0 +1,51 @@
+@import (reference) './color';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: @dark;
+  font-size: 14px;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input[type=submit],
+input[type=reset],
+input[type=button] {
+  appearance: button;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
+
+input[type=select],
+input[type=picker],
+input[type=ranger],
+input[type=text],
+input[type=url],
+input[type=email] {
+  background-color: transparent;
+  appearance: none;
+  font-size: inherit;
+  border: none;
+  padding: 0;
+  outline: none;
+  width: 100%;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  line-height: 1;
+}

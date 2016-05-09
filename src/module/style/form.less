@@ -1,0 +1,18 @@
+@import (reference) './color';
+
+:global {
+  .kf-form > .kf-control > * {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    &:first-child {
+      > .kf-asterisk {
+        margin-left: 2px;
+        color: @accent;
+      }
+    }
+    &:last-child {
+      position: relative;
+    }
+  }
+}

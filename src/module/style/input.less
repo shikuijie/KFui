@@ -1,0 +1,101 @@
+@import (reference) './color';
+@import (reference) './size';
+
+.define-kf-input() {
+  @colorLen: length(@colors);
+
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+
+    .kf-input.kf-@{c} {
+      border: 1px solid @@c;
+    }
+    .kf-input-group.kf-@{c} {
+      > * {
+        border: 1px solid @@c;
+      }
+      > .kf-addon {
+        background-color: @@c;
+        color: white;
+      }
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @br: extract(@brs, @i);
+    @fs: extract(@fss, @i);
+
+    .kf-input.kf-@{s} {
+      padding: @@vpad @@hpad;
+      font-size: @@fs;
+      border-radius: @@br;
+    }
+    .kf-input-group.kf-@{s} {
+      > * {
+        padding: @@vpad @@hpad;
+        font-size: @@fs;
+        border-radius: @@br;
+      }
+    }
+
+    .size(@i + 1);
+  }
+
+  :global {
+    .kf-input {
+      display: inline-block;
+
+      border: 1px solid @gray;
+      padding: @vpad-md @hpad-md;
+      font-size: @fs-md;
+      border-radius: @br-md;
+    }
+
+    .kf-input-group {
+      // display: table;
+      // table-layout: fixed;
+      display: flex;
+
+      > * {
+        // display: table-cell !important;
+        flex-grow: 1;
+        border: 1px solid @gray;
+        padding: @vpad-md @hpad-md;
+        font-size: @fs-md;
+        border-radius: @br-md;
+
+        &:not(:first-child) {
+          border-left: none !important;
+        }
+
+        &:first-child {
+          border-top-right-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
+        &:last-child {
+          border-top-left-radius: 0 !important;
+          border-bottom-left-radius: 0 !important;
+        }
+        &:not(:first-child):not(:last-child) {
+          border-radius: 0 !important;
+        }
+      }
+      > .kf-addon {
+        white-space: nowrap;
+        background-color: white;
+        flex-grow: 0;
+      }
+    }
+
+    .color();
+    .size();
+  }
+}
+
+.define-kf-input();

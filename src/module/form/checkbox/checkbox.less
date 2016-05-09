@@ -1,0 +1,153 @@
+@import (reference) '../../style/color';
+@import (reference) '../../style/size';
+
+.kf-checkbox-size(@vpad, @hpad, @size) {
+  margin: @vpad 0;
+  & > input {
+    width: @size;
+    height: @size;
+  }
+
+  & > i {
+    font-size: @size;
+  }
+
+  & > span {
+    font-size: @size + 2;
+  }
+
+  & > label {
+    font-size: @size;
+  }
+}
+.kf-checkbox-color(@color) {
+  & > input {
+    &:checked + i {
+      color: @color;
+    }
+  }
+
+  & > span {
+    color: @gray;
+  }
+}
+
+.checkbox {
+  display: inline-block;
+  position: relative;
+
+  > input[type=checkbox] {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  > .box {
+    background-color: white;
+  }
+
+  > .check {
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: color .2s linear;
+    color: transparent;
+  }
+
+  > label {
+    margin-left: 5px;
+  }
+}
+
+.kf-checkbox-group-size(@vpad, @hpad, @size) {
+  & > span {
+    .kf-checkbox-size(@vpad, @hpad, @size);
+    &:not(:last-child) {
+      margin-right: @hpad;
+    }
+  }
+}
+.kf-checkbox-group-color(@color) {
+  & > span {
+    .kf-checkbox-color(@color);
+  }
+}
+
+.ckbgrp {
+  display: inline-block;
+}
+
+.define-kf-checkbox() {
+  .kf-checkbox {
+    .kf-checkbox-color(@dark);
+    .kf-checkbox-size(@vpad-md, @hpad-md, @fs-md);
+  }
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-checkbox.kf-@{c} {
+      .kf-checkbox-color(@@c);
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    .kf-checkbox.kf-@{s} {
+      .kf-checkbox-size(@@vpad, @@hpad, @@fs);
+    }
+
+    .size(@i + 1);
+  }
+
+  .color();
+  .size();
+}
+
+.define-kf-checkbox-group() {
+  .kf-checkbox-group {
+    .kf-checkbox-group-color(@dark);
+    .kf-checkbox-group-size(@vpad-md, @hpad-md, @fs-md);
+  }
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+    .kf-checkbox-group.kf-@{c} {
+      .kf-checkbox-group-color(@@c);
+    }
+
+    .color(@i + 1);
+  }
+
+  @sizeLen: length(@sizes);
+  .size(@i: 1) when (@i <= @sizeLen) {
+    @s: extract(@sizes, @i);
+    @vpad: extract(@vpads, @i);
+    @hpad: extract(@hpads, @i);
+    @fs: extract(@fss, @i);
+    .kf-checkbox-group.kf-@{s} {
+      .kf-checkbox-group-size(@@vpad, @@hpad, @@fs);
+    }
+
+    .size(@i + 1);
+  }
+
+  .color();
+  .size();
+}
+
+:global {
+  .define-kf-checkbox();
+  .define-kf-checkbox-group();
+}

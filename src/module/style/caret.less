@@ -1,0 +1,46 @@
+.kf-tip-arrow(@dir, @color, @width) {
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+
+  .kf-tip-arrow-color(@dir, @color);
+  .kf-tip-arrow-size(@dir, @width);
+}
+
+.kf-tip-arrow() {
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.kf-tip-arrow-color(@dir, @color) {
+  & when (@dir = up) {
+    border-bottom-color: @color;
+  }
+  & when (@dir = right) {
+    border-left-color: @color;
+  }
+  & when (@dir = down) {
+    border-top-color: @color;
+  }
+  & when (@dir = left) {
+    border-right-color: @color;
+  }
+}
+
+.kf-tip-arrow-size(@dir, @width) {
+  & when (@dir = up) {
+    border-width: 0 @width @width;
+  }
+  & when (@dir = right) {
+    border-width: @width 0 @width @width;
+  }
+  & when (@dir = down) {
+    border-width: @width @width 0;
+  }
+  & when (@dir = left) {
+    border-width: @width @width @width 0;
+  }
+}

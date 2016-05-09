@@ -1,0 +1,49 @@
+@import (reference) './size';
+
+@columns: 12;
+
+.define-kf-grid() {
+  .kf-grid {
+    display: flex;
+
+    > * {
+      flex-grow: 1;
+      display: flex;
+      &.kf-left {
+        justify-content: flex-start;
+      }
+      &.kf-right {
+        justify-content: flex-end;
+      }
+      &.kf-hcenter {
+        justify-content: center;
+      }
+      &.kf-top {
+        align-items: flex-start;
+      }
+      &.kf-vcenter {
+        align-items: center;
+      }
+      &.kf-bottom {
+        align-items: flex-end;
+      }
+    }
+  }
+
+  .define-col(@num: 1) when (@num <= @columns) {
+    .percent(@den: @num + 1) when (@den <= @columns) {
+      .kf-grid > .kf-@{num}-@{den} {
+        flex: 0 0 percentage(@num/@den);
+      }
+      .percent(@den + 1);
+    }
+    .percent();
+
+    .define-col(@num + 1);
+  }
+  .define-col();
+}
+
+:global {
+  .define-kf-grid();
+}
