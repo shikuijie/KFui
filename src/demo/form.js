@@ -5,9 +5,10 @@ import '../module/form/radio/radio';
 import '../module/form/validate/validate';
 import '../module/form/file/file';
 import '../module/form/radio/radio';
+import './module/form/autoinput/autoinput';
 
 let form = {
-  currentRow: {name: '张双', email: '', address: '', date: '', start: '', end: '', department: '', skills: [], salary: '', agree: false},
+  currentRow: {name: '', email: '', address: '', date: '', start: '', end: '', department: '', skills: [], salary: '', agree: false},
   departCN: ['平台运营部', '技术研发部', '设计部'],
   departEN: ['platform', 'tech', 'design'],
   options: [],
@@ -20,13 +21,11 @@ let form = {
       form.currentRow[name] = val;
     }
   },
-  setoptions: function(name, val){
-    console.log('设置待选列表' + name + ';' + val);
+  setoptions: function(val){
     var self = this;
     setTimeout(function(val){
       self.options.push('张' + Math.round(Math.random()*100));
     }, 300);
-    return self.options;
   },
   validator: {
     name: {required: '请输入姓名字段!'},

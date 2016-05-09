@@ -17,6 +17,5 @@ export default {
       tip: tip
     };
     toaster.add(this, o);
-    console.log(this);
   }
 };

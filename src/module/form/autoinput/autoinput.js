@@ -83,7 +83,7 @@ vue.component('kf-autoinput', {
   },
   template:
     '<div>'+
-      '<input type="text" @input="change(name, value)" v-model="value" @keyup.stop.prevent="opreate($event)" autocomplete="off" :name="name" :required="required">'+
+      '<input type="text" @input="change(value)" v-model="value" @keyup.stop.prevent="opreate($event)" autocomplete="off" :name="name" :required="required">'+
       '<div :class="cls.bg" v-show="isShow()" @click="hide()"></div>'+
       '<ul :class="cls.list" v-show="isShow()">'+
         '<li v-for="item in items" track-by="$index" @click="choose($index)"><a href="javasript:;" :class="isActive($index)">{{item}}</a></li>'+

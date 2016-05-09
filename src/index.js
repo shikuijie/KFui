@@ -5,7 +5,6 @@ import './module/layout/layout';
 import './module/tab/tab';
 import './module/modal/modal';
 import './module/toaster/toaster';
-import './module/form/autoinput/autoinput';
 
 import './module/style/clearfix.css!';
 import './module/style/button.css!';
