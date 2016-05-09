@@ -33,6 +33,10 @@ let vm = {
       showError: function() {
         kfToaster.fail(this, '出错啦!');
       }
+    },
+    onAutoChange: function() {},
+    getAutoOptions: function() {
+      return [1, 2];
     }
   }
 };

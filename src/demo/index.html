@@ -211,9 +211,7 @@
             <div>
               <div class="kf-input-group kf-sm kf-primary">
                 <kf-select style="width: 100px" class="kf-addon" value="option1" :options="['option1', 'option2']"></kf-select>
-                <div class="kf-input">
-                  <input type="text">
-                </div>
+                <kf-autoinput :get-options="getAutoOptions"></kf-autoinput>
               </div>
             </div>
           </div>
