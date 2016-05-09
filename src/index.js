@@ -47,16 +47,6 @@ let vm = {
     },
     error: function(){
       toaster.showError('失败提示信息！');
-    },
-    onChange: function(val){
-      var self = this;
-      if(!val) return;
-      setTimeout(function(){
-        self.options.push(Math.round((Math.random()*100)));
-      }, 300);
-    },
-    getValue: function(val){
-      console.log('instant value = '+val);
     }
   }
 };

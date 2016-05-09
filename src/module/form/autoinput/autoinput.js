@@ -7,11 +7,26 @@ vue.component('kf-autoinput', {
   props: {
     onChange: {
       type: Function,
-      default: function(){}
-    },
-    getValue: {
-      type: Function,
-      default: function(){}
+      default: () => {}
+      /*
+        function(name, val, val1) {
+          console.log(name, val)
+          if(name == 'range') {
+            form.currentRow.start = val;
+            form.currentRow.end = val1;
+          } else if(name === 'name') {
+            var self = this;
+            if(!val) return;
+            setTimeout(function(){
+              self.options.push(Math.round((Math.random()*100)));
+            }, 300);
+            form.currentRow[name] = val;
+          else {
+            form.currentRow[name] = val;
+          }
+        }
+      }
+      */
     },
     value: {},
     name: String,
@@ -35,13 +50,11 @@ vue.component('kf-autoinput', {
   watch: {
     'options': function(n, o){
       this.items = this.options;
-    },
-    'value': function(n,o){
-      this.getValue(n);
     }
   },
   methods: {
     opreate: function(ev){
+      var self = this;
       switch (ev.keyCode) {
         case 38:
           if(this.activeIndex){
@@ -59,13 +72,16 @@ vue.component('kf-autoinput', {
           break;
         case 13:
           this.value = this.items[this.activeIndex];
+          this.onChange({name: self.name, value: self.value, getOpt: false});
           this.items = [];
           this.activeIndex = null;
           break;
       }
     },
     choose: function(index){
+      var self = this;
       this.value = this.items[index];
+      this.onChange({name: self.name, value: self.value, getOpt: false});
       this.items = [];
       this.activeIndex = null;
     },
@@ -79,9 +95,19 @@ vue.component('kf-autoinput', {
       this.items = [];
     }
   },
+  computed: {
+    valData: function(){
+      var self = this;
+      return {
+        name: self.name,
+        value: self.value,
+        getOpt: true
+      }
+    }
+  },
   template:
     '<div>'+
-      '<input type="text" @input="change(value)" v-model="value" @keyup.stop.prevent="opreate($event)" autocomplete="off" :name="name" :required="required">'+
+      '<input type="text" @input="change(valData)" v-model="value" @keyup.stop.prevent="opreate($event)" autocomplete="off" :name="name" :required="required">'+
       '<div :class="cls.bg" v-show="isShow()" @click="hide()"></div>'+
       '<ul :class="cls.list" v-show="isShow()">'+
         '<li v-for="item in items" track-by="$index" @click="choose($index)"><a href="javasript:;" :class="isActive($index)">{{item}}</a></li>'+
