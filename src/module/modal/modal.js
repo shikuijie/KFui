@@ -4,9 +4,8 @@ import './modal.css!';
 
 vue.component('kf-modal', {
   props: {
-    open: {
-      type: Boolean,
-      twoWay: true,
+    modal: {
+      type: Object,
       required: true
     },
     bgclose: {
@@ -15,9 +14,15 @@ vue.component('kf-modal', {
     }
   },
   data: function() {
+    vue.set(this.modal, '__OPEN', false);
     return {
       cls: cls
     };
+  },
+  computed: {
+    open: function() {
+      return this.modal.__OPEN;
+    }
   },
   methods: {
     getCls: function() {
@@ -28,7 +33,7 @@ vue.component('kf-modal', {
     },
     close: function() {
       if(this.bgclose) {
-        this.open = false;
+        this.modal.__OPEN = false;
       }
     }
   },
@@ -41,3 +46,12 @@ vue.component('kf-modal', {
       '</div>' +
     '</section>'
 });
+
+export default {
+  open: function(modal) {
+    modal.__OPEN = true;
+  },
+  close: function(modal) {
+    modal.__OPEN = false;
+  }
+};

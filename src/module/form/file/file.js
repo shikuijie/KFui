@@ -3,15 +3,11 @@ import _ from 'lodash';
 import './file.css!';
 import cls from './file.css.map';
 
-function blur(elem) {
-  let event = new FocusEvent('blur');
-  elem.dispatchEvent(event);
-}
-
 vue.component('kf-file', {
   props: {
-    model: {
-      twoWay: true
+    onChange: {
+      type: Function,
+      default: () => {}
     },
     onSuccess: {
       type: Function,
@@ -23,7 +19,7 @@ vue.component('kf-file', {
     },
     validate: {
       type: Function,
-      default: () => {return '文件太大';}
+      default: (f) => {}
     },
     url: String,
     appendum: {
@@ -58,27 +54,7 @@ vue.component('kf-file', {
       type: Object,
       default: function() {
         return {bottom: true, left: true};
-      },
-      coerce: function(val) {
-        if((val.bottom && val.top) || (!val.bottom && !val.top)) {
-          val.bottom = true;
-          val.top = false;
-        }
-        if((val.left && val.right) || (!val.left && !val.right)) {
-          val.left = true;
-          val.right = false;
-        }
-
-        return val;
       }
-    }
-  },
-  ready: function() {
-    this.input = this.$el.querySelector('input');
-  },
-  watch: {
-    model: function() {
-      blur(this.input);
     }
   },
   data: function() {
@@ -93,23 +69,42 @@ vue.component('kf-file', {
   ready: function() {
     this.input = this.$el.querySelector('input');
   },
+  computed: {
+    flipObj: function() {
+      let val = this.flip;
+      if((val.bottom && val.top) || (!val.bottom && !val.top)) {
+        val.bottom = true;
+        val.top = false;
+      }
+      if((val.left && val.right) || (!val.left && !val.right)) {
+        val.left = true;
+        val.right = false;
+      }
+
+      return val;
+    }
+  },
   methods: {
     change: function(event) {
+      _.forEach(this.files, function(file) {
+        if(file.doing) {
+          file.xhr.abort();
+        }
+      });
       processFiles(this, event.target.files);
     },
     getListCls: function() {
       let res = {};
       res[cls.visible] = this.listVisible && this.files.length;
-      res[cls.left] = this.flip.left;
-      res[cls.top] = this.flip.top;
-      res[cls.bottom] = this.flip.bottom;
-      res[cls.right] = this.flip.right;
+      res[cls.left] = this.flipObj.left;
+      res[cls.top] = this.flipObj.top;
+      res[cls.bottom] = this.flipObj.bottom;
+      res[cls.right] = this.flipObj.right;
       return res;
     },
     getProgCls: function(f) {
       let res = {};
       res[cls.error] = f.error;
-      res[cls.abort] = f.abort;
       return res;
     },
     dragEnter: function(event) {
@@ -126,11 +121,6 @@ vue.component('kf-file', {
       this.dragging = false;
 
       processFiles(this, event.dataTransfer.files);
-    },
-    abort: function(f) {
-      f.xhr.abort();
-      f.abort = true;
-      f.doing = false;
     }
   },
   template:
@@ -149,10 +139,10 @@ vue.component('kf-file', {
         '<li v-for="f in files">' +
           '<div>' +
             '<span v-text="f.name"></span>' +
-            '<span v-text="f.size"></span>' +
+            '<span v-text="f.errorInfo || f.size"></span>' +
             '<span>' +
               '<i class="fa fa-check-circle" v-show="f.done"></i>' +
-              '<i class="fa fa-times-circle" v-show="f.doing" @click="abort(f)"></i>' +
+              '<i class="fa fa-spin fa-spinner" v-show="f.doing"></i>' +
               '<i class="fa fa-exclamation-circle" :class="cls.error" v-show="f.error"></i>' +
             '</span>' +
           '</div>' +
@@ -228,8 +218,8 @@ function processFiles(self, fileList) {
       progress: 0,
       doing: false,
       done: false,
-      error: error,
-      abort: false
+      error: !!error,
+      errorInfo: error
     };
   });
   if(!files.length) return;
@@ -241,10 +231,9 @@ function processFiles(self, fileList) {
   if(hasError) {
     return;
   }
-
-  if(!_.isUndefined(self.model)) {
-    self.model = self.multiple ? files : files[0];
-  }
+  self.onChange(self.name && self.name || fileList, self.name && fileList);
+  self.input.__NOERR = true;
+  self.input.__BUS && self.input.__BUS.$emit('kf.form.change', self.input, fileList);
 
   if(self.preview) {
     _.forEach(files, function(f) {

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<style>
+[v-cloak] {
+  display: none;
+}
+</style>
+<body v-cloak>
+    <kf-tab class="kf-lg kf-primary kf-vertical">
+      <kf-tab-item label="表格">
+        <div style="margin: 10px">
+          <div class="kf-grid" style="margin-bottom: 10px">
+            <h3 class="kf-3-10 kf-bottom">单行表格</h3>
+            <div class="kf-7-10 kf-right kf-btn-group">
+              <button class="kf-btn" @click="stable.prependRow()">前插</button>
+              <button class="kf-btn" @click="stable.appendRow()">后插</button>
+              <button class="kf-btn" @click="stable.iterateRows()">遍历</button>
+            </div>
+          </div>
+          <kf-stable class="kf-border" :table="stable" :col-keys="stable.colKeys"></kf-stable>
+          <kf-pager style="margin-top: 10px" :page-entries="[20,50,100]" :total-entries="1000" :current-page="3" :visible-pages="8"></kf-pager>
+        </div>
+
+        <div style="margin: 10px">
+          <div class="kf-grid" style="margin-bottom: 10px">
+            <h3 class="kf-3-10 kf-bottom">多行表格</h3>
+            <div class="kf-7-10 kf-right kf-btn-group kf-accent">
+              <button class="kf-btn" @click="mtable.prependRow()">前插</button>
+              <button class="kf-btn" @click="mtable.appendRow()">后插</button>
+              <button class="kf-btn" @click="mtable.iterateRows()">遍历</button>
+            </div>
+          </div>
+          <kf-mtable class="kf-border" :table="mtable" :col-keys="mtable.colKeys"></kf-mtable>
+          <kf-pager class="kf-accent" style="margin-top: 10px" :page-entries="[20,50,100]" :total-entries="1000" :current-page="3" :visible-pages="8"></kf-pager>
+        </div>
+
+        <div style="margin: 10px">
+          <div class="kf-grid" style="margin-bottom: 10px">
+            <h3 class="kf-3-10 kf-bottom">树行表格</h3>
+            <div class="kf-7-10 kf-right kf-btn-group kf-primary">
+              <button class="kf-btn" @click="ttable.prependRow()">前插</button>
+              <button class="kf-btn" @click="ttable.appendRow()">后插</button>
+              <button class="kf-btn" @click="ttable.iterateRows()">遍历</button>
+            </div>
+          </div>
+          <kf-ttable class="kf-border" :table="ttable" :col-keys="ttable.colKeys"></kf-ttable>
+          <kf-pager class="kf-primary" style="margin-top: 10px" :page-entries="[20,50,100]" :total-entries="1000" :current-page="3" :visible-pages="8"></kf-pager>
+        </div>
+      </kf-tab-item>
+      <kf-tab-item label="表单">
+        <style>
+          .kf-form {
+            margin: 20px auto;
+            width: 500px;
+            border: 1px solid #ecf0f1;
+            border-radius: 8px;
+            padding: 10px;
+          }
+        </style>
+        <form novalidate v-kf-form="form" class="kf-form">
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">姓名<span class="kf-asterisk">*</span></label>
+            <div class="kf-7-10 kf-input">
+              <input type="text" name="name" required>
+            </div>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">日期</label>
+            <kf-date-picker class="kf-7-10" name="date"></kf-date-picker>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">起始日期<span class="kf-asterisk">*</span></label>
+            <kf-date-ranger class="kf-7-10" name="range"></kf-date-ranger>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">部门<span class="kf-asterisk">*</span></label>
+            <kf-select class="kf-7-10" name="department" :required="true" :options="form.departEN" :labels="form.departCN"></kf-select>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">邮箱<span class="kf-asterisk">*</span></label>
+            <div class="kf-input kf-7-10">
+              <input type="email" required name="email">
+            </div>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">地址<span class="kf-asterisk">*</span></label>
+            <div class="kf-input kf-7-10">
+              <input type="text" required name="address">
+            </div>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">技能</label>
+            <kf-checkbox-group class="kf-7-10 kf-left" name="skills" :options="['c++', 'js', 'css']" :required="true"></kf-checkbox-group>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">薪资</label>
+            <kf-radio-group class="kf-7-10 kf-left" name="salary" :required="true" :options="['8k', '12k', '15k']" :required="true"></kf-radio-group>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10">头像</label>
+            <div class="kf-left kf-5-10">
+              <kf-file url="upload.json" accept=".jpg" :required="true" name="file" :preview="form.preview" :multiple="true"></kf-file>
+            </div>
+            <div class="kf-2-10">
+              <img style="position: absolute; bottom: 0;" width="100%" :src="form.photoURL" alt="">
+            </div>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10"></label>
+            <kf-checkbox class="kf-7-10 kf-left" option="ok" name="agree" :required="true" label="同意"></kf-checkbox>
+          </div>
+
+          <div class="kf-control kf-grid">
+            <label class="kf-3-10"></label>
+            <div class="kf-7-10 kf-right kf-btn-group kf-primary">
+              <input type="submit" class="kf-btn" @click.prevent="form.confirm($event)" value="确定">
+              <input type="reset" class="kf-btn" @click.prevent value="取消">
+            </div>
+          </div>
+        </form>
+      </kf-tab-item>
+      <kf-tab-item label="树">
+        <kf-tree :tree="tree" style="margin-left: 10px;" :draggable="true"></kf-tree>
+      </kf-tab-item>
+      <kf-tab-item label="杂项">
+        <style>
+          .kf-margin-5 {
+            margin-bottom: 5px;
+          }
+        </style>
+        <div class="kf-grid kf-margin-5" style="height: 50px;">
+          <div class="kf-1-2 kf-hcenter kf-vcenter" style="background-color: #ccc">kf-1-2</div>
+          <div class="kf-1-2 kf-hcenter kf-vcenter" style="background-color: #aaa">kf-1-2</div>
+        </div>
+        <div class="kf-grid kf-margin-5" style="height: 50px">
+          <div class="kf-1-3 kf-hcenter kf-vcenter" style="background-color: #ccc">kf-1-3</div>
+          <div class="kf-1-3 kf-hcenter kf-vcenter" style="background-color: #aaa">kf-1-3</div>
+          <div class="kf-1-3 kf-hcenter kf-vcenter" style="background-color: #888">kf-1-3</div>
+        </div>
+        <div class="kf-grid kf-margin-5" style="height: 50px">
+          <div class="kf-1-12 kf-hcenter kf-vcenter" style="background-color: #ccc">kf-1-12</div>
+          <div class="kf-2-12 kf-left kf-bottom" style="background-color: #aaa">kf-2-12</div>
+          <div class="kf-3-12 kf-right kf-top" style="background-color: #888">kf-3-12</div>
+          <div class="kf-6-12 kf-hcenter kf-bottom" style="background-color: #666">kf-6-12</div>
+        </div>
+        <div class="kf-grid kf-margin-5">
+          <div class="kf-1-3">
+            <button class="kf-btn kf-primary" @click="modal.open()">打开弹窗</button>
+            <kf-modal :modal="modal" :bgclose="true">
+              <div slot="body" style="padding: 10px 20px; color: red">
+                警告！网络错误，请告知网络管理员
+
+                <div style="margin-top: 30px; text-align: right">
+                  <button class="kf-btn kf-accent" @click="modal.close()">确定</button>
+                </div>
+              </div>
+            </kf-modal>
+          </div>
+          <div class="kf-1-3">
+            <div class="kf-btn-group kf-primary kf-lg">
+              <button class="kf-btn">确定</button>
+              <button class="kf-btn">取消</button>
+              <a class="kf-btn">重置</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="kf-grid kf-margin-5">
+          <div class="kf-1-3 kf-input-group kf-lg kf-primary">
+            <div class="kf-input">
+              <input type="text">
+            </div>
+            <label class="kf-addon"><i class="fa fa-search"></i></label>
+          </div>
+          <div class="kf-1-3 kf-input-group kf-lg kf-dark">
+            <kf-date-picker></kf-date-picker>
+            <label class="kf-addon"><i class="fa fa-calendar"></i></label>
+          </div>
+          <div class="kf-1-3 kf-input-group kf-lg kf-accent">
+            <kf-date-ranger></kf-date-ranger>
+            <label class="kf-addon"><i class="fa fa-bars"></i></label>
+          </div>
+        </div>
+
+        <div class="kf-grid kf-margin-5">
+          <div class="kf-1-3">
+            <div>
+              <div class="kf-input-group kf-lg kf-primary">
+                <kf-select :options="['option1', 'option2']"></kf-select>
+                <label class="kf-addon"><i class="fa fa-bars"></i></label>
+              </div>
+            </div>
+          </div>
+          <div class="kf-1-3">
+            <div>
+              <div class="kf-input-group kf-sm kf-primary">
+                <kf-select style="width: 100px" class="kf-addon" value="option1" :options="['option1', 'option2']"></kf-select>
+                <div class="kf-input">
+                  <input type="text">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </kf-tab-item>
+    </kf-tab>
+    <br>
+  </div>
+
+  <script src="../../jspm_packages/system.js"></script>
+  <script src="../../jspm.config.js"></script>
+  <script>
+    System.import('./index.js');
+  </script>
+</body>
+</html>

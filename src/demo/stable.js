@@ -1,5 +1,4 @@
-import kfTable from '../module/table/table';
-import '../module/form/checkbox/checkbox';
+import {table} from 'kfui';
 
 function getAction(func, label) {
   return '<button class="kf-btn kf-xs" @click="TABLE.' + func + '(ROW)">' + label + '</button>';
@@ -15,11 +14,11 @@ function getCheckbox(head, label) {
 let stable = {
   checked: false,
   onReady: function() {
-    kfTable.setHead(this, this.thead);
-    kfTable.setBody(this, this.tbody);
+    table.setHead(this, this.thead);
+    table.setBody(this, this.tbody);
   },
   checkAll: function(val) {
-    kfTable.iterate(stable, function(row) {
+    table.iterate(stable, function(row) {
       row.checked = val;
     });
   },
@@ -32,18 +31,18 @@ let stable = {
     };
   },
   appendRow: function() {
-    kfTable.appendRow(this, this.sampleRow('remove', '删除'));
+    table.appendRow(this, this.sampleRow('remove', '删除'));
   },
   iterateRows: function() {
-    kfTable.iterate(this, function(row) {
+    table.iterate(this, function(row) {
       console.log(row.name, row.email)
     });
   },
   prependRow: function() {
-    kfTable.prependRow(this, this.sampleRow('remove', '删除'));
+    table.prependRow(this, this.sampleRow('remove', '删除'));
   },
   remove: function(row) {
-    kfTable.deleteRow(row);
+    table.deleteRow(row);
   },
   edit: function(row) {
     alert('可以在此打开一个弹窗来编辑内容');

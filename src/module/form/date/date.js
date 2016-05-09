@@ -1,13 +1,8 @@
 import vue from 'vue';
 import _ from 'lodash';
-import '../../rotator/rotator';
+import './rotator';
 import './date.css!';
 import cls from './date.css.map';
-
-function blur(elem) {
-  let event = new FocusEvent('blur');
-  elem.dispatchEvent(event);
-}
 
 let datime = vue.extend({
   props: ['moment', 'hasSec', 'hasTime', 'name', 'min', 'max'],
@@ -27,7 +22,7 @@ let datime = vue.extend({
 
     return {
       cls: cls,
-      date: this.day || now.getDate(),
+      date: now.getDate(),
       monthObj: {
         els: months,
         idx: 0,
@@ -144,7 +139,8 @@ let datime = vue.extend({
     chooseDate: function(d) {
       if(!d.valid) return;
       this.date = d.value;
-      this.$dispatch('kf-datime-selected', {
+
+      this.$parent.$emit('kf.datime.selected', {
         name: this.name,
         date: new Date(
           this.yearObj.els[this.yearObj.idx],
@@ -153,8 +149,7 @@ let datime = vue.extend({
           this.hourObj.els[this.hourObj.idx],
           this.minuteObj.els[this.minuteObj.idx],
           this.secondObj.els[this.secondObj.idx])
-        }
-      );
+      });
     },
     inRange: function(d) {
       if(!this.min || !this.max) return false;
@@ -181,9 +176,9 @@ let datime = vue.extend({
       return min < el && el < max;
     }
   },
-  events: {
-    'kf-datime-ask': function() {
-      this.$dispatch('kf-datime-answer', {
+  ready: function() {
+    this.$on('kf.datime.ask', function() {
+      let answer = {
         name: this.name,
         date: new Date(
           this.yearObj.els[this.yearObj.idx],
@@ -192,12 +187,16 @@ let datime = vue.extend({
           this.hourObj.els[this.hourObj.idx],
           this.minuteObj.els[this.minuteObj.idx],
           this.secondObj.els[this.secondObj.idx])
-        }
-      );
-    }
+      };
+      this.$parent.$emit('kf.datime.answer', answer);
+    });
+    this.$parent.$emit('kf.datime.register', this);
+  },
+  destroyed: function() {
+    this.$off('kf.datime.ask');
   },
   template:
-    '<div :class="cls.datime">' +
+    '<section :class="cls.datime">' +
       '<div :class="cls.date">' +
         '<span :class="cls.title">' +
           '<i @click.stop="prevMonth()"></i>' +
@@ -281,20 +280,16 @@ let datime = vue.extend({
           '</tr>' +
         '</tbody>' +
       '</table>' +
-    '</div>'
+    '</section>'
 });
 
 vue.component('kf-date-picker', {
   props: {
     onChange: {
       type: Function,
-      default: (val) => {}
+      default: () => {}
     },
-    moment: {
-      twoWay: true,
-      type: String,
-      required: true
-    },
+    value: String,
     name: String,
     required: {
       type: Boolean,
@@ -304,18 +299,6 @@ vue.component('kf-date-picker', {
       type: Object,
       default: function() {
         return {bottom: true, left: true};
-      },
-      coerce: function(val) {
-        if((val.bottom && val.top) || (!val.bottom && !val.top)) {
-          val.bottom = true;
-          val.top = false;
-        }
-        if((val.left && val.right) || (!val.left && !val.right)) {
-          val.left = true;
-          val.right = false;
-        }
-
-        return val;
       }
     },
     hasTime: {
@@ -333,30 +316,34 @@ vue.component('kf-date-picker', {
       visible: false
     };
   },
-  ready: function() {
-    this.input = this.$el.querySelector('input');
-  },
   computed: {
+    flipObj: function() {
+      let val = this.flip;
+      if((val.bottom && val.top) || (!val.bottom && !val.top)) {
+        val.bottom = true;
+        val.top = false;
+      }
+      if((val.left && val.right) || (!val.left && !val.right)) {
+        val.left = true;
+        val.right = false;
+      }
+
+      return val;
+    },
     datimeCls: function() {
       let res = {};
       res[cls.visible] = this.visible;
-      res[cls.left] = this.flip.left;
-      res[cls.right] = this.flip.right;
-      res[cls.top] = this.flip.top;
+      res[cls.left] = this.flipObj.left;
+      res[cls.right] = this.flipObj.right;
+      res[cls.top] = this.flipObj.top;
       res[cls.bottom] = this.flip.bottom;
 
       return res;
     }
   },
-  watch: {
-    moment: function(val) {
-      this.onChange(val);
-      this.name && blur(this.input);
-    }
-  },
   methods: {
     clear: function() {
-      this.moment = '';
+      this.value = '';
     },
     hide: function() {
       this.visible = false;
@@ -365,17 +352,27 @@ vue.component('kf-date-picker', {
   components: {
     'kf-datime': datime
   },
-  events: {
-    'kf-datime-selected': function(data) {
-      this.moment = formatDate(data.date, this.hasTime, this.hasSec);
-      this.visible = false;
+  watch: {
+    value: function(val) {
+      this.onChange(this.name && this.name || val, this.name && val);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
+  },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+    this.$on('kf.datime.selected', function(data) {
+      this.value = formatDate(data.date, this.hasTime, this.hasSec);
+      this.visible = false;
+    });
+  },
+  destroyed: function() {
+    this.$el.$off('kf.datime.selected');
   },
   template:
     '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="visible = true">' +
-      '<input autocomplete="off" type="text" :name="name" :value="moment" :required="required"/>' +
+      '<input autocomplete="off" type="picker" :name="name" :value="value" :required="required"/>' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
-      '<kf-datime kf-datime :class="datimeCls" :moment="moment" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
+      '<kf-datime kf-datime :class="datimeCls" :moment="value" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
       '<i class="fa fa-times" @click.stop="clear()"></i>' +
     '</div>'
 });
@@ -386,16 +383,8 @@ vue.component('kf-date-ranger', {
       type: Function,
       default: () => {}
     },
-    start: {
-      twoWay: true,
-      type: String,
-      required: true
-    },
-    end: {
-      twoWay: true,
-      type: String,
-      required: true
-    },
+    start: String,
+    end: String,
     name: String,
     required: {
       type: Boolean,
@@ -405,18 +394,6 @@ vue.component('kf-date-ranger', {
       type: Object,
       default: function() {
         return {bottom: true, left: true};
-      },
-      coerce: function(val) {
-        if((val.bottom && val.top) || (!val.bottom && !val.top)) {
-          val.bottom = true;
-          val.top = false;
-        }
-        if((val.left && val.right) || (!val.left && !val.right)) {
-          val.left = true;
-          val.right = false;
-        }
-
-        return val;
       }
     },
     hasTime: {
@@ -433,28 +410,31 @@ vue.component('kf-date-ranger', {
       cls: cls,
       visible: false,
       range: {start: '', end: ''},
-      rangeStr: '',
       rangerr: ''
     };
   },
-  ready: function() {
-    this.input = this.$el.querySelector('input');
-  },
-  watch: {
-    '[start, end]': function(val) {
-      this.onChange(val[0], val[1]);
-      this.name && blur(this.input);
-    }
-  },
   computed: {
-    rangeCls: function() {
+    flipObj: function() {
+      let val = this.flip;
+      if((val.bottom && val.top) || (!val.bottom && !val.top)) {
+        val.bottom = true;
+        val.top = false;
+      }
+      if((val.left && val.right) || (!val.left && !val.right)) {
+        val.left = true;
+        val.right = false;
+      }
+
+      return val;
+    },
+    dropCls: function() {
       let res = {};
       res[cls.visible] = this.visible;
-      res[cls.left] = this.flip.left;
-      res[cls.right] = this.flip.right;
-      res[cls.top] = this.flip.top;
-      res[cls.bottom] = this.flip.bottom;
-      res[cls.range] = true;
+      res[cls.left] = this.flipObj.left;
+      res[cls.right] = this.flipObj.right;
+      res[cls.top] = this.flipObj.top;
+      res[cls.bottom] = this.flipObj.bottom;
+      res[cls.drop] = true;
 
       return res;
     },
@@ -469,7 +449,9 @@ vue.component('kf-date-ranger', {
       this.rangeStr = '';
     },
     chooseRange: function() {
-      this.$broadcast('kf-datime-ask');
+      _.forEach(this.datimes, function(datime) {
+        datime.$emit('kf.datime.ask');
+      });
     },
     hide: function() {
       this.visible = false;
@@ -478,9 +460,33 @@ vue.component('kf-date-ranger', {
   components: {
     'kf-datime': datime
   },
-  events: {
-    'kf-datime-answer': function(data) {
+  watch: {
+    '[start, end]': function(val, oval) {
+      this.onChange(this.name && this.name || val[0], this.name && val[0] || val[1], this.name && val[1]);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
+    }
+  },
+  created: function() {
+    this.$on('kf.datime.register', function(datime) {
+      this.datimes = this.datimes || [];
+      this.datimes.push(datime);
+    });
+  },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+    this.$on('kf.datime.selected', function(data) {
       this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
+    });
+
+    let count = 0;
+    this.$on('kf.datime.answer', function(data) {
+      count++;
+      this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
+      if(count < 2) {
+        return;
+      } else {
+        count = 0;
+      }
 
       if(this.range.start > this.range.end) {
         this.rangerr = '结束时间不能在开始时间之前';
@@ -492,21 +498,25 @@ vue.component('kf-date-ranger', {
 
       this.rangerr = '';
       this.visible = false;
-    },
-    'kf-datime-selected': function(data) {
-      this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
-    },
+    });
+  },
+  destroyed: function() {
+    this.$off('kf.datime.register');
+    this.$off('kf.datime.selected');
+    this.$off('kf.datime.answer');
   },
   template:
     '<div :class="cls.dtranger" class="kf-date-ranger" @click.stop="visible = true">' +
-      '<input autocomplete="off" type="text" :name="name" :required="required" :value="rangeStr"/>' +
+      '<input autocomplete="off" type="ranger" :name="name" :required="required" :value="rangeStr"/>' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
-      '<div :class="rangeCls">' +
-        '<kf-datime kf-datime name="start" :moment="start" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
-        '<kf-datime kf-datime name="end" :moment="end" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
+      '<div :class="dropCls">' +
+        '<div :class="cls.range">' +
+          '<kf-datime kf-datime name="start" :moment="start" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
+          '<kf-datime kf-datime name="end" :moment="end" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
+        '</div>' +
         '<div :class="cls.confirm">' +
           '<span v-show="rangerr" v-text="rangerr"></span>' +
-          '<button @click.prevent.stop="chooseRange()">确定</button>' +
+          '<a @click.prevent.stop="chooseRange()">确定</a>' +
         '</div>' +
       '</div>' +
       '<i class="fa fa-times" @click.stop="clear()"></i>' +

@@ -2,22 +2,8 @@ import _ from 'lodash';
 import vue from 'vue';
 import '../../code/code';
 import cls from './checkbox.css.map';
-import 'font-awesome';
 import './checkbox.css!';
 
-function blur(elem) {
-  let event = new FocusEvent('blur');
-  elem.dispatchEvent(event);
-}
-
-/**
-  @kf-comment-type  {VUE component}
-  @kf-comment-name  {kf-checkbox}
-  @kf-comment-how   {<kf-checkbox label="A" :model.sync="mdl" :value="val"></kf-checkbox>}
-  @kf-comment-what  {label为跟在checkbox后面的标签;
-                       当勾选checkbox时,将value赋值给model;
-                       当取消勾选时,model的值为其原来的值}
-*/
 vue.component('kf-checkbox', {
   props: {
     onChange: {
@@ -25,51 +11,40 @@ vue.component('kf-checkbox', {
       default: () => {}
     },
     label: String,
-    value: {
+    option: {
       type: null,
       default: true
     },
-    model: {
-      twoWay: true,
-      required: true
-    },
+    value: null,
     name: String,
     required: {
       type: Boolean,
       default: false
     }
   },
-  ready: function() {
-    this.input = this.$el.querySelector('input');
-  },
   data: function() {
     return {
       cls: cls
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   watch: {
-    model: function(val) {
-      this.onChange(val);
-      this.name && blur(this.input);
+    value: function(val) {
+      this.onChange(this.name && this.name || val, this.name && val);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
   template:
     '<span :class="cls.checkbox" class="kf-checkbox">' +
-      '<input :name="name" :required="required" type="checkbox" v-model="model" :true-value="value" :false-value="false"/>' +
+      '<input :name="name" :required="required" type="checkbox" v-model="value" :true-value="option" :false-value="false"/>' +
       '<i class="fa fa-check" :class="cls.check"></i>' +
       '<span class="fa fa-square-o" :class="cls.box"></span>' +
       '<label v-text="label"></label>' +
     '</span>'
 });
 
-/**
-  @kf-comment-type  {VUE component}
-  @kf-comment-name  {kf-checkbox-group}
-  @kf-comment-how   {<kf-checkbox-group :labels="['slfslk', 'sldfe']" :model.sync="mdl" :values="[123, 345]"></kf-checkbox-group>}
-  @kf-comment-what  {labels为跟在对应checkbox后面的标签;
-                      当勾选一个checkbox时,values对应的值会被push到model中;
-                      当取消勾选时,对应的值会被splice掉}
-*/
 vue.component('kf-checkbox-group', {
   props: {
     onChange: {
@@ -82,39 +57,40 @@ vue.component('kf-checkbox-group', {
         return [];
       }
     },
-    values: {
+    options: {
       type: Array,
       required: true
     },
-    model: {
+    value: {
       type: Array,
-      twoWay: true,
-      required: true
+      default: function() {
+        return [];
+      }
     },
     name: String
-  },
-  ready: function() {
-    this.inputs = this.$el.querySelectorAll('input');
   },
   data: function() {
     return {
       cls: cls,
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   watch: {
-    model: function(val) {
-      let input = this.inputs[0];
-      this.onChange(val);
-      this.name && blur(input);
+    value: function(val) {
+      let value = [].slice.apply(val);
+      this.onChange(this.name && this.name || value, this.name && value);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, value);
     }
   },
   template:
     '<span :class="cls.ckbgrp" class="kf-checkbox-group">' +
-      '<span :class="cls.checkbox" v-for="value in values">' +
-        '<input :name="name" type="checkbox" v-model="model" :value="value"/>' +
+      '<span :class="cls.checkbox" v-for="option in options">' +
+        '<input :name="name" type="checkbox" v-model="value" :value="option"/>' +
         '<i class="fa fa-check" :class="cls.check"></i>' +
         '<span class="fa fa-square-o" :class="cls.box"></span>' +
-        '<label v-text="labels[$index] || value"></label>' +
+        '<label v-text="labels[$index] || option"></label>' +
       '</span>' +
     '</span>'
 });

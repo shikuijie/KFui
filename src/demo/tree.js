@@ -1,6 +1,6 @@
-import kfTree from '../module/tree/tree';
+import {tree} from 'kfui';
 
-let tree = {
+let treeData = {
   onDrop: function(src, target) {
     console.log('drag ' + src.node + ' to ' + target.node);
   },
@@ -29,4 +29,4 @@ let tree = {
   }]
 };
 
-export default tree;
+export default treeData;

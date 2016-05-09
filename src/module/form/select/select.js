@@ -3,25 +3,18 @@ import '../../code/code';
 import cls from './select.css.map';
 import './select.css!';
 
-function blur(elem) {
-  let event = new FocusEvent('blur');
-  elem.dispatchEvent(event);
-}
-
 vue.component('kf-select', {
   props: {
-    model: {
-      type: null,
-      twoWay: true,
-      required: true
-    },
-    values: {
+    value: {},
+    options: {
       type: Array,
       required: true
     },
     labels: {
       type: Array,
-      required: true
+      default: function() {
+        return [];
+      }
     },
     name: String,
     required: {
@@ -36,23 +29,8 @@ vue.component('kf-select', {
       type: Object,
       default: function() {
         return {bottom: true, left: true};
-      },
-      coerce: function(val) {
-        if((val.bottom && val.top) || (!val.bottom && !val.top)) {
-          val.bottom = true;
-          val.top = false;
-        }
-        if((val.left && val.right) || (!val.left && !val.right)) {
-          val.left = true;
-          val.right = false;
-        }
-
-        return val;
       }
     },
-  },
-  ready: function() {
-    this.input = this.$el.querySelector('input');
   },
   data: function() {
     return {
@@ -60,32 +38,48 @@ vue.component('kf-select', {
       visible: false
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   watch: {
-    model: function(val) {
-      this.onChange(val);
-      this.name && blur(this.input);
+    value: function(val) {
+      this.onChange(this.name && this.name || val, this.name && val);
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
   computed: {
+    flipObj: function() {
+      let val = this.flip;
+      if((val.bottom && val.top) || (!val.bottom && !val.top)) {
+        val.bottom = true;
+        val.top = false;
+      }
+      if((val.left && val.right) || (!val.left && !val.right)) {
+        val.left = true;
+        val.right = false;
+      }
+
+      return val;
+    },
     selectedIndex: function() {
-      return this.values.indexOf(this.model);
+      return this.options.indexOf(this.value);
     },
     selectedLabel: function() {
-      return this.labels[this.selectedIndex];
+      return this.labels[this.selectedIndex] || this.options[this.selectedIndex];
     }
   },
   methods: {
     select: function(index) {
-      this.model = this.values[index];
+      this.value = this.options[index];
       this.visible = false;
     },
     getOptionsCls: function() {
       let res = {};
       res[cls.visible] = this.visible;
-      res[cls.left] = this.flip.left;
-      res[cls.top] = this.flip.top;
-      res[cls.bottom] = this.flip.bottom;
-      res[cls.right] = this.flip.right;
+      res[cls.left] = this.flipObj.left;
+      res[cls.top] = this.flipObj.top;
+      res[cls.bottom] = this.flipObj.bottom;
+      res[cls.right] = this.flipObj.right;
       return res;
     },
     hide: function() {
@@ -94,14 +88,14 @@ vue.component('kf-select', {
   },
   template:
     '<div :class="cls.select" class="kf-select" @click="visible = true">' +
-      '<input type="text" autocomplete="off" :name="name" :required="required" :value="selectedLabel">' +
+      '<input type="select" autocomplete="off" :name="name" :required="required" :value="selectedLabel">' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<i></i>' +
       '<ul :class="getOptionsCls()">' +
-        '<li v-for="label in labels" ' +
+        '<li v-for="option in options" ' +
             ':kf-selected="selectedIndex == $index" ' +
             '@click.stop="select($index)">' +
-          '<div v-text="label"></div>' +
+          '<div v-text="labels[$index] || option"></div>' +
         '</li>' +
       '</ul>' +
     '</div>'

@@ -50,7 +50,6 @@
     vertical-align: middle;
     text-align: center;
     white-space: nowrap;
-    line-height: 1;
 
     border: 1px solid @gray;
     border-radius: @br-md;
@@ -66,8 +65,9 @@
   }
 
   .kf-btn-group {
-    display: inline-block;
+    display: flex;
     > .kf-btn {
+      flex-grow: 0;
       &:not(:first-child) {
         border-left: none !important;
       }
