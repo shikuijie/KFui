@@ -1,6 +1,6 @@
 {
-  "name": "LG-AFE",
-  "version": "0.0.0",
+  "name": "KFui",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "update": "npm-check-updates -u -a",
