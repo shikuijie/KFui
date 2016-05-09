@@ -7,7 +7,8 @@
     "dev": "gulp dev",
     "sprite": "gulp sprite",
     "bundle": "gulp bundle",
-    "lib": "gulp lib"
+    "lib": "gulp lib",
+    "install": "jspm install"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.5",
