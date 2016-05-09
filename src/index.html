@@ -69,7 +69,7 @@
             <div class="kf-control kf-grid">
               <label class="kf-3-10">姓名<span class="kf-asterisk">*</span></label>
               <div class="kf-7-10 kf-input">
-                <kf-autoinput name="name" :value="form.currentRow.name" :options="options" :on-change="onChange" :get-value="getValue" :required="true"></kf-autoinput>
+                <kf-autoinput name="name" :value="form.currentRow.name" :options="options" :on-change="form.setField" :required="true"></kf-autoinput>
               </div>
             </div>
 
