@@ -1,7 +1,7 @@
 @import (reference) '../../style/color';
 @import (reference) '../../style/size';
 @import (reference) '../../style/caret';
-@import (reference) '../../rotator/rotator';
+@import (reference) './rotator';
 
 .kf-datime(@color) {
   //.date > .slides > div
@@ -268,11 +268,10 @@
 }
 
 .dtpicker > .datime,
-.dtranger > .range {
+.dtranger > .drop {
   position: absolute;
   left: 0;
   top: 100%;
-  z-index: 2016;
   background-color: white;
   border-radius: 3px;
   margin-top: 3px;
@@ -302,10 +301,11 @@
     margin-top: 0;
   }
 
-  transition: opacity .2s linear, visibility .2s linear;
+  transition: all .2s linear;
   visibility: hidden;
   opacity: 0;
   &.visible {
+    z-index: 2016;
     visibility: visible;
     opacity: 1;
   }
@@ -314,35 +314,34 @@
 .dtranger {
   font-size: 12px;
 
-  > .range {
-    width: 400px;
+  > .drop {
     padding: 5px;
     border: 1px solid @light;
 
-    > .datime {
-      display: inline-block;
-      & + .datime {
-        margin-left: 15px;
+    > .range {
+      white-space: nowrap;
+      > .datime {
+        display: inline-block;
+        & + .datime {
+          margin-left: 15px;
+        }
       }
     }
 
     > .confirm {
       text-align: right;
+      margin-top: 5px;
       > span {
         color: @accent;
         margin-right: 10px;
       }
 
-      > button {
+      > a {
         color: white;
         border-radius: 5px;
         padding: 5px 10px;
         font-size: 12px;
-        border: 1px solid transparent;
-        margin-top: 5px;
-        &:focus {
-          outline: none;
-        }
+        cursor: pointer;
       }
     }
   }
@@ -362,10 +361,10 @@
 
 .kf-datime-ranger-color(@color) {
   border: 1px solid @color;
-  > div > [kf-datime] {
+  > div > div > [kf-datime] {
     .kf-datime(@color);
   }
-  button {
+  a {
     background-color: @color;
   }
 }

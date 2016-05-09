@@ -28,7 +28,7 @@ vue.component('kf-layout', {
           '<slot name="left"></slot>' +
         '</aside>' +
         '<main>' +
-          '<slot name="middle"></slot>' +
+          '<slot name="main"></slot>' +
         '</main>' +
         '<aside>' +
           '<slot name="right"></slot>' +

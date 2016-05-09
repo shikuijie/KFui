@@ -1,6 +1,5 @@
 import vue from 'vue';
 import '../code/code';
-import 'font-awesome';
 import './tree.css!';
 import cls from './tree.css.map';
 

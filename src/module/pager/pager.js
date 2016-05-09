@@ -80,6 +80,7 @@ vue.component('kf-pager', {
       this.onChange(this.current + 1, this.pageEntry);
     },
     go: function(n) {
+      if(n >= this.pages) return;
       this.current = n;
       this.onChange(this.current + 1, this.pageEntry);
     },
@@ -114,9 +115,9 @@ vue.component('kf-pager', {
         '<div :class="cls.input">' +
           '<div>' +
             '<div>' +
-              '<input type="text"/>' +
+              '<input type="text" v-model="currentPage"/>' +
             '</div>' +
-            '<span class="fa fa-caret-right"></span>' +
+            '<span class="fa fa-caret-right" @click="go(currentPage - 1)"></span>' +
           '</div>' +
         '</div>' +
       '</div>' +

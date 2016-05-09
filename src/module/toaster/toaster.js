@@ -3,7 +3,7 @@ import './toaster.css!';
 import 'font-awesome';
 import cls from './toaster.css.map';
 
-vue.transition('fade', {
+vue.transition('kf-toaster-fade', {
   enterClass: cls.show,
   leaveClass: cls.hide
 });
@@ -46,7 +46,7 @@ vue.component('kf-toaster', {
   },
   template:
 		'<ul :class="cls.tips">' +
-	    '<li v-for="obj in objs" :class="cls.item" transition="fade">' +
+	    '<li v-for="obj in objs" :class="cls.item" transition="kf-toaster-fade">' +
 		    '<div v-if="obj.success" :class="cls.success">' +
 			    '<i class="fa fa-check-circle" :class="cls.icon"></i>' +
 			    '{{obj.tip}}' +

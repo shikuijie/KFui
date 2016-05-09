@@ -12,7 +12,19 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-  separateCSS: true,
+  bundles: {
+    "lib.bundle.js": [
+      "lib.js"
+    ],
+    "src/demo/index.bundle.js": [
+      "src/demo/index.js",
+      "src/demo/form.js",
+      "src/demo/stable.js",
+      "src/demo/ttable.js",
+      "src/demo/tree.js",
+      "src/demo/mtable.js"
+    ]
+  },
 
   map: {
     "animate.css": "npm:animate.css@3.5.1",
@@ -24,6 +36,7 @@ System.config({
     "font-awesome": "npm:font-awesome@4.6.1",
     "image": "github:systemjs/plugin-image@0.1.0",
     "json": "github:systemjs/plugin-json@0.1.2",
+    "kfui": "lib.js",
     "lodash": "npm:lodash@4.11.2",
     "reflect-metadata": "npm:reflect-metadata@0.1.3",
     "text": "github:systemjs/plugin-text@0.0.4",

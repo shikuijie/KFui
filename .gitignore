@@ -3,6 +3,8 @@ logs
 *.log
 npm-debug.log*
 
+.DS_Store
+
 # Runtime data
 pids
 *.pid
@@ -40,6 +42,10 @@ mock
 
 .DS_Store
 
-# css and cssmap
+# css css.map
 *.css
 *.css.map.js
+
+# bundle
+*.bundle.js
+*.bundle.js.map
