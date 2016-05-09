@@ -3,7 +3,7 @@ import './autoinput.css!';
 import cls from './autoinput.css.map';
 import _ from 'lodash';
 
-vue.component('kf-autofill', {
+vue.component('kf-autoinput', {
   props: {
     onChange: {
       type: Function,
