@@ -13,14 +13,6 @@ System.config({
     "npm:*": "jspm_packages/npm/*"
   },
   bundles: {
-    "src/demo/index.bundle.js": [
-      "src/demo/index.js",
-      "src/demo/stable.js",
-      "src/demo/mtable.js",
-      "src/demo/form.js",
-      "src/demo/ttable.js",
-      "src/demo/tree.js"
-    ],
     "lib.bundle.js": [
       "lib.js"
 		]

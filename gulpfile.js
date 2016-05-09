@@ -41,26 +41,6 @@ var fs = require('fs'),
     srcAll = path.join(srcDir, '/**/*'),
     srcLess = path.join(srcDir, '/**/*.less');
 
-/** 获取命令行参数 **/
-var type = process.argv[2];
-var paramGroups = process.argv.slice(3).reduce(function(grps, elem) {
-    if(/^--/.test(elem)) {
-        grps.push([elem.replace(/^-*/, '')]);
-    } else {
-        grps[grps.length - 1].push(elem);
-    }
-
-    return grps;
-}, []);
-
-var params = {};
-params[type] = paramGroups.reduce(function(res, grp) {
-  res[grp[0]] = !grp[1] && true || grp[1];
-
-  return res;
-}, {});
-/*****************/
-
 gulp.task('dev', ['dev:init', 'dev:css', 'dev:watch', 'dev:reload', 'server']);
 
 /** 初始化, 比如生成文件夹 **/
@@ -155,9 +135,9 @@ gulp.task('server', function() {
   connect.server({
     host: '0.0.0.0',
     root: './',
-    port: params.dev.port || 8080,
+    port: 8080,
     livereload: {
-      port: params.dev.reload || 35730
+      port: 35730
     },
     middleware: function() {
       var middlewares = [];
@@ -200,9 +180,9 @@ gulp.task('server', function() {
 
 /** 生成精灵图 **/
 gulp.task('sprite', function() {
-  var dir = params.sprite && params.sprite.dir;
-  console.log(dir)
+  var dir = process.argv[3].replace('--', '');
   if(dir) {
+    console.log(dir)
     gulp.src(path.join(dir, '/**/*.png'))
         .pipe(sprite())
         .on('error', function(err) {
@@ -210,10 +190,48 @@ gulp.task('sprite', function() {
         })
         .pipe(gulp.dest(dir));
   } else {
-    console.log('请指定精灵图所在的文件夹');
+    console.log('请指定精灵图所在的文件夹[npm run sprite -- --xxx]');
   }
 });
 /***************/
+
+/** 压缩图片 **/
+gulp.task('image', function(cb) {
+  var targetPng = path.join(srcDir, '/**/*.png');
+
+  gulp.src([targetPng])
+      .pipe(minifyImg({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: false}],
+        use: [pngquant()]
+      }))
+      .pipe(rename({extname: '.min.png'}))
+      .pipe(gulp.dest(srcDir))
+      .on('end', function() {
+        cb();
+      });
+});
+/*******************/
+
+gulp.task('bundle', function() {
+  var entryJs = process.argv[3].replace('--', '');
+  if(!entryJs) {
+    console.log('请指定需要打包的文件路径[npm run bundle -- --xxx]');
+    return;
+  }
+  var bundleJs = entryJs.replace('.js', '.bundle.js');
+  var cmd = 'jspm bundle ' + entryJs + ' - kfui ' + bundleJs + ' --minify --inject';
+  console.log(cmd);
+
+  var self = this;
+  exec(cmd, function(err) {
+    if(err) {
+      console.log(err);
+      self.push(file);
+      done();
+    }
+  });
+});
 
 gulp.task('lib', function() {
   var bundleJs = libJs.replace('.js', '.bundle.js');
@@ -224,10 +242,8 @@ gulp.task('lib', function() {
   exec(cmd, function(err) {
     if(err) {
       console.log(err);
-
       self.push(file);
       done();
-      return;
     } else {
       gulp.src(bundleJs)
           .pipe(through2.obj(function(file, encoding, done) {
@@ -244,7 +260,6 @@ gulp.task('lib', function() {
             var contents = String(file.contents);
             var bundleRe = new RegExp('(bundles:\\s*\\{\\s*[^\}]*,?"' + bundleJs + '":\\s*\\[\\s*"' + libJs + '"),?\\s*[^\\]]*\\]');
             contents = contents.replace(bundleRe, function(s0, s1) {
-              console.log(s1)
               return s1 + '\n\t\t]';
             });
 
