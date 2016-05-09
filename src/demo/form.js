@@ -11,37 +11,22 @@ let form = {
   departCN: ['平台运营部', '技术研发部', '设计部'],
   departEN: ['platform', 'tech', 'design'],
   options: [],
-  // setField: function(name, val, val1) {
-  //   console.log(name+';'+val);
-  //   if(name == 'range') {
-  //     form.currentRow.start = val;
-  //     form.currentRow.end = val1;
-  //   } else if(name === 'name') {
-  //     var self = this;
-  //     if(!val) return;
-  //     setTimeout(function(){
-  //       self.options.push(Math.round((Math.random()*100)));
-  //     }, 300);
-  //     form.currentRow[name] = val;
-  //   } else {
-  //     form.currentRow[name] = val;
-  //   }
-  // },
-  setField: function(data) {
-    console.log(data);
-    if(data.name == 'range') {
-      //
-
-    } else if(data.name === 'name' && data.getOpt) {
-      var self = this;
-      if(!data.value) return;
-      setTimeout(function(){
-        self.options.push(Math.round((Math.random()*100)));
-      }, 300);
-      form.currentRow[data.name] = data.value;
+  setfield: function(name, val) {
+    console.log('form取值' + name + ';' + val);
+    if(name == 'range') {
+      form.currentRow.start = val[0];
+      form.currentRow.end = val[1];
     } else {
-      form.currentRow[data.name] = data.value;
+      form.currentRow[name] = val;
     }
+  },
+  setoptions: function(name, val){
+    console.log('设置待选列表' + name + ';' + val);
+    var self = this;
+    setTimeout(function(val){
+      self.options.push('张' + Math.round(Math.random()*100));
+    }, 300);
+    return self.options;
   },
   validator: {
     name: {required: '请输入姓名字段!'},
