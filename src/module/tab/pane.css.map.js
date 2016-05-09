@@ -1,1 +1,0 @@
-export default {"tabs":"_tabs_15tck_1"}

@@ -1,9 +1,9 @@
-import {vue, kfModal} from './module/ui';
-import stable from './demo/stable';
-import mtable from './demo/mtable';
-import ttable from './demo/ttable';
-import form from './demo/form';
-import tree from './demo/tree';
+import {vue, modal} from 'kfui';
+import stable from './stable';
+import mtable from './mtable';
+import ttable from './ttable';
+import form from './form';
+import tree from './tree';
 
 let vm = {
   el: 'body',
@@ -19,10 +19,10 @@ let vm = {
     tree: tree,
     modal: {
       open: function() {
-        kfModal.open(this);
+        modal.open(this);
       },
       close: function() {
-        kfModal.close(this);
+        modal.close(this);
       }
     },
     form: form

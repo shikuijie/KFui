@@ -32,6 +32,7 @@ var fs = require('fs'),
     mockDir = 'mock',
     srcDir = 'src',
     distDir = 'dist',
+    libJs = 'lib.js',
 
     mockJs = path.join(mockDir, '/**/*.js'),
     srcHtml = path.join(srcDir, '/**/*.html'),
@@ -214,202 +215,44 @@ gulp.task('sprite', function() {
 });
 /***************/
 
-gulp.task('dist', ['dist:version', 'dist:image']);
+gulp.task('lib', function() {
+  var bundleJs = libJs.replace('.js', '.bundle.js');
+  var cmd = 'jspm bundle ' + libJs + ' ' + bundleJs + ' --minify --inject';
+  console.log(cmd);
 
-/** 生成版本号 **/
-gulp.task('dist:version', ['dist:bundle'], function() {
-  var dir = params.dist && params.dist.dir || srcDir;
-  dir = path.join(distDir, dir.slice(srcDir.length));
-  var targetHtml = path.join(dir, '/**/*.html');
+  var self = this;
+  exec(cmd, function(err) {
+    if(err) {
+      console.log(err);
 
-  var vRe = /(['"])(\S+)([&?])v=\$version\$(\S*)\1/g;
-
-  gulp.src(targetHtml)
-      .pipe(through2.obj(function(file, encoding, done) {
-        var dir = path.dirname(file.path.slice(__dirname + 1));
-        var contents = String(file.contents);
-        contents = contents.replace(vRe, function(s0, s1, s2, s3, s4) {
-          var p = path.join(dir, s2);
-          var v = hash.sync(p);
-
-          return '"' + s2 + s3 + 'v=' + v + s4 + '"';
-        });
-
-        file.contents = new Buffer(contents);
-        this.push(file);
-        done();
-      }))
-      .pipe(gulp.dest(dir));
-});
-/*****************/
-
-/** 针对ES6模块进行打包操作 **/
-gulp.task('dist:bundle', ['dist:url'], function(cb) {
-  var dir = params.dist && params.dist.dir || srcDir;
-  dir = path.join(distDir, dir.slice(srcDir.length));
-  var targetHtml = path.join(dir, '/**/*.html');
-
-  gulp.src(targetHtml)
-      .pipe(through2.obj(function(file, encoding, done) {
-        var self = this;
-        var contents = String(file.contents);
-
-        var importRe = /System.import\s*\(\s*(['"])\s*(\S*)\s*\1\s*\)/;
-        var entryJs = contents.match(importRe);
-        if(!entryJs) {
-          self.push(file);
-          done();
-          return;
-        }
-
-        entryJs = entryJs[2];
-        var pathJs = /\.js$/.test(entryJs) ? entryJs : (entryJs + '.js');
-        entryJs = path.join(path.dirname(file.path.slice(__dirname.length + 1)), pathJs);
-
-        var bundleJs = entryJs.replace('.js', '.bundle.js');
-        var cmd = 'jspm bundle ' + entryJs + ' ' + bundleJs + ' --minify';
-
-        exec(cmd, function(err) {
-          if(err) {
-            console.log(err);
-
-            self.push(file);
+      self.push(file);
+      done();
+      return;
+    } else {
+      gulp.src(bundleJs)
+          .pipe(through2.obj(function(file, encoding, done) {
+            var contents = String(file.contents);
+            contents = contents.replace(/url\(jspm_packages/g, 'url(/jspm_packages');
+            file.contents = new Buffer(contents);
+            this.push(file);
             done();
-            return;
-          }
+          }))
+          .pipe(gulp.dest(path.dirname(bundleJs)));
 
-          console.log(cmd);
+      gulp.src(jspmCfg)
+          .pipe(through2.obj(function(file, encoding, done) {
+            var contents = String(file.contents);
+            var bundleRe = new RegExp('(bundles:\\s*\\{\\s*[^\}]*,?"' + bundleJs + '":\\s*\\[\\s*"' + libJs + '"),?\\s*[^\\]]*\\]');
+            contents = contents.replace(bundleRe, function(s0, s1) {
+              console.log(s1)
+              return s1 + '\n\t\t]';
+            });
 
-          var headTail = /<\/\s*head\s*>/;
-          var footTail = /<\s*script\s*>/;
-          var pathCssBundle = pathJs.replace('.js', '.bundle.css');
-          var pathJsBundle = pathJs.replace('.js', '.bundle.js');
-
-          contents = contents.replace(headTail, function(s0) {
-            var cssLink = '<link rel="stylesheet" href="' + pathCssBundle + '"/>';
-            return cssLink + '\n' + s0;
-          });
-          contents = contents.replace(footTail, function(s0) {
-            var jsScript = '<script src="' + pathJsBundle + '"></script>';
-            return jsScript + '\n' + s0;
-          });
-
-          file.contents = new Buffer(contents);
-          self.push(file);
-          done();
-        });
-      }))
-      .pipe(through2.obj(function(file, encoding, done) {
-        var dir = path.dirname(file.path.slice(__dirname + 1));
-        var contents = String(file.contents);
-
-        var importRe = /System.import\s*\(\s*(['"])\s*(\S*)\s*\1\s*\)/;
-        if(!contents.match(importRe)) {
-          this.push(file);
-          done();
-          return;
-        }
-
-        contents = contents.replace(importRe, function(s0, s1, s2) {
-          s1 = /\.js$/.test(s2) ? s2 : (s2 + '.js');
-          var p = path.join(dir, s2);
-          var v = hash.sync(p);
-          return "System.import('" + s2 + '?v=' + v + "')";
-        });
-
-        contents = contents.replace(/<link rel="stylesheet" href="([^"]+\.bundle\.css)"\/>/, function(s0, s1) {
-          var p = path.join(dir, s1);
-          if(fs.existsSync(p)) {
-            var v = hash.sync(p);
-            return '<link rel="stylesheet" href="' + s1 + '?v=' + v + '"/>';
-          } else {
-            return s0;
-          }
-        });
-
-        contents = contents.replace(/<script src="([^"]+\.bundle\.js)"><\/script>/, function(s0, s1) {
-          var p = path.join(dir, s1);
-          var v = hash.sync(p);
-          return '<script src="' + s1 + '?v=' + v + '"></script>';
-        });
-
-        contents = contents.replace(/<script\s*src=\s*(['"])\s*([./]+jspm\.config\.js)\s*\1\s*>\s*<\/\s*script\s*>/, function(s0, s1, s2) {
-          var p = path.join(dir, s2);
-          var v = hash.sync(p);
-          return '<script src="' + s2 + '?v=' + v + '"></script>';
-        });
-
-        file.contents = new Buffer(contents);
-        this.push(file);
-        done();
-      }))
-      .pipe(gulp.dest(dir))
-      .on('end', function() {
-        cb();
-      });
-});
-/*******************/
-
-/** 修改 jspm.config.js中的baseURL **/
-gulp.task('dist:url', ['dist:copy'], function(cb) {
-  gulp.src(jspmCfg)
-      .pipe(through2.obj(function(file, encoding, done) {
-        var contents = String(file.contents);
-        contents = contents.replace(/baseURL: "[^"]+"/, function() {
-          return 'baseURL: "' + path.join('/', params.dist.url || '') + '"';
-        });
-
-        file.contents = new Buffer(contents);
-        this.push(file);
-        done();
-      }))
-      .pipe(gulp.dest('.'))
-      .on('end', function() {
-        cb();
-      });
-});
-/**********************************/
-
-/** 压缩图片 **/
-gulp.task('dist:image', ['dist:copy'], function(cb) {
-  var targetDir = params.dist && params.dist.dir || srcDir;
-  var targetPng = path.join(targetDir, '/**/*.png');
-
-  var targetDistDir = path.join(distDir, targetDir.slice(srcDir.length));
-
-  gulp.src([targetPng])
-      .pipe(minifyImg({
-        progressive: true,
-        svgoPlugins: [{removeViewBox: false}],
-        use: [pngquant()]
-      }))
-      .pipe(gulp.dest(targetDistDir))
-      .on('end', function() {
-        cb();
-      });
-});
-/*******************/
-
-/** 拷贝源代码到编译目录 **/
-gulp.task('dist:copy', ['dist:clean'], function(cb) {
-  var targetDir = params.dist && params.dist.dir || srcDir;
-  var targetAll = path.join(targetDir, '/**/*.*');
-  var targetLess = path.join(targetDir, '/**/*.less');
-
-  var targetDistDir = path.join(distDir, targetDir.slice(srcDir.length));
-
-  gulp.src([targetAll, '!' + targetLess])
-      .pipe(gulp.dest(targetDistDir))
-      .on('end', function() {
-        cb();
-      });
-});
-/*********************/
-
-/** 在编译之前先将 dist 目录删掉 **/
-gulp.task('dist:clean', function(cb) {
-  del(distDir).then(function() {
-    cb();
+            file.contents = new Buffer(contents);
+            this.push(file);
+            done();
+          }))
+          .pipe(gulp.dest(path.dirname(jspmCfg)));
+    }
   });
 });
-/*****************************/

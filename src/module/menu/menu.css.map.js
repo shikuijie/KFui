@@ -1,1 +1,0 @@
-export default {"menu":"_menu_1ylqq_1","submenu":"_submenu_1ylqq_12"}

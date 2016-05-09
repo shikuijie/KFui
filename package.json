@@ -5,9 +5,8 @@
   "scripts": {
     "update": "npm-check-updates -u -a",
     "dev": "gulp dev",
-    "dist": "gulp dist",
     "sprite": "gulp sprite",
-    "lib": "jspm"
+    "lib": "gulp lib"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.5",

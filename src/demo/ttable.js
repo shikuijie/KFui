@@ -1,4 +1,4 @@
-import {kfTable} from '../module/ui';
+import {table} from 'kfui';
 
 function getAction(func, label) {
   return '<button class="kf-btn kf-xs" @click="TABLE.' + func + '(ROW)">' + label + '</button>';
@@ -6,8 +6,8 @@ function getAction(func, label) {
 
 export default {
   onReady: function() {
-    kfTable.setHead(this, this.thead);
-    kfTable.setBody(this, this.tbody);
+    table.setHead(this, this.thead);
+    table.setBody(this, this.tbody);
   },
   sampleRow: function() {
     return {
@@ -18,21 +18,21 @@ export default {
     };
   },
   appendRow: function() {
-    kfTable.appendRow(this, this.sampleRow());
+    table.appendRow(this, this.sampleRow());
   },
   prependRow: function() {
-    kfTable.prependRow(this, this.sampleRow());
+    table.prependRow(this, this.sampleRow());
   },
   iterateRows: function() {
-    kfTable.iterate(this, function(row) {
+    table.iterate(this, function(row) {
       console.log(row.name)
     });
   },
   add: function(row) {
-    kfTable.appendRow(row, this.sampleRow());
+    table.appendRow(row, this.sampleRow());
   },
   remove: function(row) {
-    kfTable.deleteRow(row, true);
+    table.deleteRow(row, true);
   },
   thead: ['姓名', '邮箱', '电话', '地址', '操作'],
   tbody: [{
