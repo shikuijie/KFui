@@ -1,12 +1,3 @@
-import '../module/form/select/select';
-import '../module/form/date/date';
-import '../module/form/checkbox/checkbox';
-import '../module/form/radio/radio';
-import '../module/form/validate/validate';
-import '../module/form/file/file';
-import '../module/form/radio/radio';
-import './module/form/autoinput/autoinput';
-
 let form = {
   currentRow: {name: '', email: '', address: '', date: '', start: '', end: '', department: '', skills: [], salary: '', agree: false},
   departCN: ['平台运营部', '技术研发部', '设计部'],

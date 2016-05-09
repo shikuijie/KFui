@@ -9,16 +9,12 @@ vue.component('kf-autoinput', {
       type: Function,
       default: () => {}
     },
-    setOptions: {
+    getOptions: {
       type: Function,
       default: () => {}
     },
-    value: {},
+    value: null,
     name: String,
-    options: {
-      type: Array,
-      default: []
-    },
     required: {
       type: Boolean,
       default: false
@@ -28,17 +24,21 @@ vue.component('kf-autoinput', {
     return {
       items: [],
       cls: cls,
-      change: _.debounce(this.setOptions, 500),
+      change: _.debounce(function() {
+        this.options = this.getOptions();
+      }, 500),
+      options: [],
       activeIndex: null
     };
   },
+  ready: function() {
+    this.input = this.$el.querySelector('input');
+  },
   watch: {
-    'options': function(n, o){
-      this.items = this.options;
-    },
-    'value': function(n, o){
-      this.onChange(this.name, n);
-    }
+    value: _.debounce(function(nval) {
+      this.onChange(nval, this.name);
+      this.input.__BUS.$emit('kf.form.change', this.input, nval);
+    }, 500)
   },
   methods: {
     opreate: function(ev){
@@ -74,19 +74,16 @@ vue.component('kf-autoinput', {
     isActive: function(index){
       return this.activeIndex === index ? cls.active : '';
     },
-    isShow: function(){
-      return !!this.items.length;
-    },
     hide: function(){
       this.items = [];
     }
   },
   template:
-    '<div>'+
+    '<div :class="cls.autofill">'+
       '<input type="text" @input="change(value)" v-model="value" @keyup.stop.prevent="opreate($event)" autocomplete="off" :name="name" :required="required">'+
-      '<div :class="cls.bg" v-show="isShow()" @click="hide()"></div>'+
-      '<ul :class="cls.list" v-show="isShow()">'+
-        '<li v-for="item in items" track-by="$index" @click="choose($index)"><a href="javasript:;" :class="isActive($index)">{{item}}</a></li>'+
+      '<div :class="cls.bg" v-show="items.length" @click="hide()"></div>'+
+      '<ul :class="cls.list" v-show="items.length">'+
+        '<li v-for="item in items" track-by="$index" @click="choose($index)"><span :class="isActive($index)" v-text="item"></span></li>'+
       '</ul>'+
     '</div>'
 });

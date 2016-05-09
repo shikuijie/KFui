@@ -1,4 +1,4 @@
-import {tree} from 'kfui';
+import {kfTree} from 'kfui';
 
 let treeData = {
   onDrop: function(src, target) {

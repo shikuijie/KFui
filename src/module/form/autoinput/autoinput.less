@@ -1,42 +1,46 @@
 @import (reference) '../../style/color';
 @import (reference) '../../style/size';
-.bg{
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  opacity: 0;
-}
-.list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  box-shadow: 2px 2px #ecf0f1;
-  background: #fff;
-  z-index: 2016;
-  border: 1px solid @light;
-  color: @dark;
-  padding-bottom: @vpad-md;
-  li {
-    padding: @vpad-md @vpad-md 0;
-    a {
-      display: block;
-      padding: @vpad-md @hpad-md;
-      border-radius: @br-md;
-      text-decoration: none;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-    a:hover {
-      background-color: @dark;
-      color: #fff;
-    }
-    a.active {
-      background-color: @dark;
-      color: #fff;
+
+.autofill {
+  position: relative;
+
+  .bg{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+  }
+  .list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    box-shadow: 2px 2px #ecf0f1;
+    background: #fff;
+    z-index: 2016;
+    border: 1px solid @light;
+    color: @dark;
+    padding-bottom: @vpad-md;
+    li {
+      padding: @vpad-md @vpad-md 0;
+      span {
+        display: block;
+        padding: @vpad-md @hpad-md;
+        border-radius: @br-md;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      span:hover {
+        background-color: @dark;
+        color: #fff;
+      }
+      span.active {
+        background-color: @dark;
+        color: #fff;
+      }
     }
   }
 }

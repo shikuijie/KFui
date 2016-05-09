@@ -1,4 +1,4 @@
-import {table} from 'kfui';
+import {kfTable} from 'kfui';
 
 function getAction(func, label) {
   return '<button class="kf-btn kf-xs" @click="TABLE.' + func + '(ROW)">' + label + '</button>';
@@ -14,11 +14,11 @@ function getCheckbox(head, label) {
 let stable = {
   checked: false,
   onReady: function() {
-    table.setHead(this, this.thead);
-    table.setBody(this, this.tbody);
+    kfTable.setHead(this, this.thead);
+    kfTable.setBody(this, this.tbody);
   },
   checkAll: function(val) {
-    table.iterate(stable, function(row) {
+    kfTable.iterate(stable, function(row) {
       row.checked = val;
     });
   },
@@ -31,18 +31,18 @@ let stable = {
     };
   },
   appendRow: function() {
-    table.appendRow(this, this.sampleRow('remove', '删除'));
+    kfTable.appendRow(this, this.sampleRow('remove', '删除'));
   },
   iterateRows: function() {
-    table.iterate(this, function(row) {
+    kfTable.iterate(this, function(row) {
       console.log(row.name, row.email)
     });
   },
   prependRow: function() {
-    table.prependRow(this, this.sampleRow('remove', '删除'));
+    kfTable.prependRow(this, this.sampleRow('remove', '删除'));
   },
   remove: function(row) {
-    table.deleteRow(row);
+    kfTable.deleteRow(row);
   },
   edit: function(row) {
     alert('可以在此打开一个弹窗来编辑内容');
