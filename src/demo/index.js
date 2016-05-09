@@ -1,4 +1,4 @@
-import {vue, modal} from 'kfui';
+import {vue, modal, toaster} from 'kfui';
 import stable from './stable';
 import mtable from './mtable';
 import ttable from './ttable';
@@ -17,6 +17,7 @@ let vm = {
     mtable: mtable,
     ttable: ttable,
     tree: tree,
+    form: form,
     modal: {
       open: function() {
         modal.open(this);
@@ -25,7 +26,14 @@ let vm = {
         modal.close(this);
       }
     },
-    form: form
+    toaster: {
+      showSuccess: function(t) {
+        toaster.succeed(t, '成功了!');
+      },
+      showError: function(t) {
+        toaster.fail(t, '出错啦!');
+      }
+    }
   }
 };
 

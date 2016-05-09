@@ -10,59 +10,65 @@ vue.transition('kf-toaster-fade', {
 
 vue.component('kf-toaster', {
   props: {
-    data: {
+    // data: {
+    //   type: Object,
+		// 	required: true
+    // },
+    toaster: {
       type: Object,
-			required: true
+      required: true
     },
     delay: {
-      type: Number
-    }
-  },
-  watch: {
-    'data': {
-      handler: function(n, o) {
-        this.objs.unshift(n.dataObj);
-        var self = this;
-        if(!this.delay){
-          return;
-        }
-        setTimeout(function() {
-          self.objs.pop();
-        }, this.delay);
-      },
-			deep: true
+      type: Number,
+      default: 5000
     }
   },
   data: function() {
+    vue.set(this.toaster, '__TOASTS', []);
+    this.toaster.__DELAY = this.delay;
     return {
-      objs: [],
       cls: cls
+    }
+  },
+  computed: {
+    toasts: function() {
+      return this.toaster.__TOASTS;
     }
   },
   methods: {
     close: function(index) {
-      this.objs.splice(index, 1);
+      this.__TOASTS.splice(index, 1);
     }
   },
   template:
 		'<ul :class="cls.tips">' +
-	    '<li v-for="obj in objs" :class="cls.item" transition="kf-toaster-fade">' +
-		    '<div v-if="obj.success" :class="cls.success">' +
+	    '<li v-for="t in toasts" :class="cls.item" transition="kf-toaster-fade">' +
+		    '<div v-if="t.success" :class="cls.success">' +
 			    '<i class="fa fa-check-circle" :class="cls.icon"></i>' +
-			    '{{obj.tip}}' +
+          '<span v-text="t.tip"></span>' +
 			    '<i class="fa fa-close" :class="cls.close" @click="close($index)"></i>' +
 		    '</div>' +
 		    '<div v-else :class="cls.error">' +
 			    '<i class="fa fa-times-circle" :class="cls.icon"></i>' +
-			    '{{obj.tip}}' +
+          '<span v-text="t.tip"></span>' +
 			    '<i class="fa fa-close close" :class="cls.close" @click="close($index)"></i>' +
 		    '</div>' +
 	    '</li>' +
     '</ul>'
 });
 
+function show(toaster, msg, ok) {
+  toaster.__TOASTS.unshift({tip: msg, success: ok});
+  setTimeout(function() {
+    toaster.__TOASTS.pop();
+  }, toaster.__DELAY);
+}
+
 export default {
-  add: function(obj, data){
-    vue.set(obj,'dataObj',data);
+  succeed: function(toaster, msg) {
+    show(toaster, msg, true);
+  },
+  fail: function(toaster, msg) {
+    show(toaster, msg, false);
   }
 }
