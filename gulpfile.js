@@ -41,7 +41,7 @@ gulp.task('dev', ['dev:css', 'dev:watch', 'dev:reload', 'server']);
 gulp.task('dev:init', function(cb) {
   mkdirp.sync(mockDir);
 
-  srcDir = process.argv[3] && process.argv[3].replace('--', '') || 'src';
+  srcDir = process.argv[3] && process.argv[3].replace('--', '') || 'kfui';
   mkdirp.sync(srcDir);
 
   srcHtml = path.join(srcDir, '/**/*.html'),
