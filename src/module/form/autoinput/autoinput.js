@@ -65,7 +65,7 @@ vue.component('kf-autoinput', {
             this.visible = true;
             return;
           }
-          if(typeof this.activeIndex == 'number' && this.activeIndex < this.options.length - 1){
+          if(_.isNumber(this.activeIndex) && this.activeIndex < this.options.length - 1){
             this.activeIndex++;
           }else{
             this.activeIndex = 0;
