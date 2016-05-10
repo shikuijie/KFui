@@ -109,7 +109,7 @@ vue.directive('kf-form', {
         }
       });
 
-      self.errorMsg.alid = valid;
+      event.valid = valid;
     };
     that.submit.addEventListener('click', that.submitFunc);
 
@@ -129,7 +129,7 @@ vue.directive('kf-form', {
 
     let that = formMap.get(el);
     let mds = Object.keys(this.modifiers);
-    that.setfield = val.setfield;
+    that.setfield = val.setfield || (() => {});
     that.errorMsg = val.validator;
     if(!_.isFunction(val.setfield) || !_.isObject(val.validator)) {
       throw 'v-kf-form指令参数至少有两个成员：validator提供验证信息对象，setfield设置成员变量的函数';

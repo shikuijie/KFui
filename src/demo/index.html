@@ -63,53 +63,53 @@
         </style>
         <form novalidate v-kf-form="form" class="kf-form">
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">姓名<span class="kf-asterisk">*</span></label>
+            <label class="kf-3-10 kf-vcenter kf-hcenter">姓名<span class="kf-asterisk">*</span></label>
             <div class="kf-7-10 kf-input">
               <input type="text" name="name" required>
             </div>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">日期</label>
-            <kf-date-picker class="kf-7-10" name="date"></kf-date-picker>
+            <label class="kf-3-10 kf-vcenter kf-hcenter">日期</label>
+            <kf-date-picker :has-time="true" :has-sec="false" class="kf-7-10" name="date"></kf-date-picker>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">起始日期<span class="kf-asterisk">*</span></label>
-            <kf-date-ranger class="kf-7-10" name="range"></kf-date-ranger>
+            <label class="kf-3-10 kf-vcenter kf-hcenter">起始日期<span class="kf-asterisk">*</span></label>
+            <kf-date-ranger class="kf-7-10" name="range" :has-time="true" :has-sec="true"></kf-date-ranger>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">部门<span class="kf-asterisk">*</span></label>
+            <label class="kf-3-10 kf-vcenter kf-hcenter">部门<span class="kf-asterisk">*</span></label>
             <kf-select class="kf-7-10" name="department" :required="true" :options="form.departEN" :labels="form.departCN"></kf-select>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">邮箱<span class="kf-asterisk">*</span></label>
+            <label class="kf-3-10 kf-vcenter kf-hcenter">邮箱<span class="kf-asterisk">*</span></label>
             <div class="kf-input kf-7-10">
               <input type="email" required name="email">
             </div>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">地址<span class="kf-asterisk">*</span></label>
+            <label class="kf-3-10 kf-vcenter kf-hcenter">地址<span class="kf-asterisk">*</span></label>
             <div class="kf-input kf-7-10">
               <input type="text" required name="address">
             </div>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">技能</label>
+            <label class="kf-3-10 kf-vcenter kf-hcenter">技能</label>
             <kf-checkbox-group class="kf-7-10 kf-left" name="skills" :options="['c++', 'js', 'css']" :required="true"></kf-checkbox-group>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">薪资</label>
+            <label class="kf-3-10 kf-vcenter kf-hcenter">薪资</label>
             <kf-radio-group class="kf-7-10 kf-left" name="salary" :required="true" :options="['8k', '12k', '15k']" :required="true"></kf-radio-group>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10">头像</label>
+            <label class="kf-3-10 kf-vcenter kf-hcenter">头像</label>
             <div class="kf-left kf-5-10">
               <kf-file url="upload.json" accept=".jpg" :required="true" name="file" :preview="form.preview" :multiple="true"></kf-file>
             </div>
@@ -119,12 +119,12 @@
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10"></label>
+            <label class="kf-3-10 kf-vcenter kf-hcenter"></label>
             <kf-checkbox class="kf-7-10 kf-left" option="ok" name="agree" :required="true" label="同意"></kf-checkbox>
           </div>
 
           <div class="kf-control kf-grid">
-            <label class="kf-3-10"></label>
+            <label class="kf-3-10 kf-vcenter kf-hcenter"></label>
             <div class="kf-7-10 kf-right kf-btn-group kf-primary">
               <input type="submit" class="kf-btn" @click.prevent="form.confirm($event)" value="确定">
               <input type="reset" class="kf-btn" @click.prevent value="取消">

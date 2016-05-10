@@ -34,7 +34,7 @@ vue.component('kf-radio-group', {
   },
   watch: {
     value: function(val) {
-      this.onChange(this.name && this.name || val, this.name && val);
+      this.onChange(val, this.name);
       this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },

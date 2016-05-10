@@ -61,10 +61,10 @@ function show(toaster, msg, ok) {
 }
 
 export default {
-  succeed: function(toaster, msg) {
+  info: function(toaster, msg) {
     show(toaster, msg, true);
   },
-  fail: function(toaster, msg) {
+  warn: function(toaster, msg) {
     show(toaster, msg, false);
   }
 }

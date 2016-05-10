@@ -219,7 +219,7 @@ let datime = vue.extend({
           '<div @wheel.prevent.stop="scroll($event, monthObj)" :class="cls.month">' +
             '<span @click.stop="next(monthObj)"></span>' +
             '<kf-rotator :class="cls.slide" axis="x" :current="monthObj.offset">' +
-              '<span :class="cls.el" :kf-datime-active="monthObj.idx == $index" v-for="m in monthObj.els" v-text="m + 1 + \'月\'"></span>' +
+              '<span :class="cls.el" :kf-datime-active="monthObj.idx == $index" track-by="$index" v-for="m in monthObj.els" v-text="m + 1 + \'月\'"></span>' +
             '</kf-rotator>' +
             '<span @click.stop="prev(monthObj)"></span>' +
           '</div>' +
@@ -354,7 +354,7 @@ vue.component('kf-date-picker', {
   },
   watch: {
     value: function(val) {
-      this.onChange(this.name && this.name || val, this.name && val);
+      this.onChange(val, this.name);
       this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
@@ -462,7 +462,7 @@ vue.component('kf-date-ranger', {
   },
   watch: {
     '[start, end]': function(val, oval) {
-      this.onChange(this.name && this.name || val[0], this.name && val[0] || val[1], this.name && val[1]);
+      this.onChange(val, this.name);
       this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },

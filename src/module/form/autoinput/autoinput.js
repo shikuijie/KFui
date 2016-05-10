@@ -13,7 +13,7 @@ vue.component('kf-autoinput', {
       type: Function,
       default: () => {}
     },
-    value: null,
+    value: String,
     name: String,
     required: {
       type: Boolean,
@@ -26,7 +26,7 @@ vue.component('kf-autoinput', {
       cls: cls,
       change: _.debounce(function() {
         this.options = this.getOptions();
-      }, 500),
+      }, 300),
       options: [],
       activeIndex: null
     };
@@ -38,7 +38,7 @@ vue.component('kf-autoinput', {
     value: _.debounce(function(nval) {
       this.onChange(nval, this.name);
       this.input.__BUS.$emit('kf.form.change', this.input, nval);
-    }, 500)
+    }, 300)
   },
   methods: {
     opreate: function(ev){

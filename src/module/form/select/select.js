@@ -5,7 +5,7 @@ import './select.css!';
 
 vue.component('kf-select', {
   props: {
-    value: {},
+    value: null,
     options: {
       type: Array,
       required: true
@@ -43,7 +43,7 @@ vue.component('kf-select', {
   },
   watch: {
     value: function(val) {
-      this.onChange(this.name && this.name || val, this.name && val);
+      this.onChange(val, this.name);
       this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },

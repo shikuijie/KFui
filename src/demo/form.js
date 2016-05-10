@@ -31,7 +31,8 @@ let form = {
     }
   },
   confirm: function(event) {
-    if(form.validator.valid) {
+    if(event.valid) {
+      console.log('post http')
     }
   },
   upload: '',
