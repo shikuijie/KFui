@@ -231,7 +231,7 @@ function processFiles(self, fileList) {
   if(hasError) {
     return;
   }
-  self.onChange(self.name && self.name || fileList, self.name && fileList);
+  self.onChange(fileList, self.name);
   self.input.__NOERR = true;
   self.input.__BUS && self.input.__BUS.$emit('kf.form.change', self.input, fileList);
 

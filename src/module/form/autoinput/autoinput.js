@@ -13,7 +13,7 @@ vue.component('kf-autoinput', {
       type: Function,
       default: () => {}
     },
-    value: null,
+    value: String,
     name: String,
     required: {
       type: Boolean,

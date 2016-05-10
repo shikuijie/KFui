@@ -28,10 +28,10 @@ let vm = {
     },
     toaster: {
       showSuccess: function() {
-        kfToaster.succeed(this, '成功了!');
+        kfToaster.info(this, '成功了!');
       },
       showError: function() {
-        kfToaster.fail(this, '出错ssssss啦!');
+        kfToaster.warn(this, '出错啦!');
       }
     },
     onAutoChange: function() {},
