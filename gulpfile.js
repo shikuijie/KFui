@@ -41,7 +41,10 @@ gulp.task('dev', ['dev:css', 'dev:watch', 'dev:reload', 'server']);
 gulp.task('dev:init', function(cb) {
   mkdirp.sync(mockDir);
 
-  srcDir = process.argv[3] && process.argv[3].replace('--', '') || 'kfui';
+  srcDir = process.argv[3] && process.argv[3].replace('--', '');
+  if(!srcDir) {
+    console.log('请指定代码文件夹路径[npm run dev -- --xxx]');
+  }
   mkdirp.sync(srcDir);
 
   srcHtml = path.join(srcDir, '/**/*.html'),
