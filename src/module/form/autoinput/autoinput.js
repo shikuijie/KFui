@@ -18,7 +18,7 @@ vue.component('kf-autoinput', {
     required: {
       type: Boolean,
       default: false
-    },
+    }
   },
   data: function() {
     return {
