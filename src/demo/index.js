@@ -31,7 +31,7 @@ let vm = {
         kfToaster.succeed(this, '成功了!');
       },
       showError: function() {
-        kfToaster.fail(this, '出错啦!');
+        kfToaster.fail(this, '出错ssssss啦!');
       }
     },
     onAutoChange: function() {},

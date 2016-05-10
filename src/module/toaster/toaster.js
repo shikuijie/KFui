@@ -45,7 +45,7 @@ vue.component('kf-toaster', {
 			    '<i class="fa fa-close" :class="cls.close" @click="close($index)"></i>' +
 		    '</div>' +
 		    '<div v-else :class="cls.error">' +
-			    '<i class="fa fa-times-circle" :class="cls.icon"></i>' +
+			    '<i class="fa fa-exclamation-circle" :class="cls.icon"></i>' +
           '<span v-text="t.tip"></span>' +
 			    '<i class="fa fa-close" :class="cls.close" @click="close($index)"></i>' +
 		    '</div>' +
