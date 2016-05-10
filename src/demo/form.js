@@ -1,5 +1,5 @@
 let form = {
-  currentRow: {name: '', email: '', address: '', date: '', start: '', end: '', department: '', skills: [], salary: '', agree: false},
+  currentRow: {name: '',addr: '', email: '', address: '', date: '', start: '', end: '', department: '', skills: [], salary: '', agree: false},
   departCN: ['平台运营部', '技术研发部', '设计部'],
   departEN: ['platform', 'tech', 'design'],
   options: [],
@@ -20,6 +20,7 @@ let form = {
   },
   validator: {
     name: {required: '请输入姓名字段!'},
+    addr: {required: '请输入地址字段!'},
     email: {required: '请输入邮箱字段!', email: '邮箱格式不对!'},
     address: {required: '请输入地址字段!', pattern: '请输入5-10个字符!'},
     skills: {

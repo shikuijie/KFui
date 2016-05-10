@@ -35,8 +35,12 @@ let vm = {
       }
     },
     onAutoChange: function() {},
-    getAutoOptions: function() {
-      return [1, 2];
+    getAutoOptions: function(val) {
+      var arr = [];
+      for(var i=0; i<Math.round(Math.random()*20); i++){
+        arr.push(val + '' + Math.round(Math.random()*10));
+      }
+      return arr;
     }
   }
 };
