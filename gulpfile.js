@@ -30,28 +30,32 @@ var fs = require('fs'),
 
     jspmCfg = 'jspm.config.js',
     mockDir = 'mock',
-    srcDir = 'src',
     distDir = 'dist',
     libJs = 'lib.js',
 
-    mockJs = path.join(mockDir, '/**/*.js'),
-    srcHtml = path.join(srcDir, '/**/*.html'),
-    srcJs = path.join(srcDir, '/**/*.js'),
-    srcCss = path.join(srcDir, '/**/*.css'),
-    srcAll = path.join(srcDir, '/**/*'),
-    srcLess = path.join(srcDir, '/**/*.less');
+    mockJs = path.join(mockDir, '/**/*.js');
 
-gulp.task('dev', ['dev:init', 'dev:css', 'dev:watch', 'dev:reload', 'server']);
+gulp.task('dev', ['dev:css', 'dev:watch', 'dev:reload', 'server']);
 
 /** 初始化, 比如生成文件夹 **/
-gulp.task('dev:init', function() {
-  mkdirp.sync(srcDir);
+gulp.task('dev:init', function(cb) {
   mkdirp.sync(mockDir);
+
+  srcDir = process.argv[3] && process.argv[3].replace('--', '') || 'src';
+  mkdirp.sync(srcDir);
+
+  srcHtml = path.join(srcDir, '/**/*.html'),
+  srcJs = path.join(srcDir, '/**/*.js'),
+  srcCss = path.join(srcDir, '/**/*.css'),
+  srcAll = path.join(srcDir, '/**/*'),
+  srcLess = path.join(srcDir, '/**/*.less');
+
+  cb();
 });
 /************************/
 
 /** 处理.less文件 **/
-gulp.task('dev:css', function(cb) {
+gulp.task('dev:css', ['dev:init'], function(cb) {
   gulp.src(srcLess)
       .pipe(less())
       .pipe(rename({extname: '.css'}))
@@ -64,7 +68,7 @@ gulp.task('dev:css', function(cb) {
 /****************************/
 
 /** 自动刷新页面 **/
-gulp.task('dev:reload', function() {
+gulp.task('dev:reload', ['dev:init'], function() {
   gulp.src([srcJs, srcCss, srcHtml])
       .pipe(watch([srcJs, srcCss, srcHtml]))
       .pipe(connect.reload());
@@ -76,7 +80,7 @@ gulp.task('dev:reload', function() {
 /***************/
 
 /** 监听文件变化 **/
-gulp.task('dev:watch', function() {
+gulp.task('dev:watch', ['dev:init'], function() {
   function getPaths(absPath) {
     var filePath = absPath.substr(path.join(__dirname, srcDir).length);
     return {
@@ -180,7 +184,7 @@ gulp.task('server', function() {
 
 /** 生成精灵图 **/
 gulp.task('sprite', function() {
-  var dir = process.argv[3].replace('--', '');
+  var dir = process.argv[3] && process.argv[3].replace('--', '');
   if(dir) {
     console.log(dir)
     gulp.src(path.join(dir, '/**/*.png'))
@@ -214,7 +218,7 @@ gulp.task('image', function(cb) {
 /*******************/
 
 gulp.task('bundle', function() {
-  var entryJs = process.argv[3].replace('--', '');
+  var entryJs = process.argv[3] && process.argv[3].replace('--', '');
   if(!entryJs) {
     console.log('请指定需要打包的文件路径[npm run bundle -- --xxx]');
     return;
