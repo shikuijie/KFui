@@ -204,7 +204,8 @@ gulp.task('sprite', function() {
 
 /** 压缩图片 **/
 gulp.task('image', function(cb) {
-  var targetPng = path.join(srcDir, '/**/*.png');
+  var dir = process.argv[3] && process.argv[3].replace('--', '') || srcDir;
+  var targetPng = path.join(dir, '/**/*.png');
 
   gulp.src([targetPng])
       .pipe(minifyImg({
@@ -213,7 +214,7 @@ gulp.task('image', function(cb) {
         use: [pngquant()]
       }))
       .pipe(rename({extname: '.min.png'}))
-      .pipe(gulp.dest(srcDir))
+      .pipe(gulp.dest(dir))
       .on('end', function() {
         cb();
       });
