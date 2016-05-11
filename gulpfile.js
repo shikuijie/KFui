@@ -41,7 +41,10 @@ gulp.task('dev', ['dev:css', 'dev:watch', 'dev:reload', 'server']);
 gulp.task('dev:init', function(cb) {
   mkdirp.sync(mockDir);
 
-  srcDir = process.argv[3] && process.argv[3].replace('--', '') || 'src';
+  srcDir = process.argv[3] && process.argv[3].replace('--', '');
+  if(!srcDir) {
+    console.log('请指定代码文件夹路径[npm run dev -- --xxx]');
+  }
   mkdirp.sync(srcDir);
 
   srcHtml = path.join(srcDir, '/**/*.html'),
@@ -201,7 +204,8 @@ gulp.task('sprite', function() {
 
 /** 压缩图片 **/
 gulp.task('image', function(cb) {
-  var targetPng = path.join(srcDir, '/**/*.png');
+  var dir = process.argv[3] && process.argv[3].replace('--', '') || srcDir;
+  var targetPng = path.join(dir, '/**/*.png');
 
   gulp.src([targetPng])
       .pipe(minifyImg({
@@ -210,7 +214,7 @@ gulp.task('image', function(cb) {
         use: [pngquant()]
       }))
       .pipe(rename({extname: '.min.png'}))
-      .pipe(gulp.dest(srcDir))
+      .pipe(gulp.dest(dir))
       .on('end', function() {
         cb();
       });
