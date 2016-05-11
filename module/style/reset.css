@@ -1,0 +1,51 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  color: #34495e;
+  font-size: 14px;
+}
+ul {
+  list-style: none;
+}
+a {
+  color: inherit;
+}
+button,
+input[type=submit],
+input[type=reset],
+input[type=button] {
+  -webkit-appearance: button;
+     -moz-appearance: button;
+          appearance: button;
+  cursor: pointer;
+}
+button:focus,
+input[type=submit]:focus,
+input[type=reset]:focus,
+input[type=button]:focus {
+  outline: none;
+}
+input[type=select],
+input[type=picker],
+input[type=ranger],
+input[type=text],
+input[type=url],
+input[type=email] {
+  background-color: transparent;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  font-size: inherit;
+  border: none;
+  padding: 0;
+  outline: none;
+  width: 100%;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  line-height: 1;
+}

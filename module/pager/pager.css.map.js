@@ -1,0 +1,1 @@
+export default {"pager":"_pager_1o8vv_1","right":"_right_1o8vv_47","entry":"_entry_1o8vv_54","slash":"_slash_1o8vv_70","pageNo":"_pageNo_1o8vv_73","input":"_input_1o8vv_76"}

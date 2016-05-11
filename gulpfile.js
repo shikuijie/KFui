@@ -31,6 +31,7 @@ var fs = require('fs'),
     jspmCfg = 'jspm.config.js',
     mockDir = 'mock',
     distDir = 'dist',
+    wrapDir = 'KFui',
     libJs = 'lib.js',
 
     mockJs = path.join(mockDir, '/**/*.js');
@@ -142,7 +143,7 @@ gulp.task('server', function() {
   connect.server({
     host: '0.0.0.0',
     root: '..',
-    port: 8765,
+    port: 8080,
     livereload: {
       port: 35730
     },

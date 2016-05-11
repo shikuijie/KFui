@@ -41,7 +41,3 @@ jspm_packages
 mock
 
 .DS_Store
-
-# css css.map
-*.css
-*.css.map.js

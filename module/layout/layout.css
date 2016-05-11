@@ -1,0 +1,32 @@
+._wrapper_1c4of_1 {
+  overflow-x: hidden;
+}
+._wrapper_1c4of_1 > ._body_1c4of_4 {
+  position: relative;
+  overflow: hidden;
+}
+._wrapper_1c4of_1 > ._body_1c4of_4:before {
+  display: table;
+  content: " ";
+}
+._wrapper_1c4of_1 > ._body_1c4of_4:after {
+  display: table;
+  content: " ";
+  clear: both;
+}
+._wrapper_1c4of_1 > ._body_1c4of_4 > aside:first-child {
+  float: left;
+}
+._wrapper_1c4of_1 > ._body_1c4of_4 > aside:last-child {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+._wrapper_1c4of_1:not([kf-left-visible]) > ._body_1c4of_4 > aside:first-child {
+  overflow: hidden;
+  width: 0;
+}
+._wrapper_1c4of_1:not([kf-right-visible]) > ._body_1c4of_4 > aside:last-child {
+  overflow: hidden;
+  width: 0;
+}

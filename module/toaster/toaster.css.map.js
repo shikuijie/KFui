@@ -1,0 +1,1 @@
+export default {"tips":"_tips_6uds3_1","item":"_item_6uds3_7","success":"_success_6uds3_20","error":"_error_6uds3_27","close":"_close_6uds3_31","icon":"_icon_6uds3_37","show":"_show_6uds3_40","hide":"_hide_6uds3_44"}

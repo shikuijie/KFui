@@ -1,0 +1,87 @@
+._tips_6uds3_1 {
+  position: fixed;
+  top: 5.4vh;
+  right: 10px;
+  z-index: 1000;
+}
+._tips_6uds3_1 ._item_6uds3_7 {
+  position: relative;
+  height: 40px;
+  overflow: hidden;
+  line-height: 40px;
+  color: #fff;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+._tips_6uds3_1 ._item_6uds3_7 ._success_6uds3_20 {
+  padding: 0 20px 0 15px;
+  background-color: #30c9e8;
+}
+._tips_6uds3_1 ._item_6uds3_7 span {
+  margin-right: 5px;
+}
+._tips_6uds3_1 ._item_6uds3_7 ._error_6uds3_27 {
+  padding: 0 20px 0 15px;
+  background-color: #e74c3c;
+}
+._tips_6uds3_1 ._item_6uds3_7 ._close_6uds3_31 {
+  position: absolute;
+  right: 10px;
+  top: 13px;
+  cursor: pointer;
+}
+._tips_6uds3_1 ._item_6uds3_7 ._icon_6uds3_37 {
+  margin-right: 4px;
+}
+._tips_6uds3_1 ._show_6uds3_40 {
+  -webkit-animation-name: _show_6uds3_40;
+  animation-name: _show_6uds3_40;
+}
+._tips_6uds3_1 ._hide_6uds3_44 {
+  -webkit-animation-name: _hide_6uds3_44;
+  animation-name: _hide_6uds3_44;
+}
+@-webkit-keyframes _show_6uds3_40 {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to {
+    opacity: 1;
+    height: 40px;
+  }
+}
+@keyframes _show_6uds3_40 {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to {
+    opacity: 1;
+    height: 40px;
+  }
+}
+@-webkit-keyframes _hide_6uds3_44 {
+  from {
+    opacity: 1;
+    height: 40px;
+  }
+  to {
+    opacity: 0;
+    height: 0;
+  }
+}
+@keyframes _hide_6uds3_44 {
+  from {
+    opacity: 1;
+    height: 40px;
+  }
+  to {
+    opacity: 0;
+    height: 0;
+  }
+}

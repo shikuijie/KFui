@@ -1,0 +1,26 @@
+._circle_1qx5i_1 {
+  position: relative;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+._circle_1qx5i_1 > div {
+  position: absolute;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform .5s linear;
+  transition: -webkit-transform .5s linear;
+  transition: transform .5s linear;
+  transition: transform .5s linear, -webkit-transform .5s linear;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+._circle_1qx5i_1 > div > * {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}

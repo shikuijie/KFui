@@ -20,8 +20,8 @@ System.config({
       "demo/index.js",
       "demo/form.js",
       "demo/mtable.js",
-      "demo/ttable.js",
       "demo/stable.js",
+      "demo/ttable.js",
       "demo/tree.js"
     ]
   },
