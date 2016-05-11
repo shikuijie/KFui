@@ -12,13 +12,13 @@
   1. cd xxx(项目中webapp目录)
   2. git clone https://github.com/shikuijie/KFui (将组件代码clone到本地，若有新版本，重新clone即可)
   3. npm install (安装本地开发用到的nodejs库)
-  4. npm run lib (打包组件库，若有新版本，需重新打包)
   5. npm run dev -- --xxx (启动本地服务器，然后就可以开发页面代码了，参数为项目代码所在的目录)
   6. npm run bundle -- --xxx.js (打包自己的前端代码, 参数为项目的入口js文件)
   7. npm run sprite -- --xxx (将指定目录中的png文件合并生成精灵图以及相关的css文件，不需要该功能的用户请略过)
   8. npm run image -- --xxx (将指定目录中的png文件压缩，不需要该功能的用户请略过)
 
 #### 注意事项
+  * 组件库使用方式请参考 demo 中的文件
   * 上述开发流程中，1~3步只需在项目初始化或更新组件库时操作，4步是在开发过程中执行，5步则是在开发完成后执行
   * npm run dev 指令的参数应该是当前的项目文件夹(webapp下可能有多个独立的子项目)，当其中的文件有更改时，浏览器会自动刷新，从而呈现最新效果
   * npm run bundle 会将特定的html文件的依赖js及css文件打包并压缩，该指令的参数应该是html文件的入口js文件(在html中通过System.import()指定的js文件)。

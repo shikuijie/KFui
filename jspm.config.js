@@ -15,7 +15,7 @@ System.config({
   bundles: {
     "lib.bundle.js": [
       "lib.js"
-    ],
+		],
     "demo/index.bundle.js": [
       "demo/index.js",
       "demo/form.js",
