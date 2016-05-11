@@ -31,8 +31,7 @@ var fs = require('fs'),
     jspmCfg = 'jspm.config.js',
     mockDir = 'mock',
     distDir = 'dist',
-    wrapDir = 'KFui',
-    libJs = 'lib.js',
+    libJs = 'module/lib.js',
 
     mockJs = path.join(mockDir, '/**/*.js');
 
@@ -142,7 +141,7 @@ gulp.task('dev:watch', ['dev:init'], function() {
 gulp.task('server', function() {
   connect.server({
     host: '0.0.0.0',
-    root: '..',
+    root: '.',
     port: 8080,
     livereload: {
       port: 35730
@@ -257,7 +256,7 @@ gulp.task('lib', function() {
       gulp.src(bundleJs)
           .pipe(through2.obj(function(file, encoding, done) {
             var contents = String(file.contents);
-            contents = contents.replace(/url\(jspm_packages/g, 'url(/KFui/jspm_packages');
+            contents = contents.replace(/url\(jspm_packages/g, 'url(/jspm_packages');
             file.contents = new Buffer(contents);
             this.push(file);
             done();

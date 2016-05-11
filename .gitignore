@@ -41,3 +41,7 @@ jspm_packages
 mock
 
 .DS_Store
+
+# bundle
+*.bundle.js
+*.bundle.js.map

@@ -35,9 +35,9 @@
     "through2": "^2.0.1"
   },
   "jspm": {
-    "main": "ui.js",
+    "main": "module/lib.js",
     "directories": {
-      "lib": "src/module"
+      "lib": "."
     },
     "configFile": "jspm.config.js",
     "dependencies": {
