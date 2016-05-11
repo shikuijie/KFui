@@ -41,10 +41,7 @@ gulp.task('dev', ['dev:css', 'dev:watch', 'dev:reload', 'server']);
 gulp.task('dev:init', function(cb) {
   mkdirp.sync(mockDir);
 
-  srcDir = process.argv[3] && process.argv[3].replace('--', '');
-  if(!srcDir) {
-    console.log('请指定代码文件夹路径[npm run dev -- --xxx]');
-  }
+  srcDir = process.argv[3] && process.argv[3].replace('--', '') || '.';
   mkdirp.sync(srcDir);
 
   srcHtml = path.join(srcDir, '/**/*.html'),
@@ -227,8 +224,8 @@ gulp.task('bundle', function() {
     console.log('请指定需要打包的文件路径[npm run bundle -- --xxx]');
     return;
   }
-  var bundleJs = entryJs.replace('.js', '.bundle.js');
-  var cmd = 'jspm bundle ' + entryJs + ' - kfui ' + bundleJs + ' --minify --inject';
+  var bundleJs = entryJs.replace(/(\.js)?$/, '.bundle.js');
+  var cmd = 'jspm bundle ' + entryJs + (entryJs == 'kfui' ? ' ' : ' - kfui ') + bundleJs + ' --minify --inject';
   console.log(cmd);
 
   var self = this;
@@ -237,45 +234,6 @@ gulp.task('bundle', function() {
       console.log(err);
       self.push(file);
       done();
-    }
-  });
-});
-
-gulp.task('lib', function() {
-  var bundleJs = libJs.replace('.js', '.bundle.js');
-  var cmd = 'jspm bundle ' + libJs + ' ' + bundleJs + ' --minify --inject';
-  console.log(cmd);
-
-  var self = this;
-  exec(cmd, function(err) {
-    if(err) {
-      console.log(err);
-      self.push(file);
-      done();
-    } else {
-      gulp.src(bundleJs)
-          .pipe(through2.obj(function(file, encoding, done) {
-            var contents = String(file.contents);
-            contents = contents.replace(/url\(jspm_packages/g, 'url(/jspm_packages');
-            file.contents = new Buffer(contents);
-            this.push(file);
-            done();
-          }))
-          .pipe(gulp.dest(path.dirname(bundleJs)));
-
-      gulp.src(jspmCfg)
-          .pipe(through2.obj(function(file, encoding, done) {
-            var contents = String(file.contents);
-            var bundleRe = new RegExp('(bundles:\\s*\\{\\s*[^\}]*,?"' + bundleJs + '":\\s*\\[\\s*"' + libJs + '"),?\\s*[^\\]]*\\]');
-            contents = contents.replace(bundleRe, function(s0, s1) {
-              return s1 + '\n\t\t]';
-            });
-
-            file.contents = new Buffer(contents);
-            this.push(file);
-            done();
-          }))
-          .pipe(gulp.dest(path.dirname(jspmCfg)));
     }
   });
 });

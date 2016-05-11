@@ -12,11 +12,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-  bundles: {
-    "module/lib.bundle.js": [
-      "module/lib.js"
-		]
-  },
 
   map: {
     "animate.css": "npm:animate.css@3.5.1",
