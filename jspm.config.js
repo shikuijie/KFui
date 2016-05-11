@@ -12,6 +12,19 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+  bundles: {
+    "lib.bundle.js": [
+      "lib.js"
+    ],
+    "demo/index.bundle.js": [
+      "demo/index.js",
+      "demo/form.js",
+      "demo/mtable.js",
+      "demo/ttable.js",
+      "demo/stable.js",
+      "demo/tree.js"
+    ]
+  },
 
   map: {
     "animate.css": "npm:animate.css@3.5.1",
