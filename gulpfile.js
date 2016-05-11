@@ -141,8 +141,8 @@ gulp.task('dev:watch', ['dev:init'], function() {
 gulp.task('server', function() {
   connect.server({
     host: '0.0.0.0',
-    root: './',
-    port: 8080,
+    root: '..',
+    port: 8765,
     livereload: {
       port: 35730
     },
@@ -256,7 +256,7 @@ gulp.task('lib', function() {
       gulp.src(bundleJs)
           .pipe(through2.obj(function(file, encoding, done) {
             var contents = String(file.contents);
-            contents = contents.replace(/url\(jspm_packages/g, 'url(/jspm_packages');
+            contents = contents.replace(/url\(jspm_packages/g, 'url(/KFui/jspm_packages');
             file.contents = new Buffer(contents);
             this.push(file);
             done();

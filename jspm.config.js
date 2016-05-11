@@ -1,5 +1,5 @@
 System.config({
-  baseURL: "/",
+  baseURL: "/KFui",
   defaultJSExtensions: true,
   transpiler: "babel",
   babelOptions: {
@@ -11,19 +11,6 @@ System.config({
   paths: {
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
-  },
-  bundles: {
-    "lib.bundle.js": [
-      "lib.js"
-		],
-    "demo/index.bundle.js": [
-      "demo/index.js",
-      "demo/form.js",
-      "demo/stable.js",
-      "demo/mtable.js",
-      "demo/ttable.js",
-      "demo/tree.js"
-    ]
   },
 
   map: {
