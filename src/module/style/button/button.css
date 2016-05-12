@@ -17,13 +17,11 @@ a.kf-btn {
 }
 .kf-btn-group {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 .kf-btn-group > .kf-btn {
   -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;
 }

@@ -7,13 +7,11 @@
 }
 .kf-input-group {
   display: -webkit-box;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 .kf-input-group > * {
   -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
   border: 1px solid #bdc3c7;
@@ -39,7 +37,6 @@
   white-space: nowrap;
   background-color: white;
   -webkit-box-flex: 0;
-  -webkit-flex-grow: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;
 }
