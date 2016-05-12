@@ -29,11 +29,10 @@ var fs = require('fs'),
                   })],
 
     jspmCfg = 'config.js',
-    jspmPkg = 'jspm_packages/**/*',
-    npmPkg = 'node_modules/**/*',
     mockDir = 'mock',
     distDir = 'dist',
     libJs = 'module/lib.js',
+    uiName = 'kfui',
 
     mockJs = path.join(mockDir, '/**/*.js');
 
@@ -57,7 +56,7 @@ gulp.task('dev:init', function(cb) {
 
 /** 处理.less文件 **/
 gulp.task('dev:css', ['dev:init'], function(cb) {
-  gulp.src([srcLess, '!' + jspmPkg, '!' + npmPkg])
+  gulp.src(srcLess)
       .pipe(less())
       .pipe(rename({extname: '.css'}))
       .pipe(postcss(cssPlugins))
@@ -69,8 +68,8 @@ gulp.task('dev:css', ['dev:init'], function(cb) {
 
 /** 自动刷新页面 **/
 gulp.task('dev:reload', ['dev:init'], function() {
-  gulp.src([srcJs, srcCss, srcHtml, '!' + jspmPkg, '!' + npmPkg])
-      .pipe(watch([srcJs, srcCss, srcHtml, '!' + jspmPkg, '!' + npmPkg]))
+  gulp.src([srcJs, srcCss, srcHtml])
+      .pipe(watch([srcJs, srcCss, srcHtml]))
       .pipe(connect.reload());
 
   gulp.src(mockJs)
@@ -89,7 +88,7 @@ gulp.task('dev:watch', ['dev:init'], function() {
     };
   }
 
-  watch([srcAll, '!' + jspmPkg, '!' + npmPkg])
+  watch(srcAll)
     .on('change', function(absFilePath) {
       var paths = getPaths(absFilePath);
 
@@ -106,7 +105,7 @@ gulp.task('dev:watch', ['dev:init'], function() {
       console.log(paths.srcPath + ' deleted');
     });
 
-  watch([srcLess, '!' + jspmPkg, '!' + npmPkg])
+  watch(srcLess)
     .on('change', function(absFilePath) {
       var paths = getPaths(absFilePath);
 
@@ -222,7 +221,7 @@ gulp.task('bundle', function() {
     return;
   }
   var bundleJs = entryJs.replace(/(\.js)?$/, '.bundle.js');
-  var cmd = 'jspm bundle ' + entryJs + (entryJs == 'kfui' ? ' ' : ' - kfui ') + bundleJs + ' --minify --inject';
+  var cmd = 'jspm bundle ' + entryJs + (entryJs == uiName ? ' ' : (' - ' + uiName + ' ')) + bundleJs + ' --minify --inject';
   console.log(cmd);
 
   var self = this;
@@ -231,6 +230,7 @@ gulp.task('bundle', function() {
       console.log(err);
       self.push(file);
       done();
+    } else if(entryJs == uiName) {
     }
   });
 });
