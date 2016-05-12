@@ -24,6 +24,8 @@ var fs = require('fs'),
                           var basename = path.basename(cssFileName, '.css'),
                               dirname = path.dirname(cssFileName),
                               cssmap = path.join(dirname, basename + '.css.map.js');
+
+                          if(Object.keys(json).length == 0) return;
                           fs.writeFileSync(cssmap, 'export default ' + JSON.stringify(json));
                       }
                   })],

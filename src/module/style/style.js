@@ -1,6 +1,6 @@
-import './reset.css!';
-import './button.css!';
-import './clearfix.css!';
-import './form.css!';
-import './grid.css!';
-import './input.css!';
+import './reset/reset.css!';
+import './button/button.css!';
+import './clearfix/clearfix.css!';
+import './form/form.css!';
+import './grid/grid.css!';
+import './input/input.css!';
