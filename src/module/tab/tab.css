@@ -1,9 +1,9 @@
-._tabs_111pl_1 > ul > li {
+._tabs_tht14_1 > ul > li {
   cursor: pointer;
   white-space: nowrap;
   background-color: white;
 }
-._tabs_111pl_1 > ul > li[kf-tab-active] {
+._tabs_tht14_1 > ul > li[kf-tab-active] {
   position: relative;
 }
 .kf-tab > ul {
@@ -23,6 +23,7 @@
 }
 .kf-tab:not(.kf-vertical) > ul {
   border-right: none !important;
+  text-align: left;
 }
 .kf-tab:not(.kf-vertical) > ul > li {
   display: inline-block;
