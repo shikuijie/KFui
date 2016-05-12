@@ -231,6 +231,15 @@ gulp.task('bundle', function() {
       self.push(file);
       done();
     } else if(entryJs == uiName) {
+      gulp.src(bundleJs)
+          .pipe(through2.obj(function(file, encoding, done) {
+            var contents = String(file.contents);
+            contents = contents.replace(/url\(jspm_packages/g, 'url(/jspm_packages');
+            file.contents = new Buffer(contents);
+            this.push(file);
+            done();
+          }))
+          .pipe(gulp.dest(path.dirname(bundleJs)));
     }
   });
 });
