@@ -35,11 +35,10 @@
     "through2": "^2.0.1"
   },
   "jspm": {
-    "main": "module/lib.js",
+    "main": "src/module/lib.js",
     "directories": {
       "lib": "."
     },
-    "configFile": "jspm.config.js",
     "dependencies": {
       "animate.css": "npm:animate.css@^3.5.1",
       "clean-css": "npm:clean-css@^3.4.9",

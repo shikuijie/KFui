@@ -28,7 +28,9 @@ var fs = require('fs'),
                       }
                   })],
 
-    jspmCfg = 'jspm.config.js',
+    jspmCfg = 'config.js',
+    jspmPkg = 'jspm_packages/**/*',
+    npmPkg = 'node_modules/**/*',
     mockDir = 'mock',
     distDir = 'dist',
     libJs = 'module/lib.js',
@@ -41,7 +43,7 @@ gulp.task('dev', ['dev:css', 'dev:watch', 'dev:reload', 'server']);
 gulp.task('dev:init', function(cb) {
   mkdirp.sync(mockDir);
 
-  srcDir = process.argv[3] && process.argv[3].replace('--', '') || '.';
+  srcDir = process.argv[3] && process.argv[3].replace('--', '') || 'src';
   mkdirp.sync(srcDir);
 
   srcHtml = path.join(srcDir, '/**/*.html'),
@@ -52,11 +54,10 @@ gulp.task('dev:init', function(cb) {
 
   cb();
 });
-/************************/
 
 /** 处理.less文件 **/
 gulp.task('dev:css', ['dev:init'], function(cb) {
-  gulp.src(srcLess)
+  gulp.src([srcLess, '!' + jspmPkg, '!' + npmPkg])
       .pipe(less())
       .pipe(rename({extname: '.css'}))
       .pipe(postcss(cssPlugins))
@@ -65,12 +66,11 @@ gulp.task('dev:css', ['dev:init'], function(cb) {
           cb();
       });
 });
-/****************************/
 
 /** 自动刷新页面 **/
 gulp.task('dev:reload', ['dev:init'], function() {
-  gulp.src([srcJs, srcCss, srcHtml])
-      .pipe(watch([srcJs, srcCss, srcHtml]))
+  gulp.src([srcJs, srcCss, srcHtml, '!' + jspmPkg, '!' + npmPkg])
+      .pipe(watch([srcJs, srcCss, srcHtml, '!' + jspmPkg, '!' + npmPkg]))
       .pipe(connect.reload());
 
   gulp.src(mockJs)
@@ -89,7 +89,7 @@ gulp.task('dev:watch', ['dev:init'], function() {
     };
   }
 
-  watch(srcAll)
+  watch([srcAll, '!' + jspmPkg, '!' + npmPkg])
     .on('change', function(absFilePath) {
       var paths = getPaths(absFilePath);
 
@@ -106,7 +106,7 @@ gulp.task('dev:watch', ['dev:init'], function() {
       console.log(paths.srcPath + ' deleted');
     });
 
-  watch(srcLess)
+  watch([srcLess, '!' + jspmPkg, '!' + npmPkg])
     .on('change', function(absFilePath) {
       var paths = getPaths(absFilePath);
 
@@ -132,7 +132,6 @@ gulp.task('dev:watch', ['dev:init'], function() {
       del(paths.srcPath.replace('.less', '.css.map.js'));
     });
 });
-/****************/
 
 /** 启动本地服务器 **/
 gulp.task('server', function() {
@@ -180,7 +179,6 @@ gulp.task('server', function() {
     }
   });
 });
-/******************/
 
 /** 生成精灵图 **/
 gulp.task('sprite', function() {
@@ -197,7 +195,6 @@ gulp.task('sprite', function() {
     console.log('请指定精灵图所在的文件夹[npm run sprite -- --xxx]');
   }
 });
-/***************/
 
 /** 压缩图片 **/
 gulp.task('image', function(cb) {
@@ -216,8 +213,8 @@ gulp.task('image', function(cb) {
         cb();
       });
 });
-/*******************/
 
+/** 打包压缩 **/
 gulp.task('bundle', function() {
   var entryJs = process.argv[3] && process.argv[3].replace('--', '');
   if(!entryJs) {

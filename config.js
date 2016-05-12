@@ -23,7 +23,7 @@ System.config({
     "font-awesome": "npm:font-awesome@4.6.1",
     "image": "github:systemjs/plugin-image@0.1.0",
     "json": "github:systemjs/plugin-json@0.1.2",
-    "kfui": "module/lib.js",
+    "kfui": "src/module/lib.js",
     "lodash": "npm:lodash@4.11.2",
     "reflect-metadata": "npm:reflect-metadata@0.1.3",
     "text": "github:systemjs/plugin-text@0.0.4",
