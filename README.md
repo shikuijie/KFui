@@ -9,9 +9,9 @@
 
 ### 开发流程
   1. node，npm安装，请前往[node官网](https://nodejs.org/en)下载安装
-  2. 安装前端工具jspm: npm install -g jspm(遇到提问就按Enter)
+  2. 安装前端工具jspm: npm install -g jspm
   3. cd xxx(项目根目录，比如webapp)
-  4. 安装组件库 jspm install kfui=github:shikuijie/KFui
+  4. 安装组件库 jspm install kfui=github:shikuijie/KFui(遇到提问就按Enter)
   5. 将jspm_packages/github/shikuijie/KFui@xxx/下的package.json和gulpfile.js考到项目根目录下
   6. npm install (安装本地开发用到的nodejs库)
   7. npm run bundle -- --kfui (打包组件代码)
