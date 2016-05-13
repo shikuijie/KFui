@@ -1,9 +1,9 @@
-._tabs_tht14_1 > ul > li {
+._tabs_1ksex_1 > ul > li {
   cursor: pointer;
   white-space: nowrap;
   background-color: white;
 }
-._tabs_tht14_1 > ul > li[kf-tab-active] {
+._tabs_1ksex_1 > ul > li[kf-tab-active] {
   position: relative;
 }
 .kf-tab > ul {
@@ -36,11 +36,13 @@
 }
 .kf-tab.kf-vertical {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 .kf-tab.kf-vertical > ul {
   -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;
   border-bottom: none !important;
@@ -56,16 +58,17 @@
 }
 .kf-tab.kf-vertical > div {
   -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
 .kf-tab.kf-primary > ul {
   background-color: white;
-  border-bottom: 1px solid #30c9e8;
-  border-right: 1px solid #30c9e8;
+  border-bottom: 1px solid #3c8dbc;
+  border-right: 1px solid #3c8dbc;
 }
 .kf-tab.kf-primary > ul > li[kf-tab-active] {
-  border: 1px solid #30c9e8;
+  border: 1px solid #3c8dbc;
 }
 .kf-tab.kf-accent > ul {
   background-color: white;

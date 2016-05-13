@@ -1,10 +1,10 @@
-._tips_6uds3_1 {
+._tips_13ms7_1 {
   position: fixed;
   top: 5.4vh;
   right: 10px;
   z-index: 1000;
 }
-._tips_6uds3_1 ._item_6uds3_7 {
+._tips_13ms7_1 ._item_13ms7_7 {
   position: relative;
   height: 40px;
   overflow: hidden;
@@ -17,35 +17,35 @@
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
-._tips_6uds3_1 ._item_6uds3_7 ._success_6uds3_20 {
+._tips_13ms7_1 ._item_13ms7_7 ._success_13ms7_20 {
   padding: 0 20px 0 15px;
-  background-color: #30c9e8;
+  background-color: #3c8dbc;
 }
-._tips_6uds3_1 ._item_6uds3_7 span {
+._tips_13ms7_1 ._item_13ms7_7 span {
   margin-right: 5px;
 }
-._tips_6uds3_1 ._item_6uds3_7 ._error_6uds3_27 {
+._tips_13ms7_1 ._item_13ms7_7 ._error_13ms7_27 {
   padding: 0 20px 0 15px;
   background-color: #e74c3c;
 }
-._tips_6uds3_1 ._item_6uds3_7 ._close_6uds3_31 {
+._tips_13ms7_1 ._item_13ms7_7 ._close_13ms7_31 {
   position: absolute;
   right: 10px;
   top: 13px;
   cursor: pointer;
 }
-._tips_6uds3_1 ._item_6uds3_7 ._icon_6uds3_37 {
+._tips_13ms7_1 ._item_13ms7_7 ._icon_13ms7_37 {
   margin-right: 4px;
 }
-._tips_6uds3_1 ._show_6uds3_40 {
-  -webkit-animation-name: _show_6uds3_40;
-  animation-name: _show_6uds3_40;
+._tips_13ms7_1 ._show_13ms7_40 {
+  -webkit-animation-name: _show_13ms7_40;
+  animation-name: _show_13ms7_40;
 }
-._tips_6uds3_1 ._hide_6uds3_44 {
-  -webkit-animation-name: _hide_6uds3_44;
-  animation-name: _hide_6uds3_44;
+._tips_13ms7_1 ._hide_13ms7_44 {
+  -webkit-animation-name: _hide_13ms7_44;
+  animation-name: _hide_13ms7_44;
 }
-@-webkit-keyframes _show_6uds3_40 {
+@-webkit-keyframes _show_13ms7_40 {
   from {
     opacity: 0;
     height: 0;
@@ -55,7 +55,7 @@
     height: 40px;
   }
 }
-@keyframes _show_6uds3_40 {
+@keyframes _show_13ms7_40 {
   from {
     opacity: 0;
     height: 0;
@@ -65,7 +65,7 @@
     height: 40px;
   }
 }
-@-webkit-keyframes _hide_6uds3_44 {
+@-webkit-keyframes _hide_13ms7_44 {
   from {
     opacity: 1;
     height: 40px;
@@ -75,7 +75,7 @@
     height: 0;
   }
 }
-@keyframes _hide_6uds3_44 {
+@keyframes _hide_13ms7_44 {
   from {
     opacity: 1;
     height: 40px;

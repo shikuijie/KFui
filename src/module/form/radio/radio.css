@@ -1,11 +1,11 @@
-._rdgrp_1msnt_1 {
+._rdgrp_13ja2_1 {
   display: inline-block;
 }
-._rdgrp_1msnt_1 > span {
+._rdgrp_13ja2_1 > span {
   display: inline-block;
   position: relative;
 }
-._rdgrp_1msnt_1 > span > input[type=radio] {
+._rdgrp_13ja2_1 > span > input[type=radio] {
   position: absolute;
   display: inline-block;
   left: 0;
@@ -16,8 +16,8 @@
   z-index: 1;
   margin: 0;
 }
-._rdgrp_1msnt_1 > span > span,
-._rdgrp_1msnt_1 > span > i {
+._rdgrp_13ja2_1 > span > span,
+._rdgrp_13ja2_1 > span > i {
   position: absolute;
   left: 0;
   top: 50%;
@@ -26,7 +26,7 @@
   -webkit-transition: color .2s ease;
   transition: color .2s ease;
 }
-._rdgrp_1msnt_1 > span > i {
+._rdgrp_13ja2_1 > span > i {
   color: transparent;
 }
 .kf-radio-group > span > input[type=radio]:checked + i {
@@ -62,7 +62,7 @@
   font-size: 14px;
 }
 .kf-radio-group.kf-primary > span > input[type=radio]:checked + i {
-  color: #30c9e8;
+  color: #3c8dbc;
 }
 .kf-radio-group.kf-primary > span > input[type=radio]:checked ~ span {
   color: transparent;

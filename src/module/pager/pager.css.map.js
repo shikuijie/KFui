@@ -1,1 +1,1 @@
-export default {"pager":"_pager_1mt8t_1","right":"_right_1mt8t_36","entry":"_entry_1mt8t_40","slash":"_slash_1mt8t_56","pageNo":"_pageNo_1mt8t_59","input":"_input_1mt8t_62"}
+export default {"pager":"_pager_3birw_1","right":"_right_3birw_36","entry":"_entry_3birw_40","slash":"_slash_3birw_56","pageNo":"_pageNo_3birw_59","input":"_input_3birw_62"}

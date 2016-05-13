@@ -1,7 +1,7 @@
-._autoinput_1uycd_1 {
+._autoinput_1dwts_1 {
   position: relative;
 }
-._autoinput_1uycd_1 ._bg_1uycd_4 {
+._autoinput_1dwts_1 ._bg_1dwts_4 {
   position: fixed;
   left: 0;
   right: 0;
@@ -9,11 +9,11 @@
   bottom: 0;
   opacity: 0;
 }
-._autoinput_1uycd_1 ._list_1uycd_12._visible_1uycd_12 {
+._autoinput_1dwts_1 ._list_1dwts_12._visible_1dwts_12 {
   visibility: visible;
   opacity: 1;
 }
-._autoinput_1uycd_1 ._list_1uycd_12 {
+._autoinput_1dwts_1 ._list_1dwts_12 {
   overflow-y: overlay;
   position: absolute;
   top: 100%;
@@ -30,7 +30,7 @@
   -webkit-transition: opacity .2s linear, visibility .2s linear;
   transition: opacity .2s linear, visibility .2s linear;
 }
-._autoinput_1uycd_1 ._list_1uycd_12 li span {
+._autoinput_1dwts_1 ._list_1dwts_12 li span {
   display: block;
   overflow: hidden;
   white-space: nowrap;
@@ -71,16 +71,16 @@
 }
 .kf-autoinput.kf-primary,
 .kf-input-group > .kf-autoinput.kf-primary {
-  border: 1px solid #30c9e8;
+  border: 1px solid #3c8dbc;
 }
 .kf-autoinput.kf-primary > ul > li > span:hover,
 .kf-input-group > .kf-autoinput.kf-primary > ul > li > span:hover {
-  background-color: #30c9e8;
+  background-color: #3c8dbc;
   color: #fff;
 }
 .kf-autoinput.kf-primary > ul > li > span.active,
 .kf-input-group > .kf-autoinput.kf-primary > ul > li > span.active {
-  background-color: #30c9e8;
+  background-color: #3c8dbc;
   color: #fff;
 }
 .kf-autoinput.kf-accent,

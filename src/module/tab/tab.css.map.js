@@ -1,1 +1,1 @@
-export default {"tabs":"_tabs_tht14_1"}
+export default {"tabs":"_tabs_1ksex_1"}

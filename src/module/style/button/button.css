@@ -17,11 +17,13 @@ a.kf-btn {
 }
 .kf-btn-group {
   display: -webkit-box;
+  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 .kf-btn-group > .kf-btn {
   -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;
 }
@@ -70,14 +72,14 @@ a.kf-btn {
 .kf-btn.kf-primary,
 .kf-btn-group.kf-primary > .kf-btn,
 .kf-btn-group > .kf-btn.kf-primary {
-  background-color: #30c9e8;
-  border: 1px solid #17afce;
+  background-color: #3c8dbc;
+  border: 1px solid #307095;
   color: white;
 }
 .kf-btn.kf-primary:focus,
 .kf-btn-group.kf-primary > .kf-btn:focus,
 .kf-btn-group > .kf-btn.kf-primary:focus {
-  background-color: #17afce;
+  background-color: #307095;
 }
 .kf-btn.kf-accent,
 .kf-btn-group.kf-accent > .kf-btn,
