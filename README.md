@@ -15,7 +15,7 @@
   5. 将jspm_packages/github/shikuijie/KFui@xxx/下的package.json和gulpfile.js考到项目根目录下
   6. npm install (安装本地开发用到的nodejs库)
   7. npm run bundle -- --kfui (打包组件代码)
-  8. npm run dev -- --xxx (启动本地服务器)
+  8. npm run dev -- --xxx (启动本地服务器，用户现在可以编写项目代码了，用法请参考jspm_packages/github/shikuijie/KFui@xxx/demo中的示例)
   9. npm run bundle -- --xxx.js (打包自己的前端代码, 参数为项目的入口js文件)
 
 #### 注意事项
