@@ -84,10 +84,15 @@ vue.component('kf-select', {
     },
     hide: function() {
       this.visible = false;
+    },
+    show: function() {
+      if(this.options.length) {
+        this.visible = true;
+      }
     }
   },
   template:
-    '<div :class="cls.select" class="kf-select" @click="visible = true">' +
+    '<div :class="cls.select" class="kf-select" @click="show()">' +
       '<input type="select" autocomplete="off" :name="name" :required="required" :value="selectedLabel">' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<i></i>' +
