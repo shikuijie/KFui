@@ -8,13 +8,11 @@ vue.component('kf-select', {
     value: null,
     options: {
       type: Array,
-      required: true
+      default: () => { return []; }
     },
     labels: {
       type: Array,
-      default: function() {
-        return [];
-      }
+      default: () => { return []; }
     },
     name: String,
     required: {
