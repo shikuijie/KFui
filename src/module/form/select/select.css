@@ -1,12 +1,12 @@
-._select_1yw2o_1 {
+._select_1560y_1 {
   position: relative;
   display: inline-block;
   padding-right: 15px !important;
 }
-._select_1yw2o_1 > input {
+._select_1560y_1 > input {
   cursor: pointer;
 }
-._select_1yw2o_1 > ._bg_1yw2o_9 {
+._select_1560y_1 > ._bg_1560y_9 {
   position: fixed;
   left: 0;
   top: 0;
@@ -15,7 +15,7 @@
   z-index: 2015;
   opacity: 0;
 }
-._select_1yw2o_1 > i {
+._select_1560y_1 > i {
   position: absolute;
   display: inline-block;
   top: 50%;
@@ -23,17 +23,17 @@
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
-._select_1yw2o_1 > ul._visible_1yw2o_25 {
+._select_1560y_1 > ul._visible_1560y_25 {
   visibility: visible;
   opacity: 1;
 }
-._select_1yw2o_1 > ul {
+._select_1560y_1 > ul {
   position: absolute;
   white-space: nowrap;
+  max-height: 618px;
+  overflow: auto;
+  min-width: 100%;
   z-index: 2016;
-  margin: 0;
-  padding: 0;
-  list-style: none;
   left: 0;
   top: 100%;
   border: 1px solid #ecf0f1;
@@ -43,33 +43,33 @@
   transition: opacity .2s linear, visibility .2s linear;
   color: #34495e;
 }
-._select_1yw2o_1 > ul._left_1yw2o_44._bottom_1yw2o_44 {
+._select_1560y_1 > ul._left_1560y_44._bottom_1560y_44 {
   box-shadow: 2px 2px #ecf0f1;
 }
-._select_1yw2o_1 > ul._left_1yw2o_44._top_1yw2o_47 {
+._select_1560y_1 > ul._left_1560y_44._top_1560y_47 {
   box-shadow: 2px -2px #ecf0f1;
 }
-._select_1yw2o_1 > ul._right_1yw2o_50._bottom_1yw2o_44 {
+._select_1560y_1 > ul._right_1560y_50._bottom_1560y_44 {
   box-shadow: -2px 2px #ecf0f1;
 }
-._select_1yw2o_1 > ul._right_1yw2o_50._top_1yw2o_47 {
+._select_1560y_1 > ul._right_1560y_50._top_1560y_47 {
   box-shadow: -2px -2px #ecf0f1;
 }
-._select_1yw2o_1 > ul._right_1yw2o_50 {
+._select_1560y_1 > ul._right_1560y_50 {
   right: 0;
   left: auto;
   box-shadow: inset;
 }
-._select_1yw2o_1 > ul._top_1yw2o_47 {
+._select_1560y_1 > ul._top_1560y_47 {
   bottom: 100%;
   top: auto;
   margin-bottom: 3px;
   margin-top: 0;
 }
-._select_1yw2o_1 > ul li:not(:last-child) {
+._select_1560y_1 > ul li:not(:last-child) {
   padding-bottom: 0 !important;
 }
-._select_1yw2o_1 > ul li > div {
+._select_1560y_1 > ul li > div {
   cursor: pointer;
 }
 .kf-select,
