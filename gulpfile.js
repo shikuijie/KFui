@@ -229,7 +229,7 @@ gulp.task(uiName, function() {
       console.log(err);
       self.push(file);
       done();
-    } else if(entryJs == uiName) {
+    } else {
       gulp.src(bundleJs)
           .pipe(through2.obj(function(file, encoding, done) {
             var contents = String(file.contents);
