@@ -35,6 +35,7 @@ var fs = require('fs'),
     distDir = 'dist',
     libJs = 'module/lib.js',
     uiName = 'kfui',
+    uiPath = 'jspm_packages/github/shikuijie/KFui@master/' + uiName + '.bundle.js';
 
     mockJs = path.join(mockDir, '/**/*.js');
 
@@ -215,15 +216,11 @@ gulp.task('image', function(cb) {
       });
 });
 
-/** 打包压缩 **/
-gulp.task('bundle', function() {
-  var entryJs = process.argv[3] && process.argv[3].replace('--', '');
-  if(!entryJs) {
-    console.log('请指定需要打包的文件路径[npm run bundle -- --xxx]');
-    return;
-  }
-  var bundleJs = entryJs.replace(/(\.js)?$/, '.bundle.js');
-  var cmd = 'jspm bundle ' + entryJs + (entryJs == uiName ? ' ' : (' - ' + uiName + ' ')) + bundleJs + ' --minify --inject';
+/** 打包库文件 **/
+gulp.task(uiName, function() {
+  var baseUrl = process.argv[3] && process.argv[3].replace('--', '') || '';
+  var packageUrl = path.join('/', baseUrl, 'jspm_packages');
+  var cmd = 'jspm bundle ' + uiName + ' ' + path.join('/', baseUrl, uiPath) + ' --minify --inject';
   console.log(cmd);
 
   var self = this;
@@ -236,12 +233,34 @@ gulp.task('bundle', function() {
       gulp.src(bundleJs)
           .pipe(through2.obj(function(file, encoding, done) {
             var contents = String(file.contents);
-            contents = contents.replace(/url\(jspm_packages/g, 'url(/jspm_packages');
+            contents = contents.replace(/url\(jspm_packages/g, 'url(' + packageUrl);
             file.contents = new Buffer(contents);
             this.push(file);
             done();
           }))
           .pipe(gulp.dest(path.dirname(bundleJs)));
+    }
+  });
+});
+
+/** 打包压缩 **/
+gulp.task('bundle', function() {
+  var entryJs = process.argv[3] && process.argv[3].replace('--', '');
+  if(!entryJs) {
+    console.log('请指定打包入口js文件[npm run bundel -- --entry.js]');
+    return;
+  }
+
+  var bundleJs = entryJs.replace(/(\.js)?$/, '.bundle.js');
+  var cmd = 'jspm bundle ' + entryJs + ' - ' + uiName + ' ' + bundleJs + ' --minify --inject';
+  console.log(cmd);
+
+  var self = this;
+  exec(cmd, function(err) {
+    if(err) {
+      console.log(err);
+      self.push(file);
+      done();
     }
   });
 });
