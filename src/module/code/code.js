@@ -1,4 +1,5 @@
 import vue from 'vue';
+import _ from 'lodash';
 
 /**
   @kf-comment-type    {自定义指令}
@@ -10,7 +11,11 @@ import vue from 'vue';
 */
 vue.directive('kf-code', {
   update: function(newVal) {
-    this.el.innerHTML = newVal;
+    if(_.isUndefined(newVal)) {
+      this.el.innerHTML = '';
+    } else {
+      this.el.innerHTML = newVal;
+    }
     this.vm.$compile(this.el);
   }
 });
