@@ -272,7 +272,7 @@ gulp.task('sfx', function() {
   }
 
   var bundleJs = entryJs.replace(/(\.js)?$/, '.bundle.js');
-  var cmd = 'jspm bundle-sfx ' + entryJs + ' - ' + uiName + ' ' + bundleJs + ' --minify';
+  var cmd = 'jspm bundle-sfx ' + entryJs + ' ' + bundleJs + ' --minify';
   console.log(cmd);
 
   var self = this;
