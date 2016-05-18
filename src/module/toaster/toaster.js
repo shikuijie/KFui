@@ -1,6 +1,5 @@
 import vue from 'vue';
 import './toaster.css!';
-import 'font-awesome';
 import cls from './toaster.css.map';
 
 vue.transition('kf-toaster-fade', {
