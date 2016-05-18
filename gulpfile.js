@@ -218,8 +218,6 @@ gulp.task('image', function(cb) {
 
 /** 打包库文件 **/
 gulp.task(uiName, function() {
-  var baseUrl = process.argv[3] && process.argv[3].replace('--', '') || '';
-  var packageUrl = path.join('/', baseUrl, 'jspm_packages');
   var cmd = 'jspm bundle ' + uiName + ' ' + uiPath + ' --minify --inject';
   console.log(cmd);
 
@@ -230,15 +228,15 @@ gulp.task(uiName, function() {
       self.push(file);
       done();
     } else {
-      gulp.src(bundleJs)
+      gulp.src(uiPath)
           .pipe(through2.obj(function(file, encoding, done) {
             var contents = String(file.contents);
-            contents = contents.replace(/url\(jspm_packages/g, 'url(' + packageUrl);
+            contents = contents.replace(/url\(jspm_packages/g, 'url(/jspm_packages');
             file.contents = new Buffer(contents);
             this.push(file);
             done();
           }))
-          .pipe(gulp.dest(path.dirname(bundleJs)));
+          .pipe(gulp.dest(path.dirname(uiPath)));
     }
   });
 });
@@ -253,6 +251,28 @@ gulp.task('bundle', function() {
 
   var bundleJs = entryJs.replace(/(\.js)?$/, '.bundle.js');
   var cmd = 'jspm bundle ' + entryJs + ' - ' + uiName + ' ' + bundleJs + ' --minify --inject';
+  console.log(cmd);
+
+  var self = this;
+  exec(cmd, function(err) {
+    if(err) {
+      console.log(err);
+      self.push(file);
+      done();
+    }
+  });
+});
+
+/** 打包成单个可运行文件 **/
+gulp.task('sfx', function() {
+  var entryJs = process.argv[3] && process.argv[3].replace('--', '');
+  if(!entryJs) {
+    console.log('请指定打包入口js文件[npm run bundel -- --entry.js]');
+    return;
+  }
+
+  var bundleJs = entryJs.replace(/(\.js)?$/, '.bundle.js');
+  var cmd = 'jspm bundle-sfx ' + entryJs + ' - ' + uiName + ' ' + bundleJs + ' --minify';
   console.log(cmd);
 
   var self = this;
