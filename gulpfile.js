@@ -217,7 +217,7 @@ gulp.task('image', function(cb) {
 });
 
 /** 打包库文件 **/
-gulp.task(uiName, function() {
+gulp.task(lib, function() {
   var cmd = 'jspm bundle ' + uiName + ' ' + uiPath + ' --minify --inject';
   console.log(cmd);
 

@@ -7,7 +7,8 @@
     "dev": "gulp dev",
     "sprite": "gulp sprite",
     "bundle": "gulp bundle",
-    "kfui": "gulp kfui"
+    "lib": "gulp lib",
+    "sfx": "gulp sfx"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.5",
