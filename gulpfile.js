@@ -220,7 +220,7 @@ gulp.task('image', function(cb) {
 gulp.task(uiName, function() {
   var baseUrl = process.argv[3] && process.argv[3].replace('--', '') || '';
   var packageUrl = path.join('/', baseUrl, 'jspm_packages');
-  var cmd = 'jspm bundle ' + uiName + ' ' + path.join('/', baseUrl, uiPath) + ' --minify --inject';
+  var cmd = 'jspm bundle ' + uiName + ' ' + uiPath + ' --minify --inject';
   console.log(cmd);
 
   var self = this;
