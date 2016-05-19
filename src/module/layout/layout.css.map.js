@@ -1,1 +1,0 @@
-export default {"wrapper":"_wrapper_1c4of_1","body":"_body_1c4of_4"}

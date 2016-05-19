@@ -1,9 +1,0 @@
-.kf-clearfix:before {
-  display: table;
-  content: " ";
-}
-.kf-clearfix:after {
-  display: table;
-  content: " ";
-  clear: both;
-}

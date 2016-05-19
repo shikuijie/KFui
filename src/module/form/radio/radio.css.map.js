@@ -1,1 +1,0 @@
-export default {"rdgrp":"_rdgrp_13ja2_1"}

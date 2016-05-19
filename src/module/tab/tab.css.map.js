@@ -1,1 +1,0 @@
-export default {"tabs":"_tabs_1ksex_1"}
