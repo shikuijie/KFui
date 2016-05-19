@@ -23,7 +23,7 @@ System.config({
     "font-awesome": "npm:font-awesome@4.6.1",
     "image": "github:systemjs/plugin-image@0.1.0",
     "json": "github:systemjs/plugin-json@0.1.2",
-    "kfui": "github:shikuijie/KFui@master",
+    "kfui": "src/module/lib.js",
     "lodash": "npm:lodash@4.12.0",
     "reflect-metadata": "npm:reflect-metadata@0.1.3",
     "text": "github:systemjs/plugin-text@0.0.4",
@@ -67,20 +67,6 @@ System.config({
     },
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
-    },
-    "github:shikuijie/KFui@master": {
-      "animate.css": "npm:animate.css@3.5.1",
-      "clean-css": "npm:clean-css@3.4.12",
-      "css": "github:systemjs/plugin-css@0.1.21",
-      "font-awesome": "npm:font-awesome@4.6.1",
-      "image": "github:systemjs/plugin-image@0.1.0",
-      "json": "github:systemjs/plugin-json@0.1.2",
-      "lodash": "npm:lodash@4.12.0",
-      "reflect-metadata": "npm:reflect-metadata@0.1.3",
-      "text": "github:systemjs/plugin-text@0.0.4",
-      "vue": "npm:vue@1.0.24",
-      "vue-resource": "npm:vue-resource@0.7.0",
-      "vue-router": "npm:vue-router@0.7.13"
     },
     "npm:amdefine@1.0.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
