@@ -42,6 +42,7 @@ mock
 
 .DS_Store
 
-# bundle
+*.css
+*.css.map.js
 *.bundle.js
 *.bundle.js.map
