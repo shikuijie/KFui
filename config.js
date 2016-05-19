@@ -23,15 +23,15 @@ System.config({
     "font-awesome": "npm:font-awesome@4.6.1",
     "image": "github:systemjs/plugin-image@0.1.0",
     "json": "github:systemjs/plugin-json@0.1.2",
-    "kfui": "src/module/lib.js",
-    "lodash": "npm:lodash@4.11.2",
+    "kfui": "github:shikuijie/KFui@master",
+    "lodash": "npm:lodash@4.12.0",
     "reflect-metadata": "npm:reflect-metadata@0.1.3",
     "text": "github:systemjs/plugin-text@0.0.4",
-    "vue": "npm:vue@1.0.21",
+    "vue": "npm:vue@1.0.24",
     "vue-resource": "npm:vue-resource@0.7.0",
     "vue-router": "npm:vue-router@0.7.13",
     "github:jspm/nodelibs-assert@0.1.0": {
-      "assert": "npm:assert@1.3.0"
+      "assert": "npm:assert@1.4.0"
     },
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.6.0"
@@ -57,7 +57,7 @@ System.config({
       "path-browserify": "npm:path-browserify@0.0.0"
     },
     "github:jspm/nodelibs-process@0.1.2": {
-      "process": "npm:process@0.11.2"
+      "process": "npm:process@0.11.3"
     },
     "github:jspm/nodelibs-stream@0.1.0": {
       "stream-browserify": "npm:stream-browserify@1.0.0"
@@ -68,17 +68,38 @@ System.config({
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
     },
+    "github:shikuijie/KFui@master": {
+      "animate.css": "npm:animate.css@3.5.1",
+      "clean-css": "npm:clean-css@3.4.12",
+      "css": "github:systemjs/plugin-css@0.1.21",
+      "font-awesome": "npm:font-awesome@4.6.1",
+      "image": "github:systemjs/plugin-image@0.1.0",
+      "json": "github:systemjs/plugin-json@0.1.2",
+      "lodash": "npm:lodash@4.12.0",
+      "reflect-metadata": "npm:reflect-metadata@0.1.3",
+      "text": "github:systemjs/plugin-text@0.0.4",
+      "vue": "npm:vue@1.0.24",
+      "vue-resource": "npm:vue-resource@0.7.0",
+      "vue-router": "npm:vue-router@0.7.13"
+    },
     "npm:amdefine@1.0.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "module": "github:jspm/nodelibs-module@0.1.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:assert@1.3.0": {
+    "npm:assert@1.4.0": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0",
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "buffer-shims": "npm:buffer-shims@1.0.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
       "util": "npm:util@0.10.3"
     },
     "npm:babel-runtime@5.8.35": {
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:buffer-shims@1.0.0": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
     "npm:buffer@3.6.0": {
       "base64-js": "npm:base64-js@0.0.8",
@@ -147,7 +168,7 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "source-map": "npm:source-map@0.1.31"
     },
-    "npm:lodash@4.11.2": {
+    "npm:lodash@4.12.0": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
@@ -157,7 +178,7 @@ System.config({
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:process@0.11.2": {
+    "npm:process@0.11.3": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
     },
     "npm:punycode@1.3.2": {
@@ -209,7 +230,7 @@ System.config({
       "inherits": "npm:inherits@2.0.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:vue@1.0.21": {
+    "npm:vue@1.0.24": {
       "envify": "npm:envify@3.4.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     }

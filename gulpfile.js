@@ -35,7 +35,8 @@ var fs = require('fs'),
     distDir = 'dist',
     libJs = 'module/lib.js',
     uiName = 'kfui',
-    uiPath = 'jspm_packages/github/shikuijie/KFui@master/' + uiName + '.bundle.js';
+    uiModPath = 'src/module',
+    uiPath = 'jspm_packages/github/shikuijie/';
 
     mockJs = path.join(mockDir, '/**/*.js');
 
@@ -79,7 +80,6 @@ gulp.task('dev:reload', ['dev:init'], function() {
       .pipe(watch(mockJs))
       .pipe(connect.reload());
 });
-/***************/
 
 /** 监听文件变化 **/
 gulp.task('dev:watch', ['dev:init'], function() {
@@ -216,8 +216,29 @@ gulp.task('image', function(cb) {
       });
 });
 
+gulp.task('lib:css', function() {
+  var files = fs.readdirSync(uiPath);
+  files.forEach(function(file) {
+    if(/^KFui@.*\.js$/.test(file)) {
+      uiPath = path.join(uiPath, file.replace(/\.js$/, ''), uiName + '.bundle.js');
+      return false;
+    }
+  });
+
+  var modDir = path.join(path.dirname(uiPath), uiModPath);
+  var libLess = path.join(modDir, '/**/*.less');
+  gulp.src(libLess)
+      .pipe(less())
+      .pipe(rename({extname: '.css'}))
+      .pipe(postcss(cssPlugins))
+      .pipe(gulp.dest(modDir))
+      .on('end', function() {
+          cb();
+      });
+});
+
 /** 打包库文件 **/
-gulp.task('lib', function() {
+gulp.task('lib', ['lib:css'], function() {
   var cmd = 'jspm bundle ' + uiName + ' ' + uiPath + ' --minify --inject';
   console.log(cmd);
 
@@ -264,7 +285,7 @@ gulp.task('bundle', function() {
 });
 
 /** 打包成单个可运行文件 **/
-gulp.task('sfx', function() {
+gulp.task('sfx', ['lib:css'], function() {
   var entryJs = process.argv[3] && process.argv[3].replace('--', '');
   if(!entryJs) {
     console.log('请指定打包入口js文件[npm run bundel -- --entry.js]');
