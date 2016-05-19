@@ -6,6 +6,7 @@
     "update": "npm-check-updates -u -a",
     "dev": "gulp dev",
     "sprite": "gulp sprite",
+    "img": "gulp image",
     "bundle": "gulp bundle",
     "lib": "gulp lib",
     "sfx": "gulp sfx"

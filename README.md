@@ -5,7 +5,7 @@
   * src/module文件夹中是组件的源代码
   * gulpfile.js定义了一系列的gulp任务
   * jspm.config.js管理项目中使用到的前端库
-  * package.json管理本地nodejs库的配置文件
+  * package.json管理本地nodejs库和前端库
 
 ### 开发流程
   1. node，npm安装，请前往[node官网](https://nodejs.org/en)下载安装
@@ -14,8 +14,8 @@
   4. 安装组件库 jspm install kfui=github:shikuijie/KFui(遇到提问就按Enter)
   5. 将jspm_packages/github/shikuijie/KFui@xxx/下的package.json和gulpfile.js拷贝到项目根目录下
   6. npm install (安装本地开发用到的nodejs库)
-  7. npm run kfui -- --xxx (打包组件代码，参数表示jspm_packages的url路径)
-  8. npm run dev -- --xxx (启动本地服务器，用户现在可以编写项目代码了，用法请参考jspm_packages/github/shikuijie/KFui@xxx/demo中的示例)
+  7. npm run lib (打包库文件)
+  8. npm run dev -- --xxx (启动本地服务器，用户此刻开始编写页面代码)
   9. npm run bundle -- --xxx.js (打包自己的前端代码, 参数为项目的入口js文件)
 
 #### 注意事项
