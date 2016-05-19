@@ -216,7 +216,7 @@ gulp.task('image', function(cb) {
       });
 });
 
-gulp.task('lib:css', function() {
+gulp.task('lib:css', function(cb) {
   var files = fs.readdirSync(uiPath);
   files.forEach(function(file) {
     if(/^KFui@.*\.js$/.test(file)) {
