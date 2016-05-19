@@ -4,3 +4,4 @@ import './clearfix/clearfix.css!';
 import './form/form.css!';
 import './grid/grid.css!';
 import './input/input.css!';
+import './panel/panel.css!';
