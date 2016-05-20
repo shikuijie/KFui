@@ -4,6 +4,7 @@ import cls from './pager.css.map';
 
 vue.component('kf-pager', {
   props: {
+    initEntry: Number,
     pageEntries: {
       type: Array,
       default: function() {
@@ -30,7 +31,7 @@ vue.component('kf-pager', {
   data: function() {
     return {
       cls: cls,
-      pageEntry: this.pageEntries[0],
+      pageEntry: this.initEntry || this.pageEntries[0],
       current: this.currentPage - 1
     };
   },
