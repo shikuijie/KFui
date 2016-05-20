@@ -4,7 +4,7 @@ import cls from './validate.css.map';
 import './validate.css!';
 
 function getErrorMsg(msgs, name, type, def) {
-  return msgs[name] && msgs[name][type] || msgs[name] || msgs[type] || def;
+  return msgs[name] && msgs[name][type] || def;
 }
 
 let formMap = new Map();
@@ -17,7 +17,7 @@ vue.directive('kf-form', {
       return;
     }
 
-    let that = new vue(), self = that;
+    let that = new vue();
     that.el = el;
     formMap.set(el, that);
 
@@ -40,26 +40,29 @@ vue.directive('kf-form', {
 
     _.forEach(that.inputs, function(el) {
       el.__BUS = that;
+      let name = el.getAttribute('name');
 
       let type = el.getAttribute('type');
       if((type == 'text') || (type == 'email') || (type == 'url')) {
         el.onchange = function(event) {
           el.__VALUE = el.value;
           toggleError(el);
-          that.setfield(el.getAttribute('name'), el.value);
+          that.info[name].value = el.value;
         };
       }
     });
 
     that.$on('kf.form.change', function(el, val) {
+      let name = el.getAttribute('name');
+
       el.__VALUE = val;
       toggleError(el);
-      that.setfield(el.getAttribute('name'), val);
+      that.info[name].value = val;
     });
 
     function toggleError(target) {
       if(target.__NOERR) {
-        self.errorEls.get(target).innerHTML = '';
+        that.errorEls.get(target).innerHTML = '';
         return '';
       }
 
@@ -78,14 +81,14 @@ vue.directive('kf-form', {
         } else if(validity.tooShort) {
           errorType = 'minlength';
         }
-        msg = getErrorMsg(self.errorMsg, name, errorType, target.validationMessage);
+        msg = getErrorMsg(that.info, name, errorType, target.validationMessage);
       }
 
-      if(self.errorMsg[name] && self.errorMsg[name].validation) {
-        msg = self.errorMsg[name].validation(target.__VALUE) || '';
+      if(that.info[name] && that.info[name].validation) {
+        msg = that.info[name].validation(target.__VALUE) || '';
       }
 
-      self.errorEls.get(target).innerHTML = msg;
+      that.errorEls.get(target).innerHTML = msg;
       return msg;
     };
 
@@ -95,13 +98,13 @@ vue.directive('kf-form', {
       let span = document.createElement('strong');
       span.className = cls.error;
       input.parentElement.appendChild(span);
-      self.errorEls.set(input, span);
+      that.errorEls.set(input, span);
     });
 
     that.submit = that.el.querySelector('input[type=submit]');
     that.submitFunc = function(event) {
       let valid = true;
-      _.forEach(self.inputs, function(input) {
+      _.forEach(that.inputs, function(input) {
         let msg = toggleError(input);
 
         if(msg) {
@@ -109,13 +112,19 @@ vue.directive('kf-form', {
         }
       });
 
-      event.valid = valid;
+      if(valid) {
+        event.formData = _.reduce(that.inputs, function(res, el) {
+          let name = el.getAttribute('name');
+          res[name] = that.info[name].value;
+          return res;
+        }, {})
+      }
     };
     that.submit.addEventListener('click', that.submitFunc);
 
     that.reset = that.el.querySelector('input[type=reset]');
     that.resetFunc = function(event) {
-      _.forEach(self.el.querySelectorAll('.' + cls.error), function(error) {
+      _.forEach(that.el.querySelectorAll('.' + cls.error), function(error) {
         error.innerHTML = '';
       });
     };
@@ -128,12 +137,23 @@ vue.directive('kf-form', {
     }
 
     let that = formMap.get(el);
-    let mds = Object.keys(this.modifiers);
-    that.setfield = val.setfield || (() => {});
-    that.errorMsg = val.validator;
-    if(!_.isFunction(val.setfield) || !_.isObject(val.validator)) {
-      throw 'v-kf-form指令参数至少有两个成员：validator提供验证信息对象，setfield设置成员变量的函数';
-    }
+    that.info = val;
+
+    _.forEach(that.inputs, function(el) {
+      let type = el.getAttribute('type');
+      let name = el.getAttribute('name');
+      if(!name) {
+        throw el + '必须有name属性！';
+      }
+
+      that.info[name] = that.info[name] || {};
+      if(_.isUndefined(that.info[name].value)) return;
+      if((type == 'text') || (type == 'email') || (type == 'url')) {
+        el.value = that.info[name].value;
+      } else {
+        el.__PARENT && el.__PARENT.$emit('kf.form.init', that.info[name].value);
+      }
+    });
   },
   unbind: function() {
     let el = this.el;
@@ -141,7 +161,7 @@ vue.directive('kf-form', {
       return;
     }
 
-    let that = formMap.get(el), self = that;
+    let that = formMap.get(el);
     that.$off('kf.form.change');
 
     _.forEach(that.inputs, function(input) {

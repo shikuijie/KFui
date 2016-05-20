@@ -29,8 +29,12 @@ vue.component('kf-radio-group', {
       cls: cls
     };
   },
-  ready: function() {
+  compiled: function() {
     this.input = this.$el.querySelector('input');
+    this.input.__PARENT = this;
+    this.$on('kf.form.init', function(init) {
+      this.value = init;
+    });
   },
   watch: {
     value: function(val) {

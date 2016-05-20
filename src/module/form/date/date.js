@@ -176,6 +176,24 @@ let datime = vue.extend({
       return min < el && el < max;
     }
   },
+  compiled: function() {
+    this.$on('kf.datime.change', function(init) {
+      this.moment = init;
+      let now = this.moment && new Date(this.moment) || new Date();
+      let year = now.getFullYear(),
+          month = now.getMonth(),
+          hour = now.getHours(),
+          min = now.getMinutes(),
+          sec = now.getSeconds();
+
+      this.date = now.getDate();
+      this.yearObj.els = _.range(year, year + 6).concat(_.range(year - 6, year)),
+      this.monthObj.els = _.range(month, 12).concat(_.range(0, month)),
+      this.hourObj.els = _.range(hour, 24).concat(_.range(0, hour)),
+      this.minuteObj.els = _.range(min, 60).concat(_.range(0, min)),
+      this.secondObj.els = _.range(sec, 60).concat(_.range(0, sec));
+    });
+  },
   ready: function() {
     this.$on('kf.datime.ask', function() {
       let answer = {
@@ -358,19 +376,33 @@ vue.component('kf-date-picker', {
       this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
-  ready: function() {
+  compiled: function() {
     this.input = this.$el.querySelector('input');
+    this.input.__PARENT = this;
+    this.$on('kf.datime.register', function(datime) {
+      this.datime = datime;
+    });
+    this.$on('kf.form.init', function(date) {
+      this.initValue = date;
+    });
+  },
+  ready: function() {
     this.$on('kf.datime.selected', function(data) {
       this.value = formatDate(data.date, this.hasTime, this.hasSec);
       this.visible = false;
     });
+
+    if(this.initValue) {
+      this.datime.$emit('kf.datime.change', this.initValue);
+      this.value = this.initValue;
+    }
   },
   destroyed: function() {
-    this.$el.$off('kf.datime.selected');
+    this.$off('kf.datime.selected');
   },
   template:
     '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="visible = true">' +
-      '<input autocomplete="off" type="picker" :name="name" :value="value" :required="required"/>' +
+      '<input autocomplete="off" type="picker" :name="name" v-model="value" :required="required"/>' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<kf-datime kf-datime :class="datimeCls" :moment="value" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
       '<i class="fa fa-times" @click.stop="clear()"></i>' +
@@ -466,14 +498,18 @@ vue.component('kf-date-ranger', {
       this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
     }
   },
-  created: function() {
+  compiled: function() {
+    this.input = this.$el.querySelector('input');
+    this.input.__PARENT = this;
     this.$on('kf.datime.register', function(datime) {
       this.datimes = this.datimes || [];
       this.datimes.push(datime);
     });
+    this.$on('kf.form.init', function(dates) {
+      this.initValue = dates;
+    });
   },
   ready: function() {
-    this.input = this.$el.querySelector('input');
     this.$on('kf.datime.selected', function(data) {
       this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
     });
@@ -499,6 +535,15 @@ vue.component('kf-date-ranger', {
       this.rangerr = '';
       this.visible = false;
     });
+
+    if(this.initValue) {
+      let that = this;
+      _.forEach(this.datimes, function(datime, i) {
+        datime.$emit('kf.datime.change', that.initValue[i]);
+      });
+      that.start = that.initValue[0];
+      that.end = that.initValue[1];
+    }
   },
   destroyed: function() {
     this.$off('kf.datime.register');
@@ -507,7 +552,7 @@ vue.component('kf-date-ranger', {
   },
   template:
     '<div :class="cls.dtranger" class="kf-date-ranger" @click.stop="visible = true">' +
-      '<input autocomplete="off" type="ranger" :name="name" :required="required" :value="rangeStr"/>' +
+      '<input autocomplete="off" type="ranger" :name="name" :required="required" v-model="rangeStr"/>' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<div :class="dropCls">' +
         '<div :class="cls.range">' +

@@ -37,8 +37,12 @@ vue.component('kf-autoinput', {
       visible: false
     };
   },
-  ready: function() {
+  compiled: function() {
     this.input = this.$el.querySelector('input');
+    this.input.__PARENT = this;
+    this.$on('kf.form.init', function(init) {
+      this.value = init;
+    });
   },
   watch: {
     value: _.debounce(function(nval) {

@@ -85,6 +85,14 @@ vue.component('kf-file', {
     }
   },
   methods: {
+    clear: function(event) {
+      this.input.value = '';
+      this.input.__NOERR = false;
+      this.files = [];
+      this.preview && this.preview('');
+
+      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, '');
+    },
     change: function(event) {
       _.forEach(this.files, function(file) {
         if(file.doing) {
@@ -133,7 +141,7 @@ vue.component('kf-file', {
       '<span @click.stop="listVisible = true">' +
         '<i class="fa fa-caret-down"></i>' +
       '</span>' +
-      '<input :accept="accept" :name="name" :required="required" type="file" :multiple="multiple" @change="change($event)">' +
+      '<input :accept="accept" :name="name" :required="required" type="file" :multiple="multiple" @click="clear($event)" @change="change($event)">' +
       '<div :class="cls.bg" v-show="files.length && listVisible" @click.stop="listVisible = false"></div>' +
       '<ul :class="getListCls()">' +
         '<li v-for="f in files">' +
@@ -171,6 +179,7 @@ function startUpload(url, name, file, other, success, error) {
   file.xhr = xhr;
 
   xhr.addEventListener('load', function(event) {
+    console.log(event)
     file.doing = false;
     if(event.target.status != 200) {
       file.error = true;

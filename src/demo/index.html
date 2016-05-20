@@ -71,12 +71,12 @@
 
         <div class="kf-control kf-grid">
           <label class="kf-3-10 kf-vcenter kf-hcenter">日期</label>
-          <kf-date-picker :has-time="true" :has-sec="false" class="kf-7-10" name="date"></kf-date-picker>
+          <kf-date-picker :required="true" :has-time="true" :has-sec="false" class="kf-7-10" name="date"></kf-date-picker>
         </div>
 
         <div class="kf-control kf-grid">
           <label class="kf-3-10 kf-vcenter kf-hcenter">起始日期<span class="kf-asterisk">*</span></label>
-          <kf-date-ranger class="kf-7-10" name="range" :has-time="true" :has-sec="true"></kf-date-ranger>
+          <kf-date-ranger :required="true" class="kf-7-10" name="range" :has-time="true" :has-sec="true"></kf-date-ranger>
         </div>
 
         <div class="kf-control kf-grid">
@@ -182,37 +182,45 @@
       </div>
 
       <div class="kf-grid kf-margin-5">
-        <div class="kf-1-3 kf-input-group kf-lg kf-primary">
-          <div class="kf-input">
-            <input type="text">
+        <div class="kf-1-4">
+          <div class="kf-input-group kf-lg kf-primary">
+            <div class="kf-input">
+              <input type="text">
+            </div>
+            <label class="kf-addon"><i class="fa fa-search"></i></label>
           </div>
-          <label class="kf-addon"><i class="fa fa-search"></i></label>
         </div>
-        <div class="kf-1-3 kf-input-group kf-lg kf-dark">
-          <kf-date-picker></kf-date-picker>
-          <label class="kf-addon"><i class="fa fa-calendar"></i></label>
+        <div class="kf-1-4">
+          <div class="kf-input-group kf-accent">
+            <kf-date-picker></kf-date-picker>
+            <label class="kf-addon"><i class="fa fa-calendar"></i></label>
+          </div>
         </div>
-        <div class="kf-1-3 kf-input-group kf-lg kf-accent">
-          <kf-date-ranger></kf-date-ranger>
-          <label class="kf-addon"><i class="fa fa-bars"></i></label>
+        <div class="kf-1-4">
+          <div class="kf-input-group kf-sm kf-dark">
+            <kf-date-picker></kf-date-picker>
+            <label class="kf-addon"><i class="fa fa-calendar"></i></label>
+          </div>
+        </div>
+        <div class="kf-1-4">
+          <div class="kf-input-group kf-xs kf-gray">
+            <kf-date-ranger></kf-date-ranger>
+            <label class="kf-addon"><i class="fa fa-bars"></i></label>
+          </div>
         </div>
       </div>
 
       <div class="kf-grid kf-margin-5">
         <div class="kf-1-3">
-          <div>
-            <div class="kf-input-group kf-lg kf-primary">
-              <kf-select :options="['option1', 'option2']"></kf-select>
-              <label class="kf-addon"><i class="fa fa-bars"></i></label>
-            </div>
+          <div class="kf-input-group kf-lg kf-primary">
+            <kf-select :options="['option1', 'option2']"></kf-select>
+            <label class="kf-addon"><i class="fa fa-bars"></i></label>
           </div>
         </div>
         <div class="kf-1-3">
-          <div>
-            <div class="kf-input-group kf-sm kf-primary">
-              <kf-select style="width: 100px" class="kf-addon" value="option1" :options="['option1', 'option2']"></kf-select>
-              <kf-autoinput class="kf-primary" :get-options="getAutoOptions"></kf-autoinput>
-            </div>
+          <div class="kf-input-group kf-sm kf-primary">
+            <kf-select style="width: 100px" class="kf-addon" value="option1" :options="['option1', 'option2']"></kf-select>
+            <kf-autoinput class="kf-primary" :get-options="getAutoOptions"></kf-autoinput>
           </div>
         </div>
       </div>
