@@ -15,9 +15,11 @@
       color: #666;
       background-color: #eee;
       font-weight: normal;
+      position: relative;
     }
     >.kf-panel-body{
       padding: 12px;
+      position: relative;
     }
   }
 
@@ -31,7 +33,9 @@
       >.kf-panel-head{
         background-color: @@c;
         color: #fff;
-        .kf-panel-body{}
+        .kf-panel-body{
+          position: relative;
+        }
       }
     }
     .color(@i + 1);
