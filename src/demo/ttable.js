@@ -1,7 +1,7 @@
 import {kfTable} from 'kfui';
 
 function getAction(func, label) {
-  return '<button class="kf-btn kf-xs" @click="TABLE.' + func + '(ROW)">' + label + '</button>';
+  return '<button class="kf-btn kf-xs" @click="table.' + func + '(row)">' + label + '</button>';
 }
 
 export default {

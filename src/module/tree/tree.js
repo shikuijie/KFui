@@ -8,27 +8,27 @@ vue.component('kf-tree', {
     'kf-tree-node': {
       props: ['nodeData', 'draggable', 'nodeKey', 'subtreeKey', 'toggleKey', 'dropKey'],
       data: function() {
-        vue.set(this.nodeData, '__EXPAND', false);
-        vue.set(this.nodeData, '__DRAGOVER', false);
-        vue.set(this.nodeData, '__DRAGGING', false);
+        vue.set(this.nodeData, '__mkfExpand', false);
+        vue.set(this.nodeData, '__mkfDragover', false);
+        vue.set(this.nodeData, '__mkfDragging', false);
 
         var nodeData = this.nodeData;
         var children = nodeData[this.subtreeKey];
         if(children) {
           children.forEach(function(child) {
-            child.__ROOT = nodeData.__ROOT;
+            child.__mkfRoot = nodeData.__mkfRoot;
           });
         }
 
         return {
-          TREE: this.nodeData.__ROOT,
-          NODE: this.nodeData,
+          tree: this.nodeData.__mkfRoot,
+          node: this.nodeData,
           cls: cls
         };
       },
       computed: {
         icon: function() {
-          if(this.nodeData.__EXPAND) {
+          if(this.nodeData.__mkfExpand) {
             if(this.nodeData[this.subtreeKey] && this.nodeData[this.subtreeKey].length) {
               return 'fa fa-minus-square-o';
             } else {
@@ -44,41 +44,41 @@ vue.component('kf-tree', {
       },
       methods: {
         toggle: function() {
-          this.nodeData.__EXPAND = !this.nodeData.__EXPAND;
-          let root = this.nodeData.__ROOT;
+          this.nodeData.__mkfExpand = !this.nodeData.__mkfExpand;
+          let root = this.nodeData.__mkfRoot;
           let toggle = root[this.toggleKey];
-          toggle && toggle(this.nodeData, this.nodeData.__EXPAND);
+          toggle && toggle(this.nodeData, this.nodeData.__mkfExpand);
         },
         dragStart: function(event) {
-          this.nodeData.__DRAGGING = true;
-          this.nodeData.__ROOT.__DRAGGING_NODE = this.nodeData;
+          this.nodeData.__mkfDragging = true;
+          this.nodeData.__mkfRoot.__mkfDraggingNode = this.nodeData;
 
-          event.dataTransfer.setData('text/plain', this.nodeData.__ID);
+          event.dataTransfer.setData('text/plain', this.nodeData.__mkfId);
         },
         dragEnter: function(event) {
-          this.nodeData.__DRAGOVER = true;
+          this.nodeData.__mkfDragover = true;
         },
         dragLeave: function(event) {
-          this.nodeData.__DRAGOVER = false;
+          this.nodeData.__mkfDragover = false;
         },
         drop: function(event) {
           let id = event.dataTransfer.getData('text/plain'),
-              root = this.nodeData.__ROOT,
-              src = root.__ID_MAP[id],
+              root = this.nodeData.__mkfRoot,
+              src = root.__mkfIdMap[id],
               target = this.nodeData,
               drop = root[this.dropKey];
 
           if(drop) {
             drop(src, target);
           }
-          target.__DRAGOVER = false;
-          target.__ROOT.__DRAGGING_NODE.__DRAGGING = false;
+          target.__mkfDragover = false;
+          target.__mkfRoot.__mkfDraggingNode.__mkfDragging = false;
         }
       },
       template:
         '<li :draggable="dragStatus" ' +
-            ':kf-tree-node-dragover="nodeData.__DRAGOVER" ' +
-            ':kf-tree-node-dragging="nodeData.__DRAGGING" ' +
+            ':kf-tree-node-dragover="nodeData.__mkfDragover" ' +
+            ':kf-tree-node-dragging="nodeData.__mkfDragging" ' +
             '@dragstart.stop="dragStart($event)" ' +
             '@dragenter.stop="dragEnter($event)" ' +
             '@dragleave.stop="dragLeave($event)" ' +
@@ -89,7 +89,7 @@ vue.component('kf-tree', {
             '<i @click="toggle()" :class="icon" v-if="nodeData[subtreeKey]"></i>' +
             '<div v-kf-code="nodeData[nodeKey]"></div>' +
           '</div>' +
-          '<div v-show="nodeData.__EXPAND" :class="cls.subtreeWrapper">' +
+          '<div v-show="nodeData.__mkfExpand" :class="cls.subtreeWrapper">' +
             '<span :class="cls.vborder"></span>' +
             '<span :class="cls.overlap"></span>' +
             '<kf-tree :class="cls.subtree" v-if="nodeData[subtreeKey]" ' +
@@ -131,22 +131,22 @@ vue.component('kf-tree', {
   data: function() {
     let treeData = this.tree,
         draggable = this.draggable;
-    if(!treeData.__ROOT) {
-      treeData.__ROOT = treeData;
-      treeData.__PARENT = treeData;
-      treeData.__SUBTREE_KEY = this.subtreeKey;
+    if(!treeData.__mkfRoot) {
+      treeData.__mkfRoot = treeData;
+      treeData.__mkfParent = treeData;
+      treeData.__mkfSubtreeKey = this.subtreeKey;
       if(draggable) {
-        treeData.__ID = 0;
-        treeData.__ID_MAP = {};
+        treeData.__mkfId = 0;
+        treeData.__mkfIdMap = {};
       }
     }
 
     treeData[this.subtreeKey] && treeData[this.subtreeKey].forEach(function(child) {
-      child.__ROOT = treeData.__ROOT;
-      child.__PARENT = treeData;
+      child.__mkfRoot = treeData.__mkfRoot;
+      child.__mkfParent = treeData;
       if(draggable) {
-        child.__ID = child.__ROOT.__ID++;
-        child.__ROOT.__ID_MAP[child.__ID] = child;
+        child.__mkfId = child.__mkfRoot.__mkfId++;
+        child.__mkfRoot.__mkfIdMap[child.__mkfId] = child;
       }
     });
 
@@ -169,7 +169,7 @@ vue.component('kf-tree', {
 
 export default {
   appendNodes: function(parent, nodes) {
-    let subkey = parent.__ROOT.__SUBTREE_KEY;
+    let subkey = parent.__mkfRoot.__mkfSubtreeKey;
     if(!parent[subkey]) {
       vue.set(parent, subkey, []);
     }
@@ -177,7 +177,7 @@ export default {
     parent[subkey] = parent[subkey].concat(nodes);
   },
   appendNode: function(parent, node) {
-    let subkey = parent.__ROOT.__SUBTREE_KEY;
+    let subkey = parent.__mkfRoot.__mkfSubtreeKey;
     if(!parent[subkey]) {
       vue.set(parent, subkey, []);
     }
@@ -185,8 +185,8 @@ export default {
     parent[subkey].push(node);
   },
   deleteNode: function(node, autoLeaf) {
-    let subkey = node.__ROOT.__SUBTREE_KEY,
-        coll = node.__PARENT[subkey],
+    let subkey = node.__mkfRoot.__mkfSubtreeKey,
+        coll = node.__mkfParent[subkey],
         idx = coll.indexOf(node);
 
     if(idx == -1) {
@@ -195,7 +195,7 @@ export default {
     coll.splice(idx, 1);
 
     if(autoLeaf && coll.length == 0) {
-      delete node.__PARENT[subkey];
+      delete node.__mkfParent[subkey];
     }
   }
 };

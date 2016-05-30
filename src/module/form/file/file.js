@@ -87,11 +87,11 @@ vue.component('kf-file', {
   methods: {
     clear: function(event) {
       this.input.value = '';
-      this.input.__NOERR = false;
+      this.input.__mkfNoerr = false;
       this.files = [];
       this.preview && this.preview('');
 
-      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, '');
+      this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, '');
     },
     change: function(event) {
       _.forEach(this.files, function(file) {
@@ -241,8 +241,8 @@ function processFiles(self, fileList) {
     return;
   }
   self.onChange(fileList, self.name);
-  self.input.__NOERR = true;
-  self.input.__BUS && self.input.__BUS.$emit('kf.form.change', self.input, fileList);
+  self.input.__mkfNoerr = true;
+  self.input.__mkfBus && self.input.__mkfBus.$emit('kf.form.change', self.input, fileList);
 
   if(self.preview) {
     _.forEach(files, function(f) {

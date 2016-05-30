@@ -1,14 +1,14 @@
 import {kfTable} from 'kfui';
 
 function getAction(func, label) {
-  return '<button class="kf-btn kf-xs" @click="TABLE.' + func + '(ROW)">' + label + '</button>';
+  return '<button class="kf-btn kf-xs" @click="table.' + func + '(row)">' + label + '</button>';
 }
 
 function getCheckbox(head, label) {
-  let pos = head ? 'TABLE' : 'ROW';
+  let pos = head ? 'table' : 'row';
   return '<kf-checkbox :model.sync="' + pos + '.checked"' +
           (label ? ' :label="\'' + label + '\'"' : '') +
-          (label ? ' :on-change="TABLE.checkAll"' : '') + '></kf-checkbox>';
+          (label ? ' :on-change="table.checkAll"' : '') + '></kf-checkbox>';
 }
 
 let stable = {

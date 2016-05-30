@@ -39,7 +39,7 @@ vue.component('kf-autoinput', {
   },
   compiled: function() {
     this.input = this.$el.querySelector('input');
-    this.input.__PARENT = this;
+    this.input.__mkfParent = this;
     this.$on('kf.form.init', function(init) {
       this.value = init;
     });
@@ -47,7 +47,7 @@ vue.component('kf-autoinput', {
   watch: {
     value: _.debounce(function(nval) {
       this.onChange(nval, this.name);
-      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, nval);
+      this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, nval);
     }, 500)
   },
   methods: {

@@ -19,7 +19,7 @@ let thead = vue.extend({
     '</thead>',
   data: function() {
     return {
-      TABLE: this.tableData,
+      table: this.tableData,
       thead: parseHeadFoot(this.headData)
     };
   }
@@ -40,7 +40,7 @@ let tfoot = vue.extend({
     '</tfoot>',
   data: function() {
     return {
-      TABLE: this.tableData,
+      table: this.tableData,
       tfoot: parseHeadFoot(this.footData)
     };
   }
@@ -55,10 +55,10 @@ let srow = vue.extend({
         '</td>' +
     '</tr>',
   data: function() {
-    this.rowData.__TABLE = this.tableData;
+    this.rowData.__mkfTable = this.tableData;
     return {
-      TABLE: this.tableData,
-      ROW: this.rowData
+      table: this.tableData,
+      row: this.rowData
     };
   },
   methods: {
@@ -83,18 +83,18 @@ vue.component('kf-stable', {
   },
   template:
     '<table class="kf-table">' +
-      '<thead is="kf-thead" v-if="table.__THEAD" :head-data="headData" :table-data="table"></thead>' +
-      '<tbody v-if="table.__TBODY">' +
-        '<tr is="kf-srow" v-for="row in table.__TBODY" :row-data="row" :col-keys="colKeys" :table-data="table"></tr>' +
+      '<thead is="kf-thead" v-if="table.__mkfThead" :head-data="headData" :table-data="table"></thead>' +
+      '<tbody v-if="table.__mkfTbody">' +
+        '<tr is="kf-srow" v-for="row in table.__mkfTbody" :row-data="row" :col-keys="colKeys" :table-data="table"></tr>' +
       '</tbody>' +
-      '<tfoot is="kf-tfoot" v-if="table.__TFOOT" :foot-data="footData" :table-data="table"></thead>' +
+      '<tfoot is="kf-tfoot" v-if="table.__mkfTfoot" :foot-data="footData" :table-data="table"></thead>' +
     '</table>',
   computed: {
     headData: function() {
-      return this.table.__THEAD;
+      return this.table.__mkfThead;
     },
     footData: function() {
-      return this.table.__TFOOT;
+      return this.table.__mkfTfoot;
     }
   }
 });
@@ -103,20 +103,20 @@ let mrow = vue.extend({
   props: ['tableData', 'rowData', 'colKeys'],
   template:
     '<tbody>' +
-        '<tr v-for="(rn, keyRow) in rowData.__KEY_ROWS" track-by="$index">' +
+        '<tr v-for="(rn, keyRow) in rowData.__mkfKeyRows" track-by="$index">' +
           '<td v-for="(cn, key) in colKeys" track-by="$index" ' +
-              'v-if="rowData.__ROWSPAN[rn][cn]" ' +
-              ':rowspan="rowData.__ROWSPAN[rn][cn]">' +
-            '<div v-kf-code="getValue(rowData, keyRow[rowData.__KEY_MAP[key]])"></div>' +
+              'v-if="rowData.__mkfRowspan[rn][cn]" ' +
+              ':rowspan="rowData.__mkfRowspan[rn][cn]">' +
+            '<div v-kf-code="getValue(rowData, keyRow[rowData.__mkfKeyMap[key]])"></div>' +
           '</td>' +
         '</tr>' +
     '</tbody>',
   data: function() {
-    this.rowData.__TABLE = this.tableData;
+    this.rowData.__mkfTable = this.tableData;
     parseMrow(this.rowData, this.colKeys);
     return {
-      TABLE: this.tableData,
-      ROW: this.rowData
+      table: this.tableData,
+      row: this.rowData
     };
   },
   methods: {
@@ -148,9 +148,9 @@ vue.component('kf-mtable', {
   },
   template:
     '<table class="kf-table">' +
-      '<thead is="kf-thead" v-if="table.__THEAD" :head-data="table.__THEAD" :table-data="table"></thead>' +
-      '<tbody is="kf-mrow" v-if="table.__TBODY" v-for="row in table.__TBODY" :row-data="row" :table-data="table" :col-keys="colKeys"></tbody>' +
-      '<tfoot is="kf-tfoot" v-if="table.__TFOOT" :foot-data="table.__TFOOT" :table-data="table"></thead>' +
+      '<thead is="kf-thead" v-if="table.__mkfThead" :head-data="table.__mkfThead" :table-data="table"></thead>' +
+      '<tbody is="kf-mrow" v-if="table.__mkfTbody" v-for="row in table.__mkfTbody" :row-data="row" :table-data="table" :col-keys="colKeys"></tbody>' +
+      '<tfoot is="kf-tfoot" v-if="table.__mkfTfoot" :foot-data="table.__mkfTfoot" :table-data="table"></thead>' +
     '</table>'
 });
 
@@ -167,23 +167,23 @@ let trow = vue.extend({
       '<td v-for="ck in colKeys.slice(1)"><div v-kf-code="rowData[ck]"></div></td>' +
     '</tr>',
   data: function() {
-    vue.set(this.rowData, '__EXPAND', false);
+    vue.set(this.rowData, '__mkfExpand', false);
     return {
-      TABLE: this.tableData,
-      ROW: this.rowData,
-      marginStyle: {'margin-left': this.rowData.__LEVEL * 16 + 'px'}
+      table: this.tableData,
+      row: this.rowData,
+      marginStyle: {'margin-left': this.rowData.__mkfLevel * 16 + 'px'}
     };
   },
   methods: {
     toggle: function() {
       let row = this.rowData;
-      row.__EXPAND = !row.__EXPAND;
+      row.__mkfExpand = !row.__mkfExpand;
       this.onToggle();
     }
   },
   computed: {
     icon: function() {
-      if(this.rowData.__EXPAND) {
+      if(this.rowData.__mkfExpand) {
         if(this.rowData[this.childrenKey] && this.rowData[this.childrenKey].length) {
           return 'fa fa-minus-square-o';
         } else {
@@ -194,12 +194,12 @@ let trow = vue.extend({
       }
     },
     visible: function() {
-      let cur = this.rowData.__PARENT;
+      let cur = this.rowData.__mkfParent;
       while(cur !== this.tableData) {
-        if(!cur.__EXPAND) {
+        if(!cur.__mkfExpand) {
           return false;
         }
-        cur = cur.__PARENT;
+        cur = cur.__mkfParent;
       }
       return true;
     }
@@ -231,19 +231,19 @@ vue.component('kf-ttable', {
   },
   template:
     '<table class="kf-table" :class="cls.ttable">' +
-      '<thead is="kf-thead" v-if="table.__THEAD" :table-data="table" :head-data="table.__THEAD"></thead>' +
-      '<tbody v-if="table.__TBODY">' +
+      '<thead is="kf-thead" v-if="table.__mkfThead" :table-data="table" :head-data="table.__mkfThead"></thead>' +
+      '<tbody v-if="table.__mkfTbody">' +
         '<tr is="kf-trow" v-for="row in tbody" ' +
             ':table-data="table" :row-data="row" ' +
             ':col-keys="colKeys" :on-toggle="onToggle" ' +
             ':children-key="childrenKey">' +
         '</tr>' +
       '</tbody>' +
-      '<tfoot is="kf-tfoot" v-if="table.__TFOOT" :table-data="table" :foot-data="table.__TFOOT"></tfoot>' +
+      '<tfoot is="kf-tfoot" v-if="table.__mkfTfoot" :table-data="table" :foot-data="table.__mkfTfoot"></tfoot>' +
     '</table>',
   computed: {
     tbody: function() {
-      return parseTrows(this.table, this.table.__TBODY, this.childrenKey);
+      return parseTrows(this.table, this.table.__mkfTbody, this.childrenKey);
     }
   }
 });
@@ -251,8 +251,8 @@ vue.component('kf-ttable', {
 function parseMrow(row, keys) {
   fixRow(row, keys);
 
-  row.__KEY_ROWS = flattenField(siftRow(row, keys));
-  row.__KEY_MAP = _.reduce(row.__KEY_ROWS[0], function(res, key, i) {
+  row.__mkfKeyRows = flattenField(siftRow(row, keys));
+  row.__mkfKeyMap = _.reduce(row.__mkfKeyRows[0], function(res, key, i) {
     key = key.replace(/(\w+)\[\d+]/g, function(s0, s1) {
       return s1 + '[]';
     });
@@ -260,7 +260,7 @@ function parseMrow(row, keys) {
 
     return res;
   }, {});
-  row.__ROWSPAN = mergeRow(row.__KEY_ROWS);
+  row.__mkfRowspan = mergeRow(row.__mkfKeyRows);
 
   //将row对象中与colKeys有关的成员补全
   function fixRow(row, colKeys) {
@@ -543,13 +543,13 @@ function parseHeadFoot(partData) {
 }
 
 function parseTrows(table, rows, childrenKey) {
-  table.__CHILDREN_KEY = childrenKey;
-  table.__TABLE = table;
+  table.__mkfChildrenKey = childrenKey;
+  table.__mkfTable = table;
 
   return _.reduce(rows, function(res, row) {
-    row.__TABLE = table;
-    row.__PARENT = table;
-    row.__LEVEL = 0;
+    row.__mkfTable = table;
+    row.__mkfParent = table;
+    row.__mkfLevel = 0;
 
     parseRow(table, row, res);
     return res;
@@ -559,9 +559,9 @@ function parseTrows(table, rows, childrenKey) {
     res.push(row);
 
     _.forEach(row[childrenKey], function(child) {
-      child.__TABLE = table;
-      child.__PARENT = row;
-      child.__LEVEL = row.__LEVEL + 1;
+      child.__mkfTable = table;
+      child.__mkfParent = row;
+      child.__mkfLevel = row.__mkfLevel + 1;
 
       parseRow(table, child, res);
     });
@@ -570,56 +570,56 @@ function parseTrows(table, rows, childrenKey) {
 
 export default {
   setHead: function(table, headData) {
-    vue.set(table, '__THEAD', headData);
+    vue.set(table, '__mkfThead', headData);
   },
   setFoot: function(table, footData) {
-    vue.set(table, '__TFOOT', footData);
+    vue.set(table, '__mkfTfoot', footData);
   },
   setBody: function(table, bodyData) {
-    vue.set(table, '__TBODY', bodyData);
+    vue.set(table, '__mkfTbody', bodyData);
   },
   prependRow: function(target, row) {
-    let coll = target.__TBODY;
-    if(target.__TABLE && (target !== target.__TABLE)) {
-      coll = target[target.__TABLE.__CHILDREN_KEY];
+    let coll = target.__mkfTbody;
+    if(target.__mkfTable && (target !== target.__mkfTable)) {
+      coll = target[target.__mkfTable.__mkfChildrenKey];
       if(_.isUndefined(coll)) {
-        vue.set(target, target.__TABLE.__CHILDREN_KEY, []);
-        coll = target[target.__TABLE.__CHILDREN_KEY];
+        vue.set(target, target.__mkfTable.__mkfChildrenKey, []);
+        coll = target[target.__mkfTable.__mkfChildrenKey];
       }
     }
     coll.unshift(row);
   },
   appendRow: function(target, row) {
-    let coll = target.__TBODY;
-    if(target.__TABLE && (target !== target.__TABLE)) {
-      coll = target[target.__TABLE.__CHILDREN_KEY];
+    let coll = target.__mkfTbody;
+    if(target.__mkfTable && (target !== target.__mkfTable)) {
+      coll = target[target.__mkfTable.__mkfChildrenKey];
       if(_.isUndefined(coll)) {
-        vue.set(target, target.__TABLE.__CHILDREN_KEY, []);
-        coll = target[target.__TABLE.__CHILDREN_KEY];
+        vue.set(target, target.__mkfTable.__mkfChildrenKey, []);
+        coll = target[target.__mkfTable.__mkfChildrenKey];
       }
     }
     coll.push(row);
   },
   deleteRow: function(row, autoLeaf) {
-    let table = row.__TABLE;
-    let coll = table.__TBODY;
-    if(table.__TABLE && (row.__PARENT !== table)) {
-      coll = row.__PARENT[table.__CHILDREN_KEY];
+    let table = row.__mkfTable;
+    let coll = table.__mkfTbody;
+    if(table.__mkfTable && (row.__mkfParent !== table)) {
+      coll = row.__mkfParent[table.__mkfChildrenKey];
     }
 
     let idx = coll.indexOf(row);
     coll.splice(idx, 1);
-    if(table.__TABLE && autoLeaf && coll.length == 0) {
-      row.__PARENT[table.__CHILDREN_KEY] = undefined;
+    if(table.__mkfTable && autoLeaf && coll.length == 0) {
+      row.__mkfParent[table.__mkfChildrenKey] = undefined;
     }
   },
   iterate: function(target, cb) {
-    if(target.__TABLE) {
-      let self = this, table = target.__TABLE;
-      let subrowKey = table.__CHILDREN_KEY;
+    if(target.__mkfTable) {
+      let self = this, table = target.__mkfTable;
+      let subrowKey = table.__mkfChildrenKey;
 
       if(target === table) {
-        _.forEach(target.__TBODY, function(child) {
+        _.forEach(target.__mkfTbody, function(child) {
           self.iterate(child, cb);
         });
       } else {
@@ -632,7 +632,7 @@ export default {
       return;
     }
 
-    _.forEach(target.__TBODY, function(row) {
+    _.forEach(target.__mkfTbody, function(row) {
       cb(row);
     });
   }

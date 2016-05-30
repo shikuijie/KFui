@@ -38,7 +38,7 @@ vue.component('kf-select', {
   },
   compiled: function() {
     this.input = this.$el.querySelector('input');
-    this.input.__PARENT = this;
+    this.input.__mkfParent = this;
     this.$on('kf.form.init', function(init) {
       this.value = init;
     });
@@ -46,7 +46,7 @@ vue.component('kf-select', {
   watch: {
     value: function(val) {
       this.onChange(val, this.name);
-      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
+      this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
     }
   },
   computed: {

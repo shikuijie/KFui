@@ -19,20 +19,20 @@ vue.component('kf-toaster', {
     }
   },
   data: function() {
-    vue.set(this.toaster, '__TOASTS', []);
-    this.toaster.__DELAY = this.delay;
+    vue.set(this.toaster, '__mkfToasts', []);
+    this.toaster.__mkfDelay = this.delay;
     return {
       cls: cls
     }
   },
   computed: {
     toasts: function() {
-      return this.toaster.__TOASTS;
+      return this.toaster.__mkfToasts;
     }
   },
   methods: {
     close: function(index) {
-      this.toaster.__TOASTS.splice(index, 1);
+      this.toaster.__mkfToasts.splice(index, 1);
     }
   },
   template:
@@ -53,10 +53,10 @@ vue.component('kf-toaster', {
 });
 
 function show(toaster, msg, ok) {
-  toaster.__TOASTS.unshift({tip: msg, success: ok});
+  toaster.__mkfToasts.unshift({tip: msg, success: ok});
   setTimeout(function() {
-    toaster.__TOASTS.pop();
-  }, toaster.__DELAY);
+    toaster.__mkfToasts.pop();
+}, toaster.__mkfDelay);
 }
 
 export default {

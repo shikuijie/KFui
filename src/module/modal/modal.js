@@ -14,14 +14,14 @@ vue.component('kf-modal', {
     }
   },
   data: function() {
-    vue.set(this.modal, '__OPEN', false);
+    vue.set(this.modal, '__mkfOpen', false);
     return {
       cls: cls
     };
   },
   computed: {
     open: function() {
-      return this.modal.__OPEN;
+      return this.modal.__mkfOpen;
     }
   },
   methods: {
@@ -33,7 +33,7 @@ vue.component('kf-modal', {
     },
     close: function() {
       if(this.bgclose) {
-        this.modal.__OPEN = false;
+        this.modal.__mkfOpen = false;
       }
     }
   },
@@ -49,9 +49,9 @@ vue.component('kf-modal', {
 
 export default {
   open: function(modal) {
-    modal.__OPEN = true;
+    modal.__mkfOpen = true;
   },
   close: function(modal) {
-    modal.__OPEN = false;
+    modal.__mkfOpen = false;
   }
 };

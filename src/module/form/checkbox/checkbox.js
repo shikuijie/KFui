@@ -29,7 +29,7 @@ vue.component('kf-checkbox', {
   },
   compiled: function() {
     this.input = this.$el.querySelector('input');
-    this.input.__PARENT = this;
+    this.input.__mkfParent = this;
     this.$on('kf.form.init', function(init) {
       this.value = init;
     });
@@ -37,7 +37,7 @@ vue.component('kf-checkbox', {
   watch: {
     value: function(val) {
       this.onChange(val, this.name);
-      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, val);
+      this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
     }
   },
   template:
@@ -80,7 +80,7 @@ vue.component('kf-checkbox-group', {
   },
   compiled: function() {
     this.input = this.$el.querySelector('input');
-    this.input.__PARENT = this;
+    this.input.__mkfParent = this;
     this.$on('kf.form.init', function(init) {
       this.value = init;
     });
@@ -89,7 +89,7 @@ vue.component('kf-checkbox-group', {
     value: function(val) {
       let value = [].slice.apply(val);
       this.onChange(this.name && this.name || value, this.name && value);
-      this.input.__BUS && this.input.__BUS.$emit('kf.form.change', this.input, value);
+      this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, value);
     }
   },
   template:
