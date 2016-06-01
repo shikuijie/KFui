@@ -1,0 +1,129 @@
+@import (reference) '../style/color/color';
+
+@-webkit-keyframes ball {
+  50% {
+    opacity: 0.3;
+    -webkit-transform: scale(0.4);
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes ball {
+  50% {
+    opacity: 0.3;
+    -webkit-transform: scale(0.4);
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+
+.loader {
+  background-color: #fff;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  border-radius: 10px;
+}
+.loader::after{
+  content: '';
+  display: inline-block;
+  height: 100%;
+  width: 0;
+  vertical-align: middle;
+}
+.loader-inner{
+}
+.ball {
+  display: inline-block;
+  vertical-align: middle;
+  width: 15px;
+  height: 15px;
+  position: relative;
+}
+.ball > div:nth-child(1) {
+  top: 25px;
+  left: 0;
+  -webkit-animation: ball 1s 0s infinite linear;
+  animation: ball 1s 0s infinite linear;
+}
+.ball > div:nth-child(2) {
+  top: 17.04545px;
+  left: 17.04545px;
+  -webkit-animation: ball 1s 0.12s infinite linear;
+  animation: ball 1s 0.12s infinite linear;
+}
+.ball > div:nth-child(3) {
+  top: 0;
+  left: 25px;
+  -webkit-animation: ball 1s 0.24s infinite linear;
+  animation: ball 1s 0.24s infinite linear;
+}
+.ball > div:nth-child(4) {
+  top: -17.04545px;
+  left: 17.04545px;
+  -webkit-animation: ball 1s 0.36s infinite linear;
+  animation: ball 1s 0.36s infinite linear;
+}
+.ball > div:nth-child(5) {
+  top: -25px;
+  left: 0;
+  -webkit-animation: ball 1s 0.48s infinite linear;
+  animation: ball 1s 0.48s infinite linear;
+}
+.ball > div:nth-child(6) {
+  top: -17.04545px;
+  left: -17.04545px;
+  -webkit-animation: ball 1s 0.6s infinite linear;
+  animation: ball 1s 0.6s infinite linear;
+}
+.ball > div:nth-child(7) {
+  top: 0;
+  left: -25px;
+  -webkit-animation: ball 1s 0.72s infinite linear;
+  animation: ball 1s 0.72s infinite linear;
+}
+.ball > div:nth-child(8) {
+  top: 17.04545px;
+  left: -17.04545px;
+  -webkit-animation: ball 1s 0.84s infinite linear;
+  animation: ball 1s 0.84s infinite linear;
+}
+.ball > div {
+  background-color: #3C8DBC;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  position: absolute;
+}
+
+.define-kf-loading(){
+  @colorLen: length(@colors);
+  .color(@i : 1) when(@i <= @colorLen){
+    @c: extract(@colors, @i);
+    .kf-loading.kf-@{c}{
+      div > div{
+        background-color: @@c;
+      }
+    }
+    .color(@i + 1);
+  }
+  .color();
+}
+:global{
+  .define-kf-loading();
+}

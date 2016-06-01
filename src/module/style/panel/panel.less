@@ -1,0 +1,69 @@
+@import (reference) '../color/color';
+@import (reference) '../size/size';
+
+
+
+.define-kf-panel(){
+  .kf-panel{
+    width: 100%;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    >.kf-panel-head{
+      font-size: 14px;
+      padding: 12px;
+      color: #666;
+      background-color: #eee;
+      font-weight: normal;
+      position: relative;
+    }
+    >.kf-panel-body{
+      padding: 12px;
+      position: relative;
+    }
+  }
+
+  @colorLen: length(@colors);
+  @sizeLen: length(@sizes);
+  .color(@i:1) when(@i <= @colorLen){
+    @c: extract(@colors, @i);
+
+    .kf-panel.kf-@{c}{
+      border: 1px solid @@c;
+      >.kf-panel-head{
+        background-color: @@c;
+        color: #fff;
+        .kf-panel-body{
+          position: relative;
+        }
+      }
+    }
+    .color(@i + 1);
+  }
+  .size(@i:1) when(@i <= @sizeLen){
+    @fs: extract(@fss, @i);
+    @s: extract(@sizes, @i);
+    @hpad: extract(@hpads, @i);
+    @br: extract(@brs, @i);
+
+    .kf-panel.kf-@{s}{
+      border-radius: @@br;
+      >.kf-panel-head{
+        font-size: @@fs;
+        color: #fff;
+        padding: @@hpad;
+      }
+      .kf-panel-body{
+        padding: @@hpad;
+      }
+    }
+    .size(@i + 1);
+  }
+
+  .color();
+  .size();
+}
+
+:global{
+  .define-kf-panel();
+}
