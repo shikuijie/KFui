@@ -2,9 +2,6 @@ import vue from 'vue';
 import './loading.css!';
 import cls from './loading.css.map';
 
-console.log(cls.ball);
-
-//loading动画
 vue.component('kf-loading',{
   props:{
     loadingShow: {
