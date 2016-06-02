@@ -3,7 +3,6 @@
 
 .define-kf-panel(){
   .kf-panel{
-    border-radius: @br-md;
     font-size: @fs-md;
     background-color: white;
     >.kf-panel-head{
@@ -11,9 +10,13 @@
       padding: @vpad-md @hpad-md/2;
       background-color: @gray;
       font-weight: bold;
+      border-top-left-radius: @br-md;
+      border-top-right-radius: @br-md;
     }
     >.kf-panel-body{
       padding: @vpad-md @hpad-md;
+      border-bottom-left-radius: @br-md;
+      border-bottom-right-radius: @br-md;
     }
   }
 
@@ -38,14 +41,17 @@
     @br: extract(@brs, @i);
 
     .kf-panel.kf-@{s}{
-      border-radius: @@br;
       font-size: @@fs;
       >.kf-panel-head{
         font-size: @@fs + 5px;
         padding: @@vpad @@hpad/2;
+        border-top-left-radius: @@br;
+        border-top-right-radius: @@br;
       }
       .kf-panel-body{
         padding: @@vpad @@hpad;
+        border-bottom-left-radius: @@br;
+        border-bottom-right-radius: @@br;
       }
     }
     .size(@i + 1);
