@@ -4,20 +4,17 @@
 .define-kf-panel(){
   .kf-panel{
     width: 100%;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    overflow: hidden;
+    border: 1px solid @gray;
+    border-radius: @br-md;
+    font-size: @fs-md;
     >.kf-panel-head{
-      font-size: 14px;
-      padding: 12px;
-      color: #666;
-      background-color: #eee;
-      font-weight: normal;
-      position: relative;
+      font-size: @fs-md + 5px;
+      padding: @vpad-md @hpad-md/2;
+      background-color: @gray;
+      font-weight: bold;
     }
     >.kf-panel-body{
-      padding: 12px;
-      position: relative;
+      padding: @vpad-md @hpad-md;
     }
   }
 
@@ -42,17 +39,18 @@
     @fs: extract(@fss, @i);
     @s: extract(@sizes, @i);
     @hpad: extract(@hpads, @i);
+    @vpad: extract(@vpads, @i);
     @br: extract(@brs, @i);
 
     .kf-panel.kf-@{s}{
       border-radius: @@br;
+      font-size: @@fs;
       >.kf-panel-head{
-        font-size: @@fs;
-        color: #fff;
-        padding: @@hpad;
+        font-size: @@fs + 5px;
+        padding: @@vpad @@hpad/2;
       }
       .kf-panel-body{
-        padding: @@hpad;
+        padding: @@vpad @@hpad;
       }
     }
     .size(@i + 1);
@@ -65,3 +63,4 @@
 :global{
   .define-kf-panel();
 }
+
