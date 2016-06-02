@@ -49,6 +49,13 @@
 
       > .slides {
         margin-left: -6px;
+
+        .slide .el {
+          font-size: 12px;
+        }
+        .slide .el[kf-datime-active] {
+          font-size: 14px;
+        }
       }
     }
 
@@ -65,6 +72,14 @@
         right: 0;
         left: auto;
         margin-right: -6px;
+
+        .hour .slide .el[kf-datime-active] {
+          font-size: 15px;
+        }
+        .minute .slide .el[kf-datime-active],
+          .second .slide .el[kf-datime-active] {
+          font-size: 12px;
+        }
       }
     }
 
@@ -175,10 +190,6 @@
 
             &:not([kf-datime-active]) {
               color: @gray;
-            }
-
-            &[kf-datime-active] {
-              font-size: 14px;
             }
           }
         }

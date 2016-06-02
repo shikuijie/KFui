@@ -12,4 +12,4 @@ import kfTable from './table/table';
 import kfTree from './tree/tree';
 import kfToaster from './toaster/toaster';
 
-export default {_, vue, vueResource, kfModal, kfTable, kfTree, kfToaster};
+export {_, vue, vueResource, kfModal, kfTable, kfTree, kfToaster};

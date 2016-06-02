@@ -137,8 +137,22 @@ let datime = vue.extend({
       }
     },
     chooseDate: function(d) {
-      if(!d.valid) return;
-      this.date = d.value;
+        if(!d.valid) return;
+        this.date = d.value;
+
+        if(this.$parent.isRanger) {
+            let data = {
+                name: this.name,
+                date: new Date(
+                    this.yearObj.els[this.yearObj.idx],
+                    this.monthObj.els[this.monthObj.idx],
+                    this.date,
+                    this.hourObj.els[this.hourObj.idx],
+                    this.minuteObj.els[this.minuteObj.idx],
+                    this.secondObj.els[this.secondObj.idx])
+            };
+            this.$parent.$emit('kf.datime.select', data);
+        }
     },
     inRange: function(d) {
       if(!this.min || !this.max) return false;
@@ -350,12 +364,12 @@ vue.component('kf-date-picker', {
     }
   },
   methods: {
-    clear: function() {
-      this.value = '';
-    },
-    hide: function() {
-      this.visible = false;
-    },
+      clear: function() {
+          this.value = '';
+      },
+      hide: function() {
+          this.visible = false;
+      },
       choose: function() {
           this.datime.$emit('kf.datime.ask');
           this.visible = false;
@@ -491,7 +505,7 @@ vue.component('kf-date-ranger', {
     'kf-datime': datime
   },
   watch: {
-    '[start, end]': function(val, oval) {
+    '[start, end]': function(val) {
       this.onChange(val, this.name);
       this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
     }
@@ -500,14 +514,19 @@ vue.component('kf-date-ranger', {
     this.input = this.$el.querySelector('input');
     this.input.__mkfParent = this;
     this.$on('kf.datime.register', function(datime) {
-      this.datimes = this.datimes || [];
-      this.datimes.push(datime);
+      this.datimes = this.datimes || {};
+      this.datimes[datime.name] = datime;
     });
     this.$on('kf.form.init', function(dates) {
-      this.initValue = dates;
+        this.initValue = {start: dates[0], end: dates[1]};
     });
   },
   ready: function() {
+      this.isRanger = true;
+      this.$on('kf.datime.select', function(data) {
+          this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
+      });
+
     let count = 0;
     this.$on('kf.datime.answer', function(data) {
       count++;
@@ -531,12 +550,13 @@ vue.component('kf-date-ranger', {
     });
 
     if(this.initValue) {
-      let that = this;
-      _.forEach(this.datimes, function(datime, i) {
-        datime.$emit('kf.datime.change', that.initValue[i]);
-      });
-      that.start = that.initValue[0];
-      that.end = that.initValue[1];
+        let that = this;
+        _.forEach(this.datimes, function(datime, name) {
+            datime.$emit('kf.datime.change', that.initValue[name]);
+        });
+
+        that.range.start = that.start = that.initValue.start;
+        that.range.end = that.end = that.initValue.end;
     }
   },
   destroyed: function() {
