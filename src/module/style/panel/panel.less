@@ -3,10 +3,10 @@
 
 .define-kf-panel(){
   .kf-panel{
-    width: 100%;
     border: 1px solid @gray;
     border-radius: @br-md;
     font-size: @fs-md;
+    background-color: white;
     >.kf-panel-head{
       font-size: @fs-md + 5px;
       padding: @vpad-md @hpad-md/2;
@@ -27,10 +27,7 @@
       border: 1px solid @@c;
       >.kf-panel-head{
         background-color: @@c;
-        color: #fff;
-        .kf-panel-body{
-          position: relative;
-        }
+        color: white;
       }
     }
     .color(@i + 1);

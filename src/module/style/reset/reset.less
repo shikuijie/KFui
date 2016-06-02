@@ -1,51 +1,56 @@
 @import (reference) '../color/color';
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  color: @dark;
-  font-size: 14px;
-}
-
-ul {
-  list-style: none;
-}
-
-a {
-  color: inherit;
-}
-
-button.kf-btn,
-input[type=submit],
-input[type=reset],
-input[type=button] {
-  appearance: button;
-  cursor: pointer;
-  &:focus {
-    outline: none;
+:global {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-}
 
-input[type=select],
-input[type=picker],
-input[type=ranger],
-.kf-input > input[type=text],
-.kf-input > input[type=url],
-.kf-input > input[type=email] {
-  background-color: transparent;
-  appearance: none;
-  font-size: inherit;
-  border: none;
-  padding: 0;
-  outline: none;
-  width: 100%;
-}
+  body {
+    color: @dark;
+    font-size: 14px;
+  }
 
-table.kf-table {
-  border-spacing: 0;
-  border-collapse: collapse;
-  line-height: 1;
+  ul {
+    list-style: none;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  button.kf-btn,
+  input[type=submit],
+  input[type=reset],
+  input[type=button] {
+    appearance: button;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  input[type=select],
+  input[type=picker],
+  input[type=ranger],
+  .kf-input input[type=text],
+  .kf-input input[type=url],
+  .kf-input input[type=email] {
+    background-color: transparent;
+    appearance: none;
+    font-size: inherit;
+    border: none;
+    padding: 0;
+    outline: none;
+    width: 100%;
+  }
+
+  table.kf-table,
+  .kf-date-picker table,
+  .kf-date-ranger table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    line-height: 1;
+  }
 }
