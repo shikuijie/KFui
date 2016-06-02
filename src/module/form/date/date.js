@@ -139,17 +139,6 @@ let datime = vue.extend({
     chooseDate: function(d) {
       if(!d.valid) return;
       this.date = d.value;
-
-      this.$parent.$emit('kf.datime.selected', {
-        name: this.name,
-        date: new Date(
-          this.yearObj.els[this.yearObj.idx],
-          this.monthObj.els[this.monthObj.idx],
-          this.date,
-          this.hourObj.els[this.hourObj.idx],
-          this.minuteObj.els[this.minuteObj.idx],
-          this.secondObj.els[this.secondObj.idx])
-      });
     },
     inRange: function(d) {
       if(!this.min || !this.max) return false;
@@ -215,6 +204,24 @@ let datime = vue.extend({
   },
   template:
     '<section :class="cls.datime">' +
+        '<table>' +
+            '<thead>' +
+                '<tr>' +
+                    '<th v-for="w in weeks" v-text="w"></th>' +
+                '</tr>' +
+            '</thead>' +
+            '<tbody>' +
+                '<tr v-for="w in weeksOfMonth">' +
+                    '<td v-for="d in w" @click.prevent.stop="chooseDate(d)" ' +
+                        ':class="!d.valid && cls.invalid" ' +
+                        ':kf-datime-inrange="inRange(d)" ' +
+                        ':kf-datime-active="d.valid && d.value == date">' +
+                        '<div v-text="d.value"></div>' +
+                    '</td>' +
+                '</tr>' +
+            '</tbody>' +
+        '</table>' +
+
       '<div :class="cls.date">' +
         '<span :class="cls.title">' +
           '<i @click.stop="prevMonth()"></i>' +
@@ -280,24 +287,6 @@ let datime = vue.extend({
           '</div>' +
         '</div>' +
       '</div>' +
-
-      '<table>' +
-        '<thead>' +
-          '<tr>' +
-            '<th v-for="w in weeks" v-text="w"></th>' +
-          '</tr>' +
-        '</thead>' +
-        '<tbody>' +
-          '<tr v-for="w in weeksOfMonth">' +
-            '<td v-for="d in w" @click.prevent.stop="chooseDate(d)" ' +
-                ':class="!d.valid && cls.invalid" ' +
-                ':kf-datime-inrange="inRange(d)" ' +
-                ':kf-datime-active="d.valid && d.value == date">' +
-              '<div v-text="d.value"></div>' +
-            '</td>' +
-          '</tr>' +
-        '</tbody>' +
-      '</table>' +
     '</section>'
 });
 
@@ -349,14 +338,15 @@ vue.component('kf-date-picker', {
       return val;
     },
     datimeCls: function() {
-      let res = {};
-      res[cls.visible] = this.visible;
-      res[cls.left] = this.flipObj.left;
-      res[cls.right] = this.flipObj.right;
-      res[cls.top] = this.flipObj.top;
-      res[cls.bottom] = this.flip.bottom;
+        let res = {};
+        res[cls.drop] = true;
+        res[cls.visible] = this.visible;
+        res[cls.left] = this.flipObj.left;
+        res[cls.right] = this.flipObj.right;
+        res[cls.top] = this.flipObj.top;
+        res[cls.bottom] = this.flip.bottom;
 
-      return res;
+        return res;
     }
   },
   methods: {
@@ -365,7 +355,11 @@ vue.component('kf-date-picker', {
     },
     hide: function() {
       this.visible = false;
-    }
+    },
+      choose: function() {
+          this.datime.$emit('kf.datime.ask');
+          this.visible = false;
+      }
   },
   components: {
     'kf-datime': datime
@@ -387,10 +381,9 @@ vue.component('kf-date-picker', {
     });
   },
   ready: function() {
-    this.$on('kf.datime.selected', function(data) {
-      this.value = formatDate(data.date, this.hasTime, this.hasSec);
-      this.visible = false;
-    });
+      this.$on('kf.datime.answer', function(data) {
+          this.value = formatDate(data.date, this.hasTime, this.hasSec);
+      });
 
     if(this.initValue) {
       this.datime.$emit('kf.datime.change', this.initValue);
@@ -398,15 +391,20 @@ vue.component('kf-date-picker', {
     }
   },
   destroyed: function() {
-    this.$off('kf.datime.selected');
+      this.$off('kf.form.init');
+      this.$off('kf.datime.register');
+      this.$off('kf.datime.answer');
   },
   template:
-    '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="visible = true">' +
-      '<input autocomplete="off" type="picker" :name="name" v-model="value" :required="required"/>' +
-      '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
-      '<kf-datime kf-datime :class="datimeCls" :moment="value" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
-      '<i class="fa fa-times" @click.stop="clear()"></i>' +
-    '</div>'
+      '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="visible = true">' +
+          '<input autocomplete="off" type="picker" :name="name" v-model="value" :required="required"/>' +
+          '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
+          '<div :class="datimeCls">' +
+              '<button type="button" @click.prevent.stop="choose()">确定</button>' +
+              '<kf-datime kf-datime :moment="value" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
+          '</div>' +
+          '<i class="fa fa-times" @click.stop="clear()"></i>' +
+      '</div>'
 });
 
 vue.component('kf-date-ranger', {
@@ -510,10 +508,6 @@ vue.component('kf-date-ranger', {
     });
   },
   ready: function() {
-    this.$on('kf.datime.selected', function(data) {
-      this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
-    });
-
     let count = 0;
     this.$on('kf.datime.answer', function(data) {
       count++;
@@ -555,13 +549,13 @@ vue.component('kf-date-ranger', {
       '<input autocomplete="off" type="ranger" :name="name" :required="required" v-model="rangeStr"/>' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
       '<div :class="dropCls">' +
+        '<div :class="cls.confirm">' +
+            '<span v-show="rangerr" v-text="rangerr"></span>' +
+            '<button type="button" @click.prevent.stop="chooseRange()">确定</button>' +
+        '</div>' +
         '<div :class="cls.range">' +
           '<kf-datime kf-datime name="start" :moment="start" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
           '<kf-datime kf-datime name="end" :moment="end" :min="range.start" :max="range.end" :has-time="hasTime" :has-sec="hasSec"></kf-datime>' +
-        '</div>' +
-        '<div :class="cls.confirm">' +
-          '<span v-show="rangerr" v-text="rangerr"></span>' +
-          '<a @click.prevent.stop="chooseRange()">确定</a>' +
         '</div>' +
       '</div>' +
       '<i class="fa fa-times" @click.stop="clear()"></i>' +

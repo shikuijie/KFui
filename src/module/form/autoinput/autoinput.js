@@ -103,7 +103,7 @@ vue.component('kf-autoinput', {
   },
   template:
     '<div :class="cls.autoinput" class="kf-autoinput">'+
-      '<input type="text" @input="change(value)" v-model="value" @keyup.stop.prevent="opreate($event)" @click="showOptions(value)" autocomplete="off" :name="name" :required="required">'+
+      '<input type="autoinput" @input="change(value)" v-model="value" @keyup.stop.prevent="opreate($event)" @click="showOptions(value)" autocomplete="off" :name="name" :required="required">'+
       '<div :class="cls.bg" v-show="visible" @click="visible = false"></div>'+
       '<ul :class="getOptionsCls()">'+
         '<li v-for="option in options" track-by="$index" @click="choose($index)"><span :class="isActive($index)" v-text="option"></span></li>'+

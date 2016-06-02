@@ -43,6 +43,9 @@ vue.component('kf-select', {
       this.value = init;
     });
   },
+  destroyed: function() {
+    this.$off('kf.form.init');
+  },
   watch: {
     value: function(val) {
       this.onChange(val, this.name);

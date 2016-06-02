@@ -3,7 +3,6 @@
 
 .define-kf-panel(){
   .kf-panel{
-    border: 1px solid @gray;
     border-radius: @br-md;
     font-size: @fs-md;
     background-color: white;
@@ -24,7 +23,6 @@
     @c: extract(@colors, @i);
 
     .kf-panel.kf-@{c}{
-      border: 1px solid @@c;
       >.kf-panel-head{
         background-color: @@c;
         color: white;

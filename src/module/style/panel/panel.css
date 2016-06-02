@@ -1,112 +1,78 @@
 .kf-panel {
-  width: 100%;
-  border: 1px solid #eee;
   border-radius: 4px;
-  overflow: hidden;
+  font-size: 14px;
+  background-color: white;
 }
 .kf-panel > .kf-panel-head {
-  font-size: 14px;
-  padding: 12px;
-  color: #666;
-  background-color: #eee;
-  font-weight: normal;
-  position: relative;
+  font-size: 19px;
+  padding: 6px 6px;
+  background-color: #bdc3c7;
+  font-weight: bold;
 }
 .kf-panel > .kf-panel-body {
-  padding: 12px;
-  position: relative;
-}
-.kf-panel.kf-primary {
-  border: 1px solid #3c8dbc;
+  padding: 6px 12px;
 }
 .kf-panel.kf-primary > .kf-panel-head {
   background-color: #3c8dbc;
-  color: #fff;
-}
-.kf-panel.kf-primary > .kf-panel-head .kf-panel-body {
-  position: relative;
-}
-.kf-panel.kf-accent {
-  border: 1px solid #e74c3c;
+  color: white;
 }
 .kf-panel.kf-accent > .kf-panel-head {
   background-color: #e74c3c;
-  color: #fff;
-}
-.kf-panel.kf-accent > .kf-panel-head .kf-panel-body {
-  position: relative;
-}
-.kf-panel.kf-gray {
-  border: 1px solid #bdc3c7;
+  color: white;
 }
 .kf-panel.kf-gray > .kf-panel-head {
   background-color: #bdc3c7;
-  color: #fff;
-}
-.kf-panel.kf-gray > .kf-panel-head .kf-panel-body {
-  position: relative;
-}
-.kf-panel.kf-dark {
-  border: 1px solid #34495e;
+  color: white;
 }
 .kf-panel.kf-dark > .kf-panel-head {
   background-color: #34495e;
-  color: #fff;
-}
-.kf-panel.kf-dark > .kf-panel-head .kf-panel-body {
-  position: relative;
-}
-.kf-panel.kf-light {
-  border: 1px solid #ecf0f1;
+  color: white;
 }
 .kf-panel.kf-light > .kf-panel-head {
   background-color: #ecf0f1;
-  color: #fff;
-}
-.kf-panel.kf-light > .kf-panel-head .kf-panel-body {
-  position: relative;
+  color: white;
 }
 .kf-panel.kf-xs {
   border-radius: 3px;
+  font-size: 12px;
 }
 .kf-panel.kf-xs > .kf-panel-head {
-  font-size: 12px;
-  color: #fff;
-  padding: 5px;
+  font-size: 17px;
+  padding: 3px 2.5px;
 }
 .kf-panel.kf-xs .kf-panel-body {
-  padding: 5px;
+  padding: 3px 5px;
 }
 .kf-panel.kf-sm {
   border-radius: 3px;
+  font-size: 12px;
 }
 .kf-panel.kf-sm > .kf-panel-head {
-  font-size: 12px;
-  color: #fff;
-  padding: 10px;
+  font-size: 17px;
+  padding: 5px 5px;
 }
 .kf-panel.kf-sm .kf-panel-body {
-  padding: 10px;
+  padding: 5px 10px;
 }
 .kf-panel.kf-md {
   border-radius: 4px;
+  font-size: 14px;
 }
 .kf-panel.kf-md > .kf-panel-head {
-  font-size: 14px;
-  color: #fff;
-  padding: 12px;
+  font-size: 19px;
+  padding: 6px 6px;
 }
 .kf-panel.kf-md .kf-panel-body {
-  padding: 12px;
+  padding: 6px 12px;
 }
 .kf-panel.kf-lg {
   border-radius: 6px;
+  font-size: 16px;
 }
 .kf-panel.kf-lg > .kf-panel-head {
-  font-size: 16px;
-  color: #fff;
-  padding: 16px;
+  font-size: 21px;
+  padding: 10px 8px;
 }
 .kf-panel.kf-lg .kf-panel-body {
-  padding: 16px;
+  padding: 10px 16px;
 }

@@ -41,11 +41,15 @@
   > .date,
   > .time {
     display: inline-block;
-    border-bottom: 5px solid transparent;
+    border-top: 5px solid transparent;
 
     &.date {
       position: relative;
       padding-left: 3px;
+
+      > .slides {
+        margin-left: -6px;
+      }
     }
 
     &.time {
@@ -53,12 +57,14 @@
       right: 5px;
 
       > .title > span:last-child {
-        .kf-tip-arrow(down, @dark, 3px);
+        .kf-tip-arrow(up, @dark, 3px);
+        vertical-align: middle;
       }
 
       > .slides {
         right: 0;
         left: auto;
+        margin-right: -6px;
       }
     }
 
@@ -85,14 +91,12 @@
       }
     }
 
-    > .title:hover + .slides,
-    > .slides:hover {
+    &:hover > .slides {
       visibility: visible;
     }
 
     > .slides {
-      top: 100%;
-      box-shadow: 3px 3px @light;
+      bottom: 100%;
 
       text-align: center;
       position: absolute;
@@ -102,7 +106,6 @@
       z-index: 1;
       background-color: white;
       border: 1px solid @light;
-      margin-left: -2px;
       padding: 10px 0;
       visibility: hidden;
 
@@ -269,7 +272,7 @@
   }
 }
 
-.dtpicker > .datime,
+.dtpicker > .drop,
 .dtranger > .drop {
   position: absolute;
   left: 0;
@@ -313,6 +316,25 @@
   }
 }
 
+.dtpicker {
+  font-size: 12px;
+  > .drop {
+    padding: 5px;
+    text-align: right;
+    border: 1px solid @light;
+
+    > button {
+      margin-bottom: 3px;
+      padding: 5px 10px;
+      border: none;
+      background-color: @dark;
+      border-radius: 5px;
+      font-size: 12px;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
 .dtranger {
   font-size: 12px;
 
@@ -332,17 +354,19 @@
 
     > .confirm {
       text-align: right;
-      margin-top: 5px;
+      margin-bottom: 3px;
       > span {
         color: @accent;
         margin-right: 10px;
       }
 
-      > a {
-        color: white;
-        border-radius: 5px;
+      > button {
         padding: 5px 10px;
+        border: none;
+        background-color: @dark;
+        border-radius: 5px;
         font-size: 12px;
+        color: white;
         cursor: pointer;
       }
     }
@@ -351,7 +375,10 @@
 
 .kf-datime-picker-color(@color) {
   border: 1px solid @color;
-  > [kf-datime] {
+  button {
+    background-color: @color !important;
+  }
+  [kf-datime] {
     .kf-datime(@color);
   }
 }
@@ -363,11 +390,11 @@
 
 .kf-datime-ranger-color(@color) {
   border: 1px solid @color;
-  > div > div > [kf-datime] {
+  [kf-datime] {
     .kf-datime(@color);
   }
-  a {
-    background-color: @color;
+  button {
+    background-color: @color !important;
   }
 }
 .kf-datime-ranger-size(@vpad, @hpad, @fs, @br) {
