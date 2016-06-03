@@ -1,6 +1,7 @@
 import 'font-awesome';
 import vue from 'vue';
 import vueResource from 'vue-resource';
+import vuex from 'vuex';
 import _ from 'lodash';
 import './form/form';
 import kfModal from './modal/modal';
@@ -12,4 +13,4 @@ import kfTable from './table/table';
 import kfTree from './tree/tree';
 import kfToaster from './toaster/toaster';
 
-export {_, vue, vueResource, kfModal, kfTable, kfTree, kfToaster};
+export {_, vue, vuex, vueResource, kfModal, kfTable, kfTree, kfToaster};
