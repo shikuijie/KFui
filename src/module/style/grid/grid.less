@@ -6,27 +6,33 @@
   .kf-grid {
     display: flex;
 
-    > * {
-      flex-grow: 1;
-      // display: flex;
-      &.kf-left {
-        justify-content: flex-start;
-      }
-      &.kf-right {
-        justify-content: flex-end;
-      }
-      &.kf-hcenter {
-        justify-content: center;
-      }
-      &.kf-top {
-        align-items: flex-start;
-      }
-      &.kf-vcenter {
-        align-items: center;
-      }
-      &.kf-bottom {
-        align-items: flex-end;
-      }
+    > .kf-left,
+    > .kf-right,
+    > .kf-hcenter,
+    > .kf-vcenter,
+    > .kf-top,
+    > .kf-bottom {
+      display: flex;
+    }
+
+    > .kf-left {
+      justify-content: flex-start;
+    }
+
+    > .kf-right {
+      justify-content: flex-end;
+    }
+    > .kf-hcenter {
+      justify-content: center;
+    }
+    > .kf-top {
+      align-items: flex-start;
+    }
+    > .kf-vcenter {
+      align-items: center;
+    }
+    > .kf-bottom {
+      align-items: flex-end;
     }
   }
 
