@@ -14,6 +14,7 @@ vue.component('kf-select', {
       type: Array,
       default: () => { return []; }
     },
+    placeholder: String,
     name: String,
     required: {
       type: Boolean,
@@ -70,7 +71,7 @@ vue.component('kf-select', {
       return this.options.indexOf(this.value);
     },
     selectedLabel: function() {
-      return this.labels[this.selectedIndex] || this.options[this.selectedIndex];
+      return this.labels[this.selectedIndex] || this.options[this.selectedIndex] || this.placeholder;
     }
   },
   methods: {
