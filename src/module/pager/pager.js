@@ -35,6 +35,11 @@ vue.component('kf-pager', {
       current: this.currentPage - 1
     };
   },
+  watch: {
+    current: function(val) {
+      this.currentPage = val + 1;
+    }
+  },
   computed: {
     pages: function() {
       return Math.ceil(this.totalEntries / this.pageEntry);
@@ -81,7 +86,7 @@ vue.component('kf-pager', {
       this.onChange(this.current + 1, this.pageEntry);
     },
     go: function(n) {
-      if(n >= this.pages) return;
+      if(n >= this.pages || n < 0) return;
       this.current = n;
       this.onChange(this.current + 1, this.pageEntry);
     },
