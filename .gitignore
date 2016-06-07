@@ -45,5 +45,3 @@ mock
 
 *.css
 *.css.map.js
-*.bundle.js
-*.bundle.js.map
