@@ -127,7 +127,7 @@ vue.directive('kf-form', {
                 }, {});
             }
         };
-        that.submit.addEventListener('click', that.submitFunc);
+        that.submit && that.submit.addEventListener('click', that.submitFunc);
 
         that.reset = that.el.querySelector('[type=reset]');
         that.resetFunc = function(event) {
@@ -136,7 +136,7 @@ vue.directive('kf-form', {
                     error.innerHTML = '';
                 });
         };
-        that.reset.addEventListener('click', that.resetFunc);
+        that.reset && that.reset.addEventListener('click', that.resetFunc);
     },
     update: function(val) {
         let el = this.el;
