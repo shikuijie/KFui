@@ -36,7 +36,7 @@
     "through2": "^2.0.1"
   },
   "jspm": {
-    "main": "dist/kfui.bundle.js",
+    "main": "src/dist/kfui.bundle.js",
     "directories": {
       "lib": "."
     },
