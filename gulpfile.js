@@ -32,13 +32,13 @@ var fs = require('fs'),
 
     jspmCfg = 'config.js',
     mockDir = 'mock',
+    distDir = 'dist',
     libJs = 'module/lib.js',
     uiName = 'kfui',
-    bundlePath = 'dist/kfui.bundle.js';
+    uiModPath = 'src/module',
+    uiPath = 'jspm_packages/github/shikuijie/';
 
     mockJs = path.join(mockDir, '/**/*.js');
-
-var srcDir, srcHtml, srcJs, srcCss, srcLess, srcAll;
 
 gulp.task('dev', ['dev:css', 'dev:watch', 'dev:reload', 'server']);
 
@@ -216,9 +216,30 @@ gulp.task('image', function(cb) {
       });
 });
 
+gulp.task('lib:css', function(cb) {
+  var files = fs.readdirSync(uiPath);
+  files.forEach(function(file) {
+    if(/^KFui@.*\.js$/.test(file)) {
+      uiPath = path.join(uiPath, file.replace(/\.js$/, ''), uiName + '.bundle.js');
+      return false;
+    }
+  });
+
+  var modDir = path.join(path.dirname(uiPath), uiModPath);
+  var libLess = path.join(modDir, '/**/*.less');
+  gulp.src(libLess)
+      .pipe(less())
+      .pipe(rename({extname: '.css'}))
+      .pipe(postcss(cssPlugins))
+      .pipe(gulp.dest(modDir))
+      .on('end', function() {
+          cb();
+      });
+});
+
 /** 打包库文件 **/
-gulp.task('lib', function() {
-  var cmd = 'jspm bundle ' + uiName + ' ' + bundlePath + ' --minify --inject';
+gulp.task('lib', ['lib:css'], function() {
+  var cmd = 'jspm bundle ' + uiName + ' ' + uiPath + ' --minify --inject';
   console.log(cmd);
 
   var self = this;
@@ -228,7 +249,7 @@ gulp.task('lib', function() {
       self.push(file);
       done();
     } else {
-      gulp.src(bundlePath)
+      gulp.src(uiPath)
           .pipe(through2.obj(function(file, encoding, done) {
             var contents = String(file.contents);
             contents = contents.replace(/url\(jspm_packages/g, 'url(/jspm_packages');
@@ -236,7 +257,7 @@ gulp.task('lib', function() {
             this.push(file);
             done();
           }))
-          .pipe(gulp.dest(path.dirname(bundlePath)));
+          .pipe(gulp.dest(path.dirname(uiPath)));
     }
   });
 });
@@ -264,7 +285,7 @@ gulp.task('bundle', function() {
 });
 
 /** 打包成单个可运行文件 **/
-gulp.task('sfx', function() {
+gulp.task('sfx', ['lib:css'], function() {
   var entryJs = process.argv[3] && process.argv[3].replace('--', '');
   if(!entryJs) {
     console.log('请指定打包入口js文件[npm run bundel -- --entry.js]');
