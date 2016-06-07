@@ -2,19 +2,26 @@ import {vue, vueResource as resource} from 'kfui';
 vue.use(resource);
 
 let form = {
-  name: {value: 'shimoo', required: '请输入姓名字段!'},
-  date: {value: '2016-05-21 15:30'},
-  range: {value: ['2016-04-30', '2016-06-12']},
-  department: {value: 'tech'},
-  salary: {value: '8k'},
-  agree: {value: 'ok'},
-  email: {value: 'shimoo@lagou.com', required: '请输入邮箱字段!', email: '邮箱格式不对!'},
-  address: {value: '北京市海淀区中关村', required: '请输入地址字段!', pattern: '请输入5-10个字符!'},
-  skills: {
-    value: ['c++', 'js'],
-    validation: function(value) {
-      if(!value || value.length < 2) {
-        return '请至少选择两项技能!';
+  value: {
+    name: 'shimoo',
+    date: '2016-05-21 15:30',
+    range: ['2016-04-30', '2016-06-12'],
+    department: 'tech',
+    salary: '8k',
+    agree: 'ok',
+    email: 'shimoo@lagou.com',
+    address: '北京市海淀区中关村',
+    skills: ['c++', 'js'],
+  },
+  validation: {
+    name: {required: '请输入姓名字段!'},
+    email: {required: '请输入邮箱字段!', email: '邮箱格式不对!'},
+    address: {required: '请输入地址字段!', pattern: '请输入5-10个字符'},
+    skills: {
+      validation: function(value) {
+        if(!value || value.length < 2) {
+          return '请至少选择两项技能!';
+        }
       }
     }
   },

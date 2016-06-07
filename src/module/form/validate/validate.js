@@ -50,7 +50,7 @@ vue.directive('kf-form', {
                 el.onchange = function(event) {
                     el.__mkfValue = el.value;
                     toggleError(el);
-                    that.info[name].value = el.value;
+                    that.valueInfo[name] = el.value;
                 };
             }
         });
@@ -60,7 +60,7 @@ vue.directive('kf-form', {
 
             el.__mkfValue = val;
             toggleError(el);
-            that.info[name].value = val;
+            that.valueInfo[name] = val;
         });
 
         function toggleError(target) {
@@ -85,18 +85,18 @@ vue.directive('kf-form', {
                 } else if (validity.tooShort) {
                     errorType = 'minlength';
                 }
-                msg = getErrorMsg(that.info, name, errorType,
+                msg = getErrorMsg(that.validateInfo, name, errorType,
                     target.validationMessage);
             }
 
-            if (that.info[name] && that.info[name].validation) {
-                msg = that.info[name].validation(target.__mkfValue) ||
+            if (that.validateInfo[name] && that.validateInfo[name].validation) {
+                msg = that.validateInfo[name].validation(target.__mkfValue) ||
                     '';
             }
 
             that.errorEls.get(target).innerHTML = msg;
             return msg;
-        };
+        }
 
         that.errorEls = new Map();
 
@@ -122,7 +122,7 @@ vue.directive('kf-form', {
                 event.formData = _.reduce(that.inputs, function(
                     res, el) {
                     let name = el.getAttribute('name');
-                    res[name] = that.info[name].value;
+                    res[name] = that.valueInfo[name];
                     return res;
                 }, {});
             }
@@ -145,7 +145,8 @@ vue.directive('kf-form', {
         }
 
         let that = formMap.get(el);
-        that.info = val;
+        that.valueInfo = val.value || {};
+        that.validateInfo = val.validation || {};
 
         _.forEach(that.inputs, function(el) {
             let type = el.getAttribute('type');
@@ -154,14 +155,13 @@ vue.directive('kf-form', {
                 throw el + '必须有name属性！';
             }
 
-            that.info[name] = that.info[name] || {};
-            if (_.isUndefined(that.info[name].value)) return;
+            if (_.isUndefined(that.valueInfo[name])) return;
             if ((type == 'text') || (type == 'email') || (
                     type == 'url')) {
-                el.value = that.info[name].value;
+                el.value = that.valueInfo[name];
             } else {
                 el.__mkfParent && el.__mkfParent.$emit(
-                    'kf.form.init', that.info[name].value
+                    'kf.form.init', that.valueInfo[name]
                 );
             }
         });
