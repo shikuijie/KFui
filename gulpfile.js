@@ -32,10 +32,9 @@ var fs = require('fs'),
 
     jspmCfg = 'config.js',
     mockDir = 'mock',
-    distDir = 'dist',
     libJs = 'module/lib.js',
     uiName = 'kfui',
-    bundlePath = 'src/dist/kfui.bundle.js';
+    bundlePath = 'dist/kfui.bundle.js';
 
     mockJs = path.join(mockDir, '/**/*.js');
 
@@ -265,7 +264,7 @@ gulp.task('bundle', function() {
 });
 
 /** 打包成单个可运行文件 **/
-gulp.task('sfx', ['lib:css'], function() {
+gulp.task('sfx', function() {
   var entryJs = process.argv[3] && process.argv[3].replace('--', '');
   if(!entryJs) {
     console.log('请指定打包入口js文件[npm run bundel -- --entry.js]');
