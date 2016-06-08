@@ -11,7 +11,7 @@ System.config({
   paths: {
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
-  },
+  }, 
 
   map: {
     "animate.css": "npm:animate.css@3.5.1",
