@@ -183,8 +183,8 @@ vue.directive('kf-form', {
             }
         });
 
-        for(var el of that.errorEls) {
-            el.remove();
+        for(var [__, span] of that.errorEls) {
+            span.remove();
         }
 
         that.submit && that.submit.removeEventListener('click',

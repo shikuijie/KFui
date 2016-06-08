@@ -579,6 +579,13 @@ export default {
     vue.set(table, '__mkfTbody', bodyData);
   },
   prependRow: function(target, row) {
+    if(!target.__mkfTable || target.__mkfTable === target) {
+      if(!target.__mkfTbody) {
+        this.setBody(target, [row]);
+        return;
+      }
+    }
+
     let coll = target.__mkfTbody;
     if(target.__mkfTable && (target !== target.__mkfTable)) {
       coll = target[target.__mkfTable.__mkfChildrenKey];
@@ -590,6 +597,13 @@ export default {
     coll.unshift(row);
   },
   appendRow: function(target, row) {
+    if(!target.__mkfTable || target.__mkfTable === target) {
+      if(!target.__mkfTbody) {
+        this.setBody(target, [row]);
+        return;
+      }
+    }
+
     let coll = target.__mkfTbody;
     if(target.__mkfTable && (target !== target.__mkfTable)) {
       coll = target[target.__mkfTable.__mkfChildrenKey];
