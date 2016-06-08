@@ -40,6 +40,8 @@ var fs = require('fs'),
 
     mockJs = path.join(mockDir, '/**/*.js');
 
+var srcDir, srcHtml, srcJs, srcCss, srcLess, srcAll;
+
 gulp.task('dev', ['dev:css', 'dev:watch', 'dev:reload', 'server']);
 
 /** 初始化, 比如生成文件夹 **/
