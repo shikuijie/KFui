@@ -124,7 +124,7 @@ vue.component('kf-pager', {
         '<div :class="cls.input">' +
           '<div>' +
             '<div>' +
-              '<input type="pager" v-model="currentPage"/>' +
+              '<input type="pager" v-model="currentPage" @keyup.enter="go(currentPage - 1)"/>' +
             '</div>' +
             '<span class="fa fa-caret-right" @click="go(currentPage - 1)"></span>' +
           '</div>' +
