@@ -16,6 +16,9 @@ import kfToaster from './toaster/toaster';
 vue.use(vueResource);
 
 var kfService = {
+	hasAuthority: function(user, targetUrl, authUrl) {
+		return user.urls.indexOf(targetUrl) !== -1;
+	},
 	requestAPI: function(url, data, success, error)  {
 		vue.http.post(url, data, {
 			emulateJSON: true,
