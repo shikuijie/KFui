@@ -13,6 +13,9 @@ import kfTable from './table/table';
 import kfTree from './tree/tree';
 import kfToaster from './toaster/toaster';
 
+//add promise related runtime js into kfui
+Promise.all([Promise.resolve(1), Promise.reject(2)]).then(() => {}, () => {});
+
 vue.use(vueResource);
 
 var kfService = {
