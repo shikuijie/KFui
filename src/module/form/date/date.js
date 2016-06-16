@@ -312,6 +312,10 @@ vue.component('kf-date-picker', {
             default: () => {
             }
         },
+        onDrop: {
+            type: Function,
+            default: () => { return true; }
+        },
         value: String,
         name: String,
         required: {
@@ -372,6 +376,10 @@ vue.component('kf-date-picker', {
         hide: function () {
             this.visible = false;
         },
+        show: function() {
+            if(!this.onDrop()) return;
+            this.visible = true;
+        },
         choose: function () {
             this.datime.$emit('kf.datime.ask');
             this.visible = false;
@@ -412,7 +420,7 @@ vue.component('kf-date-picker', {
         this.$off('kf.datime.answer');
     },
     template:
-        '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="visible = true">' +
+        '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="show()">' +
             '<input autocomplete="off" type="picker" :name="name" v-model="value" :required="required"/>' +
             '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
             '<div :class="datimeCls">' +
@@ -429,6 +437,10 @@ vue.component('kf-date-ranger', {
             type: Function,
             default: () => {
             }
+        },
+        onDrop: {
+            type: Function,
+            default: () => { return true; }
         },
         start: String,
         end: String,
@@ -502,6 +514,10 @@ vue.component('kf-date-ranger', {
         },
         hide: function () {
             this.visible = false;
+        },
+        show: function() {
+            if(!this.onDrop()) return;
+            this.visible = true;
         }
     },
     components: {
@@ -568,7 +584,7 @@ vue.component('kf-date-ranger', {
         this.$off('kf.datime.answer');
     },
     template:
-        '<div :class="cls.dtranger" class="kf-date-ranger" @click.stop="visible = true">' +
+        '<div :class="cls.dtranger" class="kf-date-ranger" @click.stop="show()">' +
             '<input autocomplete="off" type="ranger" :name="name" :required="required" v-model="rangeStr"/>' +
             '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
             '<div :class="dropCls">' +

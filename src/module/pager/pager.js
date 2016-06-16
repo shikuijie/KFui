@@ -118,10 +118,13 @@ vue.component('kf-pager', {
         '<div :class="cls.pageNo">' +
           '共<span v-text="pages"></span>页' +
         '</div>' +
+        '<div :class="cls.entryNo">' +
+          '<span v-text="totalEntries"></span>项' +
+        '</div>' +
         '<div :class="cls.input">' +
           '<div>' +
             '<div>' +
-              '<input type="pager" v-model="currentPage"/>' +
+              '<input type="pager" v-model="currentPage" @keyup.enter="go(currentPage - 1)"/>' +
             '</div>' +
             '<span class="fa fa-caret-right" @click="go(currentPage - 1)"></span>' +
           '</div>' +

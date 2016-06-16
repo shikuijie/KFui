@@ -9,6 +9,10 @@ vue.component('kf-autoinput', {
       type: Function,
       default: () => {}
     },
+    onDrop: {
+      type: Function,
+      default: () => {return true;}
+    },
     getOptions: {
       type: Function,
       default: () => {}

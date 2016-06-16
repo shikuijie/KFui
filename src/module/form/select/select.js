@@ -24,6 +24,10 @@ vue.component('kf-select', {
       type: Function,
       default: () => {}
     },
+    onDrop: {
+      type: Function,
+      default: () => { return true; }
+    },
     flip: {
       type: Object,
       default: function() {
@@ -92,6 +96,7 @@ vue.component('kf-select', {
       this.visible = false;
     },
     show: function() {
+      if(!this.onDrop()) return;
       if(this.options.length) {
         this.visible = true;
       }
