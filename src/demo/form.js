@@ -2,6 +2,19 @@ import {vue, vueResource as resource} from 'kfui';
 vue.use(resource);
 
 let form = {
+  changeValue: function() {
+    form.value = {
+      name: 'shimoooo',
+      date: '2016-06-21 15:30',
+      range: ['2016-05-30', '2016-07-12'],
+      department: 'design',
+      salary: '12k',
+      agree: 'no',
+      email: 'shimoooo@lagou.com',
+      address: '北京市海淀区中关村',
+      skills: ['c++', 'css'],
+    };
+  },
   value: {
     name: 'shimoo',
     date: '2016-05-21 15:30',

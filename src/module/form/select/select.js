@@ -48,6 +48,11 @@ vue.component('kf-select', {
       this.value = init;
     });
   },
+  ready: function() {
+    this.$on('kf.form.reset', function(val) {
+      this.value = val;
+    });
+  },
   destroyed: function() {
     this.$off('kf.form.init');
   },

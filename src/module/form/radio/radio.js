@@ -36,6 +36,11 @@ vue.component('kf-radio-group', {
       this.value = init;
     });
   },
+  ready: function() {
+    this.$on('kf.form.reset', function(val) {
+      this.value = val;
+    });
+  },
   watch: {
     value: function(val) {
       this.onChange(val, this.name);

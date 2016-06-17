@@ -52,12 +52,12 @@
       "text": "github:systemjs/plugin-text@^0.0.4",
       "vue": "npm:vue@^1.0.16",
       "vue-resource": "npm:vue-resource@^0.7.0",
-      "vuex": "npm:vuex@^0.6.3",
+      "vuex": "npm:vuex@^0.6.3"
+    },
+    "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4"
-    },
-    "devDependencies": {
     }
   }
 }

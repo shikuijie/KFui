@@ -26,6 +26,14 @@ let vm = {
         kfModal.close(this);
       }
     },
+    formModal: {
+      open: function() {
+        kfModal.open(this);
+      },
+      close: function() {
+        kfModal.close(this);
+      }
+    },
     toaster: {
       showSuccess: function() {
         kfToaster.info(this, '成功了!');

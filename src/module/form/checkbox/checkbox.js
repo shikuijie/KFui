@@ -34,6 +34,11 @@ vue.component('kf-checkbox', {
       this.value = init;
     });
   },
+  ready: function() {
+    this.$on('kf.form.reset', function(val) {
+      this.value = val;
+    });
+  },
   watch: {
     value: function(val) {
       this.onChange(val, this.name);
@@ -83,6 +88,11 @@ vue.component('kf-checkbox-group', {
     this.input.__mkfParent = this;
     this.$on('kf.form.init', function(init) {
       this.value = init;
+    });
+  },
+  ready: function() {
+    this.$on('kf.form.reset', function(val) {
+      this.value = val;
     });
   },
   watch: {

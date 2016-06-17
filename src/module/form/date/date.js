@@ -409,6 +409,11 @@ vue.component('kf-date-picker', {
             this.value = formatDate(data.date, this.hasTime, this.hasSec);
         });
 
+        this.$on('kf.form.reset', function(date) {
+            this.datime.$emit('kf.datime.change', date);
+            this.value = date;
+        });
+
         if (this.initValue) {
             this.datime.$emit('kf.datime.change', this.initValue);
             this.value = this.initValue;
@@ -416,6 +421,7 @@ vue.component('kf-date-picker', {
     },
     destroyed: function () {
         this.$off('kf.form.init');
+        this.$off('kf.form.reset');
         this.$off('kf.datime.register');
         this.$off('kf.datime.answer');
     },
@@ -544,6 +550,17 @@ vue.component('kf-date-ranger', {
         this.isRanger = true;
         this.$on('kf.datime.select', function (data) {
             this.range[data.name] = formatDate(data.date, this.hasTime, this.hasSec);
+        });
+
+        this.$on('kf.form.reset', function(dates) {
+            let that = this;
+            let resetValue = {start: dates[0], end: dates[1]};
+            _.forEach(this.datimes, function (datime, name) {
+                datime.$emit('kf.datime.change', resetValue[name]);
+            });
+
+            that.range.start = that.start = resetValue.start;
+            that.range.end = that.end = resetValue.end;
         });
 
         let count = 0;

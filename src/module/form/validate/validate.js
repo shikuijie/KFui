@@ -10,7 +10,7 @@ function getErrorMsg(msgs, name, type, def) {
 let formMap = new Map();
 
 vue.directive('kf-form', {
-    bind: function(val) {
+    bind: function() {
         let el = this.el;
         let node = el.nodeName.toLowerCase();
         if (node != 'form') {
@@ -163,6 +163,32 @@ vue.directive('kf-form', {
                 el.__mkfParent && el.__mkfParent.$emit(
                     'kf.form.init', that.valueInfo[name]
                 );
+            }
+        });
+
+        new vue({
+            data: {
+                form: val
+            },
+            watch: {
+                'form.value': function(val) {
+                    var prevValueInfo = that.valueInfo;
+                    that.valueInfo = val;
+                    _.forEach(that.inputs, function(el) {
+                        let type = el.getAttribute('type');
+                        let name = el.getAttribute('name');
+
+                        if (prevValueInfo[name] === that.valueInfo[name]) return;
+                        if ((type == 'text') || (type == 'email') || (
+                                type == 'url')) {
+                            el.value = that.valueInfo[name] || '';
+                        } else {
+                            el.__mkfParent && el.__mkfParent.$emit(
+                                'kf.form.reset', that.valueInfo[name]
+                            );
+                        }
+                    });
+                }
             }
         });
     },
