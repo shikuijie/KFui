@@ -23,6 +23,18 @@ var kfService = {
 		return user.urls.indexOf(targetUrl) !== -1;
 	},
 	requestAPI: function(url, data, success, error)  {
+		if(_.isFunction(data)) {
+			error = success;
+			success = data;
+			data = {};
+		}
+		if(!error) {
+			error = window.alert;
+		}
+		if(!_.isObject(data)) {
+			return error('数据必须是js对象！');
+		}
+
 		vue.http.post(url, data, {
 			emulateJSON: true,
 			headers: {
@@ -31,19 +43,15 @@ var kfService = {
 		}).then(function(result) {
 			success(result.data);
 		}, function(result) {
-	                   if(!error) {
-	                        	alert('错误! ' + result.status);
-	                   } else {
-	                       	if(result.status == 401) {
-	                            		error('权限错误!');
-	                        	} else if(result.status == 500) {
-	                            		error('系统内部错误!');
-	                        	} else if(result.status == 404) {
-	                            		error('请求路径不存在!');
-	                        	} else {
-	                            		error('网络错误! ' + result.status);
-	                        	}
-	                   }
+           	if(result.status == 401) {
+        		error('权限错误!');
+        	} else if(result.status == 500) {
+        		error('系统内部错误!');
+        	} else if(result.status == 404) {
+        		error('请求路径不存在!');
+        	} else {
+        		error('网络错误!');
+        	}
 		});
 	}
 };
