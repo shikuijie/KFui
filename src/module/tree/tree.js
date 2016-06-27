@@ -6,7 +6,7 @@ import cls from './tree.css.map';
 vue.component('kf-tree', {
   components: {
     'kf-tree-node': {
-      props: ['nodeData', 'draggable', 'nodeKey', 'subtreeKey', 'toggleKey', 'dropKey'],
+      props: ['nodeData', 'nodeKey', 'subtreeKey', 'toggleKey', 'dropKey'],
       data: function() {
         vue.set(this.nodeData, '__mkfExpand', false);
         vue.set(this.nodeData, '__mkfDragover', false);
@@ -37,9 +37,6 @@ vue.component('kf-tree', {
           } else {
             return 'fa fa-plus-square-o';
           }
-        },
-        dragStatus: function() {
-          return this.draggable ? 'true' : 'false';
         }
       },
       methods: {
@@ -76,7 +73,7 @@ vue.component('kf-tree', {
         }
       },
       template:
-        '<li :draggable="dragStatus" ' +
+        '<li draggable="true" ' +
             ':kf-tree-node-dragover="nodeData.__mkfDragover" ' +
             ':kf-tree-node-dragging="nodeData.__mkfDragging" ' +
             '@dragstart.stop="dragStart($event)" ' +
@@ -94,7 +91,6 @@ vue.component('kf-tree', {
             '<span :class="cls.overlap"></span>' +
             '<kf-tree :class="cls.subtree" v-if="nodeData[subtreeKey]" ' +
                       ':tree="nodeData" ' +
-                      ':draggable="draggable" ' +
                       ':node-key="nodeKey" ' +
                       ':subtree-key="subtreeKey">' +
             '</kf-tree>' +
@@ -106,10 +102,6 @@ vue.component('kf-tree', {
     tree: {
       type: Object,
       required: true
-    },
-    draggable: {
-      type: Boolean,
-      default: false
     },
     nodeKey: {
       type: String,
@@ -129,25 +121,20 @@ vue.component('kf-tree', {
     }
   },
   data: function() {
-    let treeData = this.tree,
-        draggable = this.draggable;
+    let treeData = this.tree;
     if(!treeData.__mkfRoot) {
       treeData.__mkfRoot = treeData;
       treeData.__mkfParent = treeData;
       treeData.__mkfSubtreeKey = this.subtreeKey;
-      if(draggable) {
-        treeData.__mkfId = 0;
-        treeData.__mkfIdMap = {};
-      }
+      treeData.__mkfId = 0;
+      treeData.__mkfIdMap = {};
     }
 
     treeData[this.subtreeKey] && treeData[this.subtreeKey].forEach(function(child) {
       child.__mkfRoot = treeData.__mkfRoot;
       child.__mkfParent = treeData;
-      if(draggable) {
-        child.__mkfId = child.__mkfRoot.__mkfId++;
-        child.__mkfRoot.__mkfIdMap[child.__mkfId] = child;
-      }
+      child.__mkfId = child.__mkfRoot.__mkfId++;
+      child.__mkfRoot.__mkfIdMap[child.__mkfId] = child;
     });
 
     return {
@@ -157,7 +144,6 @@ vue.component('kf-tree', {
   template:
   '<ul :class="cls.tree" class="kf-tree">' +
     '<kf-tree-node v-for="node in tree[subtreeKey]" ' +
-                  ':draggable="draggable" ' +
                   ':node-data="node" ' +
                   ':node-key="nodeKey" ' +
                   ':drop-key="dropKey" ' +
@@ -168,6 +154,23 @@ vue.component('kf-tree', {
 });
 
 export default {
+  setBody: function(tree, nodes) {
+    if(tree.__mkfRoot !== tree) {
+      throw 'setBody第一个参数必须是树对象！';
+    }
+    tree.__mkfId = 0;
+    tree.__mkfIdMap = {};
+
+    let subkey = tree.__mkfRoot.__mkfSubtreeKey;
+    nodes.forEach(function(node) {
+      node.__mkfRoot = tree;
+      node.__mkfParent = tree;
+      node.__mkfId = tree.__mkfId++;
+      tree.__mkfRoot.__mkfIdMap[node.__mkfId] = node;
+    });
+
+    vue.set(tree, subkey, nodes);
+  },
   appendNodes: function(parent, nodes) {
     let subkey = parent.__mkfRoot.__mkfSubtreeKey;
     if(!parent[subkey]) {
