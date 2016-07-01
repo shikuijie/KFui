@@ -316,7 +316,7 @@ vue.component('kf-date-picker', {
             type: Function,
             default: () => { return true; }
         },
-        value: String,
+        value: null,
         name: String,
         required: {
             type: Boolean,
@@ -390,6 +390,11 @@ vue.component('kf-date-picker', {
     },
     watch: {
         value: function (val) {
+            if(_.isObject(val)) {
+                this.value = '';
+                return;
+            }
+            
             this.onChange(val, this.name);
             this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
         }
@@ -448,8 +453,8 @@ vue.component('kf-date-ranger', {
             type: Function,
             default: () => { return true; }
         },
-        start: String,
-        end: String,
+        start: null,
+        end: null,
         name: String,
         required: {
             type: Boolean,
@@ -531,6 +536,12 @@ vue.component('kf-date-ranger', {
     },
     watch: {
         '[start, end]': function (val) {
+            if(_.isObject(val[0]) || _.isObject(val[1])) {
+                this.start = '';
+                this.end = '';
+                return;
+            }
+
             this.onChange(val, this.name);
             this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
         }

@@ -16,7 +16,7 @@ vue.component('kf-pager', {
       default: 0
     },
     currentPage: {
-      type: Number,
+      type: null,
       default: 1
     },
     visiblePages: {
@@ -36,6 +36,12 @@ vue.component('kf-pager', {
     };
   },
   watch: {
+    currentPage: function(val) {
+      if(_.isObject(val)) {
+        this.current = 0;
+        this.onChange(1, this.pageEntry);
+      }
+    },
     current: function(val) {
       this.currentPage = val + 1;
     }
@@ -91,8 +97,7 @@ vue.component('kf-pager', {
       this.onChange(this.current + 1, this.pageEntry);
     },
     onChangeEntry: function() {
-      this.current = 0;
-      this.onChange(1, this.pageEntry);
+      this.onChange(this.current + 1, this.pageEntry);
     }
   },
   template:

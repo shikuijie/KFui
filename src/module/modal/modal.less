@@ -41,10 +41,10 @@
   }
 }
 
-:global {
+.define-kf-modal() {
   .kf-modal {
     > div {
-      border-radius: @br-lg;
+      border-radius: @br-md;
 
       > header,
       > main,
@@ -56,9 +56,32 @@
 
       > header {
         &:not(:empty) {
-          padding: @vpad-lg @hpad-lg;
+          padding: @vpad-md @hpad-md;
+          border-top-left-radius: @br-md;
+          border-top-right-radius: @br-md;
+          font-size: @fs-md + 5px;
+          font-weight: bold;
         }
       }
     }
   }
+
+  @colorLen: length(@colors);
+  .color(@i: 1) when (@i <= @colorLen) {
+    @c: extract(@colors, @i);
+
+    .kf-modal.kf-@{c} > div {
+      > header:not(:empty) {
+        background-color: @@c;
+        color: white;
+      }
+    }
+    .color(@i + 1);
+  }
+
+  .color();
+}
+
+:global {
+  .define-kf-modal();
 }

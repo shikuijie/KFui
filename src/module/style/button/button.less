@@ -16,6 +16,9 @@
       &:focus {
         background-color: darken(@@c, 10%);
       }
+      &:disabled {
+        background-color: lighten(@@c, 10%);
+      }
     }
 
     .color(@i + 1);
@@ -57,7 +60,10 @@
     background-color: white;
     font-size: @fs-md;
     &:focus {
-      background-color: lighten(@gray, 20%);
+      background-color: darken(@gray, 10%);
+    }
+    &:disabled {
+      background-color: lighten(@gray, 10%);
     }
   }
   a.kf-btn {
