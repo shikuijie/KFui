@@ -39,6 +39,7 @@ vue.component('kf-pager', {
     currentPage: function(val) {
       if(_.isObject(val)) {
         this.current = 0;
+        this.currentPage = 1;
         this.onChange(1, this.pageEntry);
       }
     },
@@ -97,6 +98,8 @@ vue.component('kf-pager', {
       this.onChange(this.current + 1, this.pageEntry);
     },
     onChangeEntry: function() {
+      this.current = 0;
+      this.currentPage = 1;
       this.onChange(this.current + 1, this.pageEntry);
     }
   },

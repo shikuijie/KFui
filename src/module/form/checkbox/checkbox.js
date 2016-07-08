@@ -41,6 +41,11 @@ vue.component('kf-checkbox', {
   },
   watch: {
     value: function(val) {
+      if(_.isObject(val) && !Object.keys(val).length) {
+        this.value = false;
+        return;
+      }
+      
       this.onChange(val, this.name);
       this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
     }
