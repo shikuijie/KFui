@@ -179,7 +179,6 @@ function startUpload(url, name, file, other, success, error) {
   file.xhr = xhr;
 
   xhr.addEventListener('load', function(event) {
-    console.log(event)
     file.doing = false;
     if(event.target.status != 200) {
       file.error = true;
@@ -260,3 +259,9 @@ function processFiles(self, fileList) {
     });
   }
 }
+
+export default {
+  upload: function(url, fieldName, fileContent, data, onSuccess, onError) {
+    startUpload(url, fieldName, {file: fileContent}, data, onSuccess, onError);
+  }
+};

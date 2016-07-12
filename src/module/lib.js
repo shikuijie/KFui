@@ -3,7 +3,13 @@ import vue from 'vue';
 import vueResource from 'vue-resource';
 import vuex from 'vuex';
 import _ from 'lodash';
-import './form/form';
+import './form/date/date';
+import './form/checkbox/checkbox';
+import './form/radio/radio';
+import './form/select/select';
+import kfFile from './form/file/file';
+import './form/validate/validate';
+import './form/autoinput/autoinput';
 import kfModal from './modal/modal';
 import './pager/pager';
 import './style/style';
@@ -41,19 +47,19 @@ var kfService = {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			}
 		}).then(function(result) {
-			success(result.data);
+			success && success(result.data);
 		}, function(result) {
            	if(result.status == 401) {
-        		error('权限错误!');
+        		error && error('权限错误!');
         	} else if(result.status == 500) {
-        		error('系统内部错误!');
+        		error && error('系统内部错误!');
         	} else if(result.status == 404) {
-        		error('请求路径不存在!');
+        		error && error('请求路径不存在!');
         	} else {
-        		error('网络错误!');
+        		error && error('网络错误!');
         	}
 		});
 	}
 };
 
-export {_, vue, vuex, vueResource, kfModal, kfTable, kfTree, kfToaster, kfService};
+export {_, vue, vuex, vueResource, kfModal, kfTable, kfTree, kfToaster, kfService, kfFile};
