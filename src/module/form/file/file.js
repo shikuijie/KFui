@@ -17,6 +17,10 @@ vue.component('kf-file', {
       type: Function,
       default: () => {}
     },
+    showList: {
+      type: Boolean,
+      default: true
+    },
     validate: {
       type: Function,
       default: (f) => {}
@@ -103,7 +107,7 @@ vue.component('kf-file', {
     },
     getListCls: function() {
       let res = {};
-      res[cls.visible] = this.listVisible && this.files.length;
+      res[cls.visible] = this.listVisible && this.files.length && this.showList;
       res[cls.left] = this.flipObj.left;
       res[cls.top] = this.flipObj.top;
       res[cls.bottom] = this.flipObj.bottom;
@@ -233,9 +237,7 @@ function processFiles(self, fileList) {
   if(!files.length) return;
 
   self.files = files;
-  if(hasError || self.auto) {
-    self.listVisible = true;
-  }
+  self.listVisible = true;
   if(hasError) {
     return;
   }
@@ -261,7 +263,17 @@ function processFiles(self, fileList) {
 }
 
 export default {
-  upload: function(url, fieldName, fileContent, data, onSuccess, onError) {
-    startUpload(url, fieldName, {file: fileContent}, data, onSuccess, onError);
+  upload: function(url, fieldName, fileContent, data, success, error) {
+    startUpload(url, fieldName, {file: fileContent}, data, success, function(result) {
+      if(result.status == 401) {
+        error && error('权限错误!');
+      } else if(result.status == 500) {
+        error && error('系统内部错误!');
+      } else if(result.status == 404) {
+        error && error('请求路径不存在!');
+      } else {
+        error && error('网络错误!');
+      }
+    });
   }
 };
