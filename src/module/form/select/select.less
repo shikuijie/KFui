@@ -53,7 +53,7 @@
 .select {
   position: relative;
   display: inline-block;
-  padding-right: 15px !important;
+  padding-right: 25px !important;
 
   > input {
     cursor: pointer;
@@ -69,12 +69,19 @@
     opacity: 0;
   }
 
-  > i {
+  > span, > i {
     position: absolute;
     display: inline-block;
     top: 50%;
-    right: 5px;
     transform: translateY(-50%);
+  }
+  > span {
+    right: 20px;
+    color: @light;
+    font-size: 12px;
+  }
+  > i {
+    right: 5px;
   }
 
   > ul.visible {

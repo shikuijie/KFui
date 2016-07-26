@@ -16,6 +16,10 @@ let stable = {
   onReady: function() {
     kfTable.setHead(this, this.thead);
     kfTable.setBody(this, this.tbody);
+    let self = this;
+    setTimeout(function() {
+      kfTable.setHead(self, []);
+    });
   },
   checkAll: function(val) {
     kfTable.iterate(stable, function(row) {

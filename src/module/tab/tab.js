@@ -53,6 +53,12 @@ vue.component('kf-tab-item', {
 });
 
 vue.component('kf-tab', {
+  props: {
+    onSwitch: {
+      type: Function,
+      default: function() {}
+    }
+  },
   data: function() {
     return {
       cls: cls,
@@ -60,12 +66,20 @@ vue.component('kf-tab', {
       active: ''
     };
   },
+  methods: {
+    onSwitchTab: function(title) {
+      if(title === this.active) return;
+      
+      this.onSwitch(title, this.active);
+      this.active = title;
+    }
+  },
   template:
     '<div :class="cls.tabs" class="kf-tab">' +
       '<ul>' +
         '<li v-for="(title, visible) in titles" ' +
-            '@click="this.active = title" ' +
-            ':kf-tab-active="this.active == title" ' +
+            '@click="onSwitchTab(title)" ' +
+            ':kf-tab-active="active == title" ' +
             'v-show="visible" ' +
             'v-text="title"></li>' +
       '</ul>' +

@@ -34,6 +34,10 @@ vue.component('kf-select', {
         return {bottom: true, left: true};
       }
     },
+    clearable: {
+      type: Boolean,
+      default: false
+    }
   },
   data: function() {
     return {
@@ -43,7 +47,7 @@ vue.component('kf-select', {
   },
   compiled: function() {
     this.input = this.$el.querySelector('input');
-    this.input.__mkfParent = this;
+    this.input && (this.input.__mkfParent = this);
     this.$on('kf.form.init', function(init) {
       this.value = init;
     });
@@ -58,8 +62,12 @@ vue.component('kf-select', {
   },
   watch: {
     value: function(val) {
+      if(_.isObject(val) && !Object.keys(val).length) {
+        this.value = null;
+        return;
+      }
       this.onChange(val, this.name);
-      this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
+      this.input && this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
     }
   },
   computed: {
@@ -105,12 +113,16 @@ vue.component('kf-select', {
       if(this.options.length) {
         this.visible = true;
       }
+    },
+    clear: function() {
+      this.value = null;
     }
   },
   template:
     '<div :class="cls.select" class="kf-select" @click="show()">' +
       '<input type="select" autocomplete="off" :name="name" :required="required" v-model="selectedLabel">' +
       '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
+      '<span v-if="clearable" @click.stop="clear()" class="fa fa-times"></span>' +
       '<i></i>' +
       '<ul :class="getOptionsCls()">' +
         '<li v-for="option in options" ' +

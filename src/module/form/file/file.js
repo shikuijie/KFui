@@ -90,12 +90,12 @@ vue.component('kf-file', {
   },
   methods: {
     clear: function(event) {
-      this.input.value = '';
-      this.input.__mkfNoerr = false;
+      this.input && (this.input.value = '');
+      this.input && (this.input.__mkfNoerr = false);
       this.files = [];
       this.preview && this.preview('');
 
-      this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, '');
+      this.input && this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, '');
     },
     change: function(event) {
       _.forEach(this.files, function(file) {
@@ -271,6 +271,8 @@ export default {
         error && error('系统内部错误!');
       } else if(result.status == 404) {
         error && error('请求路径不存在!');
+      } else if(result.status == 400) {
+        error && error('操作错误！');
       } else {
         error && error('网络错误!');
       }

@@ -136,6 +136,9 @@
     <kf-tab-item label="树">
       <kf-tree :tree="tree" style="margin-left: 10px;" :draggable="true"></kf-tree>
     </kf-tab-item>
+    <kf-tab-item label="菜单">
+      <kf-menu :menu="menu" :on-click="onClickMenu" style="width: 250px"></kf-menu>
+    </kf-tab-item>
     <kf-tab-item label="杂项">
       <style>
         .kf-margin-5 {

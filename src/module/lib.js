@@ -18,16 +18,26 @@ import './loading/loading';
 import kfTable from './table/table';
 import kfTree from './tree/tree';
 import kfToaster from './toaster/toaster';
+import kfMenu from './menu/menu';
 
 //add promise related runtime js into kfui
 Promise.all([Promise.resolve(1), Promise.reject(2)]).then(() => {}, () => {});
 
 vue.use(vueResource);
 
+function hasAuthority(user, targetUrl, authUrl) {
+	return user.urls.indexOf(targetUrl) !== -1;
+}
+
+vue.directive('kf-privilege', {
+    update: function (newVal) {
+    	if(!hasAuthority(lagouUserInfo, newVal)) {
+    		this.el.style.display = 'none';
+    	}
+    }
+});
+
 var kfService = {
-	hasAuthority: function(user, targetUrl, authUrl) {
-		return user.urls.indexOf(targetUrl) !== -1;
-	},
 	requestAPI: function(url, data, success, error)  {
 		if(_.isFunction(data)) {
 			error = success;
@@ -55,6 +65,8 @@ var kfService = {
         		error && error('系统内部错误!');
         	} else if(result.status == 404) {
         		error && error('请求路径不存在!');
+        	} else if(result.status == 400) {
+        		error && error('操作错误！');
         	} else {
         		error && error('网络错误!');
         	}
@@ -62,4 +74,4 @@ var kfService = {
 	}
 };
 
-export {_, vue, vuex, vueResource, kfModal, kfTable, kfTree, kfToaster, kfService, kfFile};
+export {_, vue, vuex, vueResource, kfModal, kfTable, kfTree, kfToaster, kfService, kfFile, kfMenu};

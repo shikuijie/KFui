@@ -1,4 +1,4 @@
-import {vue, kfModal, kfToaster} from 'kfui';
+import {vue, kfModal, kfToaster, kfMenu} from 'kfui';
 import stable from './stable';
 import mtable from './mtable';
 import ttable from './ttable';
@@ -11,6 +11,33 @@ let vm = {
     stable.onReady();
     mtable.onReady();
     ttable.onReady();
+    kfMenu.setBody(this.menu, [{
+      item: '平台运营部',
+      submenu: [{
+        item: '平台开发中心',
+        submenu: [{
+          item: '前端研发组'
+        }, {
+          item: '业务研发组'
+        }, {
+          item: '数据开发组'
+        }]
+      }, {
+        item: '运营中心',
+        submenu: [{
+          item: 'B端运营组'
+        }, {
+          item: 'C端运营组'
+        }, {
+          item: '移动运营组'
+        }]
+      }]
+    }]);
+  },
+  methods: {
+    onClickMenu: function(item) {
+      console.log(item)
+    }
   },
   data: {
     stable: stable,
@@ -18,6 +45,7 @@ let vm = {
     ttable: ttable,
     tree: tree,
     form: form,
+    menu: {},
     modal: {
       open: function() {
         kfModal.open(this);

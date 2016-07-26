@@ -7,15 +7,17 @@ import cls from './menu.css.map';
 vue.component('kf-menu', {
   components: {
     'kf-menu-item': {
-      props: ['hrefKey', 'itemKey', 'submenuKey', 'itemData'],
+      props: ['hrefKey', 'itemKey', 'submenuKey', 'rootData', 'itemData', 'onClick'],
       template:
-        '<li :class="getItemCls()" :kf-menu-active="itemData.__ACTIVE" @click.stop="setActive()">' +
-          '<a v-text="itemData[itemKey]" :href="itemData[hrefKey]" :kf-menu-link="!!itemData[hrefKey]"></a>' +
+        '<li :class="getItemCls()" :kf-menu-active="itemData.__mkfActive" @click.stop="setActive()">' +
+          '<a v-kf-code="itemData[itemKey]" :href="itemData[hrefKey]" :kf-menu-link="!!itemData[hrefKey]"></a>' +
           '<div v-if="itemData[submenuKey]"></div>' +
           '<kf-menu v-if="itemData[submenuKey]" ' +
                   ':style="top" ' +
                   ':menu="itemData" ' +
                   ':item-key="itemKey" ' +
+                  ':root="rootData" ' + 
+                  ':on-click="onClick" ' + 
                   ':submenu-key="submenuKey"></kf-menu>' +
         '</li>',
       methods: {
@@ -25,29 +27,32 @@ vue.component('kf-menu', {
           return res;
         },
         setActive: function() {
-          if(!this.itemData[this.hrefKey]) return;
-          let cur = this.itemData.__ROOT.__ACTIVE_ITEM;
+          let cur = this.itemData.__mkfRoot.__mkfActiveItem;
 
           while(cur) {
-            cur.__ACTIVE = false;
-            cur = cur.__ACTIVE_ITEM;
+            cur.__mkfActive = false;
+            cur = cur.__mkfActiveItem;
           }
 
           cur = this.itemData;
-          let parent = cur.__PARENT,
-              root = cur.__ROOT;
+          let parent = cur.__mkfParent,
+              root = cur.__mkfRoot;
           while(cur !== root) {
-            cur.__ACTIVE = true;
-            parent.__ACTIVE_ITEM = cur;
+            cur.__mkfActive = true;
+            parent.__mkfActiveItem = cur;
             cur = parent;
-            parent = parent.__PARENT;
+            parent = parent.__mkfParent;
           }
+
+          this.onClick(this.node);
         }
       },
       data: function() {
-        vue.set(this.itemData, '__ACTIVE', false);
+        vue.set(this.itemData, '__mkfActive', false);
         return {
-          top: {top: (this.itemData.__SUBMENU_TOP - this.itemData.__SELF_TOP) * 100 + '%'}
+          node: this.itemData,
+          menu: this.rootData,
+          top: {top: (this.itemData.__mkfSubmenuTop - this.itemData.__mkfSelfTop) * 100 + '%'}
         };
       }
     }
@@ -68,41 +73,61 @@ vue.component('kf-menu', {
     submenuKey: {
       type: String,
       default: 'submenu'
-    }
+    },
+    onClick: {
+      type: Function,
+      default: function() {}
+    },
+    root: Object
   },
   template:
     '<ul :class="cls.menu" class="kf-menu">' +
       '<kf-menu-item v-for="item in menu[submenuKey]" ' +
                     ':href-key="hrefKey" ' +
                     ':item-data="item" ' +
+                    ':root-data="rootData" ' +
                     ':item-key="itemKey" ' +
+                    ':on-click="onClick" ' +
                     ':submenu-key="submenuKey"></kf-menu-item>' +
     '</ul>',
   data: function() {
     let menu = this.menu,
         key = this.submenuKey;
-    if(!menu.__ROOT) {
-      menu.__ROOT = menu;
-      menu.__SUBMENU_TOP = 0;
+    if(!menu.__mkfRoot) {
+      menu.__mkfRoot = menu;
+      menu.__mkfSubmenuTop = 0;
+      menu.__mkfSubmenuKey = key;
     }
 
-    let submenu = menu[key] && menu[key] || [];
-    _.forEach(submenu, function(child, i) {
-      child.__ROOT = menu.__ROOT;
-      child.__PARENT = menu;
-      child.__IDX = i;
-      if(child[key]) {
-        if(child[key].length > i + menu.__SUBMENU_TOP) {
-          child.__SUBMENU_TOP = 0;
-        } else {
-          child.__SUBMENU_TOP = i + menu.__SUBMENU_TOP + 1 - child[key].length;
-        }
-        child.__SELF_TOP = menu.__SUBMENU_TOP + i;
-      }
-    });
+    init(menu, key);
 
     return {
-      cls: cls
+      cls: cls,
+      rootData: this.root || this.menu
     };
   }
 });
+
+function init(menu, smKey) {
+    let submenu = menu[smKey] && menu[smKey] || [];
+    _.forEach(submenu, function(child, i) {
+      child.__mkfRoot = menu.__mkfRoot;
+      child.__mkfParent = menu;
+      child.__mkfIdx = i;
+      if(child[smKey]) {
+        if(child[smKey].length > i + menu.__mkfSubmenuTop) {
+          child.__mkfSubmenuTop = 0;
+        } else {
+          child.__mkfSubmenuTop = i + menu.__mkfSubmenuTop + 1 - child[smKey].length;
+        }
+        child.__mkfSelfTop = menu.__mkfSubmenuTop + i;
+      }
+    });
+}
+
+export default {
+  setBody: function(menu, body) {
+    vue.set(menu, menu.__mkfSubmenuKey, body);
+    init(menu, menu.__mkfSubmenuKey);
+  }
+}

@@ -9,21 +9,14 @@
       color: white;
     }
 
-    &:first-child {
+    &:not(:first-child) {
       border-top: 1px solid lighten(@color, 15%);
     }
-    border-bottom: 1px solid lighten(@color, 15%);
 
     > div {
       .kf-tip-arrow(left, @color, 4px);
     }
 
-    &:hover,
-    &[kf-menu-active] {
-      > a {
-        background-color: lighten(@color, 15%);
-      }
-    }
   }
 }
 
@@ -41,6 +34,14 @@
   > li {
     position: relative;
     padding: 8px;
+
+    &:hover,
+    &[kf-menu-active] {
+      > a {
+        background-color: white;
+        color: @dark;
+      }
+    }
 
     > a {
       display: block;
@@ -93,7 +94,7 @@
 
 .define-kf-menu() {
   .kf-menu {
-    .kf-menu-color(@dark);
+    .kf-menu-color(@light);
     .kf-menu-size(@vpad-md, @hpad-md, @fs-md, @br-md);
   }
   @sizeLen: length(@sizes);

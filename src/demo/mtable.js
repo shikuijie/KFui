@@ -33,8 +33,8 @@ export default {
   showDetail: function(row) {
     alert(row.name + ' ' + row.email + ' ' + row.phone);
   },
-  thead: ['姓名', '邮箱', '手机', '地址类型', '地址值', '操作'],
-  colKeys: ['name', 'email', 'phone', 'address[].type', 'address[].value', 'action'],
+  thead: ['姓名', '邮箱', '手机', '地址类型', '操作', '地址值'],
+  colKeys: ['name', 'email', 'phone', 'address[].type', 'action', 'address[].value'],
   tbody: [{
     name: 'Lagou', email: 'Lagou@lagou.com',
     phone: '15741879798', action: getAction('showDetail', '详情'),

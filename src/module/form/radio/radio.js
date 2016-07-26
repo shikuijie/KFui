@@ -31,7 +31,7 @@ vue.component('kf-radio-group', {
   },
   compiled: function() {
     this.input = this.$el.querySelector('input');
-    this.input.__mkfParent = this;
+    this.input && (this.input.__mkfParent = this);
     this.$on('kf.form.init', function(init) {
       this.value = init;
     });
@@ -43,8 +43,13 @@ vue.component('kf-radio-group', {
   },
   watch: {
     value: function(val) {
+      if(_.isObject(val) && !Object.keys(val).length) {
+        this.value = null;
+        return;
+      }
+      
       this.onChange(val, this.name);
-      this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
+      this.input && this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
     }
   },
   template:

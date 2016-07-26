@@ -22,6 +22,11 @@ let thead = vue.extend({
       table: this.tableData,
       thead: parseHeadFoot(this.headData)
     };
+  },
+  watch: {
+    headData: function(n) {
+      this.thead = parseHeadFoot(n);
+    }
   }
 });
 
@@ -43,6 +48,11 @@ let tfoot = vue.extend({
       table: this.tableData,
       tfoot: parseHeadFoot(this.footData)
     };
+  },
+  watch: {
+    footData: function(n) {
+      this.tfoot = parseHeadFoot(n);
+    }
   }
 });
 
@@ -105,8 +115,8 @@ let mrow = vue.extend({
     '<tbody>' +
         '<tr v-for="(rn, keyRow) in rowData.__mkfKeyRows" track-by="$index">' +
           '<td v-for="(cn, key) in colKeys" track-by="$index" ' +
-              'v-if="rowData.__mkfRowspan[rn][cn]" ' +
-              ':rowspan="rowData.__mkfRowspan[rn][cn]">' +
+              'v-if="rowData.__mkfRowspan[rn][rowData.__mkfKeyMap[key]]" ' +
+              ':rowspan="rowData.__mkfRowspan[rn][rowData.__mkfKeyMap[key]]">' +
             '<div v-kf-code="getValue(rowData, keyRow[rowData.__mkfKeyMap[key]])"></div>' +
           '</td>' +
         '</tr>' +

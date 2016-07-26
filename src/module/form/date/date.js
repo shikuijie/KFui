@@ -318,6 +318,7 @@ vue.component('kf-date-picker', {
         },
         value: null,
         name: String,
+        placeholder: String,
         required: {
             type: Boolean,
             default: false
@@ -389,19 +390,20 @@ vue.component('kf-date-picker', {
         'kf-datime': datime
     },
     watch: {
-        value: function (val) {
+        value: function (val, oval) {
+            if(!val && !oval) return;
             if(_.isObject(val)) {
                 this.value = '';
                 return;
             }
             
             this.onChange(val, this.name);
-            this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
+            this.input && this.input && this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
         }
     },
     compiled: function () {
         this.input = this.$el.querySelector('input');
-        this.input.__mkfParent = this;
+        this.input && (this.input.__mkfParent = this);
         this.$on('kf.datime.register', function (datime) {
             this.datime = datime;
         });
@@ -432,7 +434,7 @@ vue.component('kf-date-picker', {
     },
     template:
         '<div :class="cls.dtpicker" class="kf-date-picker" @click.stop="show()">' +
-            '<input autocomplete="off" type="picker" :name="name" v-model="value" :required="required"/>' +
+            '<input autocomplete="off" type="picker" :name="name" v-model="value" :placeholder="placeholder" :required="required"/>' +
             '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
             '<div :class="datimeCls">' +
                 '<button type="button" @click.prevent.stop="choose()">确定</button>' +
@@ -456,6 +458,7 @@ vue.component('kf-date-ranger', {
         start: null,
         end: null,
         name: String,
+        placeholder: String,
         required: {
             type: Boolean,
             default: false
@@ -516,7 +519,6 @@ vue.component('kf-date-ranger', {
         clear: function () {
             this.start = '';
             this.end = '';
-            this.rangeStr = '';
         },
         chooseRange: function () {
             _.forEach(this.datimes, function (datime) {
@@ -543,12 +545,12 @@ vue.component('kf-date-ranger', {
             }
 
             this.onChange(val, this.name);
-            this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
+            this.input && this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, val);
         }
     },
     compiled: function () {
         this.input = this.$el.querySelector('input');
-        this.input.__mkfParent = this;
+        this.input && (this.input.__mkfParent = this);
         this.$on('kf.datime.register', function (datime) {
             this.datimes = this.datimes || {};
             this.datimes[datime.name] = datime;
@@ -613,7 +615,7 @@ vue.component('kf-date-ranger', {
     },
     template:
         '<div :class="cls.dtranger" class="kf-date-ranger" @click.stop="show()">' +
-            '<input autocomplete="off" type="ranger" :name="name" :required="required" v-model="rangeStr"/>' +
+            '<input autocomplete="off" type="ranger" :name="name" :placeholder="placeholder" :required="required" v-model="rangeStr"/>' +
             '<div :class="cls.bg" v-show="visible" @click.stop="hide()"></div>' +
             '<div :class="dropCls">' +
                 '<div :class="cls.confirm">' +
