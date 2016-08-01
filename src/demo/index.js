@@ -71,12 +71,13 @@ let vm = {
       }
     },
     onAutoChange: function() {},
-    getAutoOptions: function(val) {
-      var arr = [];
-      for(var i=0; i<Math.round(Math.random()*20); i++){
-        arr.push(val + '' + Math.round(Math.random()*10));
-      }
-      return arr;
+    getAutoOptions: function(val, options) {
+      //options is Array
+      setTimeout(function(){
+        for(var i=0; i<Math.round(Math.random()*20); i++){
+          options.push(val + '' + Math.round(Math.random()*10));
+        }
+      }, 600);
     }
   }
 };

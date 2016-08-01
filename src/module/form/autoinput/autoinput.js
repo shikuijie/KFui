@@ -9,10 +9,6 @@ vue.component('kf-autoinput', {
       type: Function,
       default: () => {}
     },
-    onDrop: {
-      type: Function,
-      default: () => {return true;}
-    },
     getOptions: {
       type: Function,
       default: () => {}
@@ -30,7 +26,8 @@ vue.component('kf-autoinput', {
       options: [],
       change: _.debounce(function(val) {
         if(val){
-          this.options = this.getOptions(val);
+          this.options = [];
+          this.getOptions(val, this.options);
           this.visible = true;
         }else{
           this.visible = false;
