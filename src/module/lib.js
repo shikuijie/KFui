@@ -25,19 +25,11 @@ Promise.all([Promise.resolve(1), Promise.reject(2)]).then(() => {}, () => {});
 
 vue.use(vueResource);
 
-function hasAuthority(user, targetUrl, authUrl) {
-	return user.urls.indexOf(targetUrl) !== -1;
-}
-
-vue.directive('kf-privilege', {
-    update: function (newVal) {
-    	if(!hasAuthority(lagouUserInfo, newVal)) {
-    		this.el.style.display = 'none';
-    	}
-    }
-});
-
 var kfService = {
+	hasAuthority: function(user, targetUrl, authUrl) {
+		return user.urls.indexOf(targetUrl) !== -1;
+	},
+
 	requestAPI: function(url, data, success, error)  {
 		if(_.isFunction(data)) {
 			error = success;
@@ -73,5 +65,11 @@ var kfService = {
 		});
 	}
 };
+
+vue.directive('kf-auth', function(val) {
+	if(!kfService.hasAuthority(lagouUserInfo, val)) {
+		this.el.remove();
+	}
+});
 
 export {_, vue, vuex, vueResource, kfModal, kfTable, kfTree, kfToaster, kfService, kfFile, kfMenu};
