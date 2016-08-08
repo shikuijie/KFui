@@ -57,13 +57,14 @@ vue.component('kf-tab', {
     onSwitch: {
       type: Function,
       default: function() {}
-    }
+    },
+    current: null 
   },
   data: function() {
     return {
       cls: cls,
       titles: {},
-      active: ''
+      active: this.current
     };
   },
   methods: {
@@ -72,6 +73,12 @@ vue.component('kf-tab', {
       
       this.onSwitch(title, this.active);
       this.active = title;
+    }
+  },
+  watch: {
+    current: function(nval) {
+      if(_.isObject(nval) && !Object.keys(nval).length) return;
+      this.active = nval;
     }
   },
   template:
