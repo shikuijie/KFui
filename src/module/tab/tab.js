@@ -47,13 +47,17 @@ vue.component('kf-tab-item', {
     vue.set(this.pdata.titles, this.label, this.visible);
   },
   template:
-    '<div v-show="pdata.titles[label] && pdata.active == label">' +
+    '<div v-show="pdata.titles[label] && pdata.active == label" style="background: white">' +
       '<slot></slot>' +
     '</div>'
 });
 
 vue.component('kf-tab', {
   props: {
+    canSwitch: {
+      type: Function,
+      default: function() { return true; }
+    },
     onSwitch: {
       type: Function,
       default: function() {}
@@ -69,6 +73,7 @@ vue.component('kf-tab', {
   },
   methods: {
     onSwitchTab: function(title) {
+      if(!this.canSwitch(title)) return;
       if(title === this.active) return;
       
       this.onSwitch(title, this.active);
@@ -78,7 +83,7 @@ vue.component('kf-tab', {
   watch: {
     current: function(nval) {
       if(_.isObject(nval) && !Object.keys(nval).length) return;
-      this.active = nval;
+      this.onSwitchTab(nval);
     }
   },
   template:
