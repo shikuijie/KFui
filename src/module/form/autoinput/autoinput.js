@@ -47,6 +47,11 @@ vue.component('kf-autoinput', {
   },
   watch: {
     value: _.debounce(function(nval) {
+      if(_.isObject(nval) && !Object.keys(nval).length) {
+        this.value = null;
+        return;
+      }
+      
       this.onChange(nval, this.name);
       this.input && this.input.__mkfBus && this.input.__mkfBus.$emit('kf.form.change', this.input, nval);
     }, 500)
