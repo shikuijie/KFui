@@ -49,6 +49,7 @@ vue.component('kf-tree', {
         dragStart: function(event) {
           this.nodeData.__mkfDragging = true;
           this.nodeData.__mkfRoot.__mkfDraggingNode = this.nodeData;
+          this.nodeData.__mkfRoot.__mkfDraggingEl = this.$el.querySelector('.' + cls.node + ' > div');
 
           event.dataTransfer.setData('text/plain', this.nodeData.__mkfId);
         },
@@ -66,7 +67,7 @@ vue.component('kf-tree', {
               drop = root[this.dropKey];
 
           if(drop) {
-            drop(src, target);
+            drop(src, target, root.__mkfDraggingEl, this.$el.querySelector('.' + cls.node + ' > div'), event);
           }
           target.__mkfDragover = false;
           target.__mkfRoot.__mkfDraggingNode.__mkfDragging = false;
