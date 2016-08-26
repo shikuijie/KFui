@@ -153,6 +153,13 @@ vue.component('kf-tree', {
   '</ul>'
 });
 
+function initNewNode(tree, parent, node) {
+  node.__mkfRoot = tree;
+  node.__mkfParent = parent;
+  node.__mkfId = tree.__mkfId++;
+  tree.__mkfRoot.__mkfIdMap[node.__mkfId] = node;
+}
+
 export default {
   setBody: function(tree, nodes) {
     if(tree.__mkfRoot !== tree) {
@@ -163,10 +170,7 @@ export default {
 
     let subkey = tree.__mkfRoot.__mkfSubtreeKey;
     nodes.forEach(function(node) {
-      node.__mkfRoot = tree;
-      node.__mkfParent = tree;
-      node.__mkfId = tree.__mkfId++;
-      tree.__mkfRoot.__mkfIdMap[node.__mkfId] = node;
+      initNewNode(tree, tree, node);
     });
 
     vue.set(tree, subkey, nodes);
@@ -178,6 +182,33 @@ export default {
     }
 
     parent[subkey] = parent[subkey].concat(nodes);
+
+    var tree = parent.__mkfRoot;
+    nodes.forEach(function(n) {
+      initNewNode(tree, parent, n);
+    });
+  },
+  insertBefore: function(node, newnode) {
+    let subkey = node.__mkfRoot.__mkfSubtreeKey,
+        coll = node.__mkfParent[subkey],
+        idx = coll.indexOf(node);
+
+    coll.splice(idx, 0, newnode);
+
+    initNewNode(node.__mkfRoot, node.__mkfParent, newnode);
+  },
+  insertAfter: function(node, newnode) {
+    let subkey = node.__mkfRoot.__mkfSubtreeKey,
+        coll = node.__mkfParent[subkey],
+        idx = coll.indexOf(node);
+
+    if(idx === coll.length - 1) {
+      coll.push(newnode);
+    } else {
+      coll.splice(idx + 1, 0, newnode);
+    }
+
+    initNewNode(node.__mkfRoot, node.__mkfParent, newnode);
   },
   appendNode: function(parent, node) {
     let subkey = parent.__mkfRoot.__mkfSubtreeKey;
@@ -186,6 +217,8 @@ export default {
     }
 
     parent[subkey].push(node);
+
+    initNewNode(parent.__mkfRoot, parent, node);
   },
   deleteNode: function(node, autoLeaf) {
     let subkey = node.__mkfRoot.__mkfSubtreeKey,
