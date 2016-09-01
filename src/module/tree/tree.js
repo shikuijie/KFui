@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import vue from 'vue';
 import '../code/code';
 import './tree.css!';
@@ -8,7 +9,7 @@ vue.component('kf-tree', {
     'kf-tree-node': {
       props: ['nodeData', 'nodeKey', 'subtreeKey', 'toggleKey', 'dropKey'],
       data: function() {
-        vue.set(this.nodeData, '__mkfExpand', false);
+        vue.set(this.nodeData, '__mkfExpand', this.nodeData.__mkfExpand || false);
         vue.set(this.nodeData, '__mkfDragover', false);
         vue.set(this.nodeData, '__mkfDragging', false);
 
@@ -41,10 +42,11 @@ vue.component('kf-tree', {
       },
       methods: {
         toggle: function() {
-          this.nodeData.__mkfExpand = !this.nodeData.__mkfExpand;
-          let root = this.nodeData.__mkfRoot;
-          let toggle = root[this.toggleKey];
-          toggle && toggle(this.nodeData, this.nodeData.__mkfExpand);
+          toggleNode(this.nodeData);
+          // this.nodeData.__mkfExpand = !this.nodeData.__mkfExpand;
+          // let root = this.nodeData.__mkfRoot;
+          // let toggle = root[this.toggleKey];
+          // toggle && toggle(this.nodeData, this.nodeData.__mkfExpand);
         },
         dragStart: function(event) {
           this.nodeData.__mkfDragging = true;
@@ -127,6 +129,7 @@ vue.component('kf-tree', {
       treeData.__mkfRoot = treeData;
       treeData.__mkfParent = treeData;
       treeData.__mkfSubtreeKey = this.subtreeKey;
+      treeData.__mkfToggleKey = this.toggleKey;
       treeData.__mkfId = 0;
       treeData.__mkfIdMap = {};
     }
@@ -154,15 +157,26 @@ vue.component('kf-tree', {
   '</ul>'
 });
 
-function initNewNode(tree, parent, node) {
+function initNewNode(tree, parent, node, expand) {
   node.__mkfRoot = tree;
   node.__mkfParent = parent;
   node.__mkfId = tree.__mkfId++;
   tree.__mkfRoot.__mkfIdMap[node.__mkfId] = node;
+  if(expand) {
+    node.__mkfExpand = true;
+  }
+}
+
+function toggleNode(node) {
+  node.__mkfExpand = !node.__mkfExpand;
+  var root = node.__mkfRoot;
+  var toggleKey = root.__mkfToggleKey;
+  var toggle = root[toggleKey];
+  toggle && toggle(node, node.__mkfExpand);
 }
 
 export default {
-  setBody: function(tree, nodes) {
+  setBody: function(tree, nodes, expand) {
     if(tree.__mkfRoot !== tree) {
       throw 'setBody第一个参数必须是树对象！';
     }
@@ -171,10 +185,26 @@ export default {
 
     let subkey = tree.__mkfRoot.__mkfSubtreeKey;
     nodes.forEach(function(node) {
-      initNewNode(tree, tree, node);
+      initNewNode(tree, tree, node, expand);
     });
 
     vue.set(tree, subkey, nodes);
+  },
+  toggle: function(node) {
+    toggleNode(node);
+  },
+  iterate: function(node, cb) {
+    var self = this;
+    var tree = node.__mkfRoot;
+    var subkey = node.__mkfRoot.__mkfSubtreeKey;
+
+    if(node !== node.__mkfRoot) {
+      cb(node, node.__mkfParent, node.__mkfRoot);
+    }
+
+    _.forEach(node[subkey], function(child) {
+      self.iterate(child, cb);
+    });
   },
   appendNodes: function(parent, nodes) {
     let subkey = parent.__mkfRoot.__mkfSubtreeKey;
