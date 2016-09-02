@@ -157,14 +157,11 @@ vue.component('kf-tree', {
   '</ul>'
 });
 
-function initNewNode(tree, parent, node, expand) {
+function initNewNode(tree, parent, node) {
   node.__mkfRoot = tree;
   node.__mkfParent = parent;
   node.__mkfId = tree.__mkfId++;
   tree.__mkfRoot.__mkfIdMap[node.__mkfId] = node;
-  if(expand) {
-    node.__mkfExpand = true;
-  }
 }
 
 function toggleNode(node) {
@@ -176,7 +173,7 @@ function toggleNode(node) {
 }
 
 export default {
-  setBody: function(tree, nodes, expand) {
+  setBody: function(tree, nodes) {
     if(tree.__mkfRoot !== tree) {
       throw 'setBody第一个参数必须是树对象！';
     }
@@ -185,7 +182,7 @@ export default {
 
     let subkey = tree.__mkfRoot.__mkfSubtreeKey;
     nodes.forEach(function(node) {
-      initNewNode(tree, tree, node, expand);
+      initNewNode(tree, tree, node);
     });
 
     vue.set(tree, subkey, nodes);
