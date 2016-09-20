@@ -261,5 +261,34 @@ export default {
     if(autoLeaf && coll.length == 0) {
       delete node.__mkfParent[subkey];
     }
+  },
+  prependNode: function(parent, node) {
+    let subkey = parent.__mkfRoot.__mkfSubtreeKey;
+    if(!parent[subkey]) {
+      vue.set(parent, subkey, []);
+    }
+
+    parent[subkey].unshift(node);
+    initNewNode(parent.__mkfRoot, parent, node);
+  },
+  moveBefore: function(src, target) {
+    var subkey = src.__mkfRoot.__mkfSubtreeKey;
+    var siblings = src.__mkfParent[subkey];
+
+    var srcIdx = siblings.indexOf(src);
+    siblings.splice(srcIdx, 1);
+
+    var tagIdx = siblings.indexOf(target);
+    siblings.splice(tagIdx, 0, src);
+  },
+  moveAfter: function(src, target) {
+    var subkey = src.__mkfRoot.__mkfSubtreeKey;
+    var siblings = src.__mkfParent[subkey];
+
+    var srcIdx = siblings.indexOf(src);
+    siblings.splice(srcIdx, 1);
+
+    var tagIdx = siblings.indexOf(target) + 1;
+    siblings.splice(tagIdx, 0, src);
   }
 };
