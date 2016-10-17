@@ -125,9 +125,33 @@ function init(menu, smKey) {
     });
 }
 
+function setActive(itemData, cb) {
+  let cur = itemData.__mkfRoot.__mkfActiveItem;
+
+  while(cur) {
+    cur.__mkfActive = false;
+    cur = cur.__mkfActiveItem;
+  }
+
+  cur = itemData;
+  let parent = cur.__mkfParent,
+      root = cur.__mkfRoot;
+  while(cur !== root) {
+    cur.__mkfActive = true;
+    parent.__mkfActiveItem = cur;
+    cur = parent;
+    parent = parent.__mkfParent;
+  }
+
+  cb && cb(itemData);
+}
+
 export default {
   setBody: function(menu, body) {
     vue.set(menu, menu.__mkfSubmenuKey, body);
     init(menu, menu.__mkfSubmenuKey);
+  },
+  setActive: function(item, cb) {
+    setActive(item, cb)
   }
 }
