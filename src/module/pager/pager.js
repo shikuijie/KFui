@@ -44,9 +44,10 @@ vue.component('kf-pager', {
   watch: {
     currentPage: function(val) {
       if(_.isObject(val) && this.canChange()) {
-        this.current = 0;
-        this.currentPage = 1;
-        this.onChange(1, this.pageEntry);
+        let page = val.page || 1;
+        this.current = page - 1;
+        this.currentPage = page;
+        this.onChange(page, this.pageEntry);
       }
     },
     current: function(val) {
@@ -79,16 +80,19 @@ vue.component('kf-pager', {
   },
   methods: {
     leftmost: function() {
+      if(this.current === 0) return;
       if(!this.canChange()) return;
       this.current = 0;
       this.onChange(this.current + 1, this.pageEntry);
     },
     rightmost: function() {
+      if(this.current === this.pages - 1) return;
       if(!this.canChange()) return;
       this.current = this.pages - 1;
       this.onChange(this.current + 1, this.pageEntry);
     },
     prev: function() {
+      if(this.current === 0) return;
       if(!this.canChange()) return;
       let prev = this.current - 1;
       if(prev < 0) return;
@@ -96,6 +100,7 @@ vue.component('kf-pager', {
       this.onChange(this.current + 1, this.pageEntry);
     },
     next: function() {
+      if(this.current === this.pages - 1) return;
       if(!this.canChange()) return;
       let next = this.current + 1;
       if(next == this.pages) return;
@@ -103,6 +108,7 @@ vue.component('kf-pager', {
       this.onChange(this.current + 1, this.pageEntry);
     },
     go: function(n) {
+      if(this.current === n) return;
       if(!this.canChange()) return;
       if(n >= this.pages || n < 0) return;
       this.current = n;

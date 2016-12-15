@@ -63,7 +63,70 @@ var kfService = {
         		error && error('网络错误!');
         	}
 		});
-	}
+	},
+	
+    createWebsocket(option) {
+        if(!option.url) {
+            throw '未设置url';
+        } else if(!option.onmessage) {
+            throw '未设置消息处理函数: onmessage';
+        }
+
+        var wsTime = {
+            connect : function() {
+                try {
+                    this.ws = new WebSocket(option.url);
+                    this.ws.onopen = this.onopen;
+                    this.ws.onmessage = this.onmessage;
+                    this.ws.onclose = this.onclose;
+                    this.ws.onerror = this.onerror;
+                } catch(exception) {
+                    console.log(exception);
+                }
+            },
+
+            onopen : function() {
+                option.onopen && option.onopen();
+            },
+
+            onerror : function(evt) {
+                option.onerror && option.onerror(evt);
+            },
+
+            onmessage : function(m) {
+                option.onmessage && option.onmessage(m);
+            },
+
+            onclose : function(closeEvent) {
+                var codeMap = {};
+                codeMap[1000] = "(NORMAL)";
+                codeMap[1001] = "(ENDPOINT_GOING_AWAY)";
+                codeMap[1002] = "(PROTOCOL_ERROR)";
+                codeMap[1003] = "(UNSUPPORTED_DATA)";
+                codeMap[1004] = "(UNUSED/RESERVED)";
+                codeMap[1005] = "(INTERNAL/NO_CODE_PRESENT)";
+                codeMap[1006] = "(INTERNAL/ABNORMAL_CLOSE)";
+                codeMap[1007] = "(BAD_DATA)";
+                codeMap[1008] = "(POLICY_VIOLATION)";
+                codeMap[1009] = "(MESSAGE_TOO_BIG)";
+                codeMap[1010] = "(HANDSHAKE/EXT_FAILURE)";
+                codeMap[1011] = "(SERVER/UNEXPECTED_CONDITION)";
+                codeMap[1015] = "(INTERNAL/TLS_ERROR)";
+                var codeStr = codeMap[closeEvent.code];
+
+                option.onclose && option.onclose(codeStr);
+
+                if(closeEvent.code != 1000) {
+                    setTimeout(function() {
+                        wsTime.connect();
+                    }, 1000);
+                }
+            }
+        };
+
+        wsTime.connect();
+    }
+
 };
 
 vue.directive('kf-auth', function(val) {

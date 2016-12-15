@@ -52,6 +52,51 @@ let datime = vue.extend({
             weeks: ['日', '一', '二', '三', '四', '五', '六']
         };
     },
+    watch: {
+        moment(val) {
+            let now = val && new Date(val) || new Date();
+            let year = now.getFullYear(),
+                month = now.getMonth(),
+                hour = now.getHours(),
+                min = now.getMinutes(),
+                sec = now.getSeconds();
+
+            let years = _.range(year, year + 6).concat(_.range(year - 6, year)),
+                months = _.range(month, 12).concat(_.range(0, month)),
+                hours = _.range(hour, 24).concat(_.range(0, hour)),
+                minutes = _.range(min, 60).concat(_.range(0, min)),
+                seconds = _.range(sec, 60).concat(_.range(0, sec));
+
+            this.date = now.getDate()
+            this.yearObj.els = years
+            this.yearObj.idx = 0
+            this.yearObj.offset = 0
+
+            this.monthObj.els = months
+            this.monthObj.idx = 0
+            this.monthObj.offset = 0
+
+            this.hourObj.els = hours
+            this.hourObj.idx = 0
+            this.hourObj.offset = 0
+
+            this.minuteObj.els = minutes
+            this.minuteObj.idx = 0
+            this.minuteObj.offset = 0
+
+            this.secondObj.els = seconds
+            this.secondObj.idx = 0
+            this.secondObj.offset = 0
+
+            if (this.$parent.isRanger) {
+                let data = {
+                    name: this.name,
+                    date: now
+                };
+                this.$parent.$emit('kf.datime.select', data);
+            }
+        }
+    },
     computed: {
         weeksOfMonth: function () {
             function isLeapYear(y) {
