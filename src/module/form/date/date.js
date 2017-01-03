@@ -436,7 +436,7 @@ vue.component('kf-date-picker', {
     },
     watch: {
         value: function (val, oval) {
-            if(!val && !oval) return;
+            // if(!val && !oval) return;
             if(_.isObject(val)) {
                 this.value = '';
                 return;
